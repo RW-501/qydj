@@ -1,0 +1,45 @@
+/* style.css */
+
+/* Smooth transitions */
+a, button {
+    transition: all 0.3s ease;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #111;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #6B46C1; /* purple-700 */
+    border-radius: 4px;
+  }
+  
+  /* Typography Enhancements */
+  body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #111;
+    line-height: 1.6;
+  }
+  
+  /* Utility helper */
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Card UI */
+  .card {
+    @apply bg-white rounded shadow hover:shadow-lg transition overflow-hidden;
+  }
+  
+  /* Button styles */
+  .btn {
+    @apply inline-block px-6 py-2 rounded font-medium text-white bg-purple-600 hover:bg-purple-700;
+  }
+  .btn-outline {
+    @apply border border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white transition;
+  }
+  
