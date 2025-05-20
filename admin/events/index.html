@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QYDJ Admin Panel</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/scripts/css/main.css" />
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+  <header class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">QYDJ Admin Panel</h1>
+    <button id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded hidden">Logout</button>
+  </header>
+
+  <div id="auth-section" class="text-center">
+    <h2 class="text-xl mb-4">Admin Login</h2>
+    <button id="googleLogin" class="bg-blue-600 text-white px-6 py-2 rounded mb-2">Login with Google</button>
+    <div class="my-2">OR</div>
+    <input id="phoneInput" type="tel" placeholder="+1..." class="p-2 border rounded w-60 mb-2" />
+    <button id="sendCode" class="bg-green-600 text-white px-4 py-2 rounded">Send Code</button>
+    <div id="recaptcha-container" class="my-4"></div>
+    <input id="verifyCode" type="text" placeholder="Enter Code" class="p-2 border rounded w-60 mt-4 hidden" />
+    <button id="verifyBtn" class="bg-purple-600 text-white px-4 py-2 rounded hidden">Verify</button>
+  </div>
+
+  <!-- Admin Tools -->
+  <div id="admin-panel" class="hidden">
+    <h2 class="text-2xl font-semibold mb-4">Manage Events</h2>
+    <form id="eventForm" class="grid grid-cols-1 gap-4 max-w-xl">
+      <input type="text" id="title" placeholder="Event Title" class="p-2 border rounded" required />
+      <textarea id="description" placeholder="Description" class="p-2 border rounded" required></textarea>
+      <input type="text" id="location" placeholder="Location" class="p-2 border rounded" />
+      <input type="datetime-local" id="date" class="p-2 border rounded" />
+      <input type="text" id="tags" placeholder="Tags (comma-separated)" class="p-2 border rounded" />
+      <select id="status" class="p-2 border rounded">
+        <option value="upcoming">Upcoming</option>
+        <option value="past">Past</option>
+        <option value="private">Private</option>
+      </select>
+      <input type="file" id="bannerImage" class="p-2 border rounded" accept="image/*" />
+      <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded">Save Event</button>
+    </form>
+
+    <hr class="my-8" />
+
+    <div>
+      <h3 class="text-xl font-semibold mb-2">All Events</h3>
+      <div id="eventList" class="grid gap-4"></div>
+    </div>
+  </div>
+
+  <!-- Admin JS -->
+  <script type="module" src="/scripts/js/admin.js"></script>
+</body>
+</html>
