@@ -247,25 +247,3 @@ async function loadEvents() {
 }
 
 
-/*
-DeBug
-
-
-*/
-
-
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      console.log("User logged in:", user.uid);
-      try {
-        const q = query(collection(db, "events"));
-        const snapshot = await getDocs(q);
-        console.log("Loaded events:", snapshot.size);
-      } catch (e) {
-        console.error("Firestore read failed:", e);
-      }
-    } else {
-      console.log("No user is logged in.");
-    }
-  });
-  
