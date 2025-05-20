@@ -24,9 +24,8 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
-import { Timestamp } from "https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore.js";
 
-const dateObj = Timestamp.fromDate(new Date(date));
+
 
 // 🔐 Config
 const firebaseConfig = {
