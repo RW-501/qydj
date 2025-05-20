@@ -22,8 +22,8 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 // ✅ Admin Whitelist
-const allowedEmails = ["admin@example.com"];
-const allowedPhones = ["+12345678900"];
+const allowedEmails = ["1988lrp@gmail.com"];
+const allowedPhones = ["+19725977878, +12145527280"];
 
 // 🔐 Auth State
 onAuthStateChanged(auth, user => {
