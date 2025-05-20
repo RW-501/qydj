@@ -1,190 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Basic Meta -->
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Events | QYDJ</title>
-        <meta name="description" content="QYDJ brings unforgettable themed events to life. Join the next big experience!" />
-        <meta name="keywords" content="QYDJ, events, parties, themed events, entertainment" />
-        <meta name="author" content="QYDJ Team" />
-        <meta name="robots" content="index, follow" />
-      
-        <!-- Tailwind CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      
-        <!-- Custom Styles -->
-        <link href="/scripts/css/main.css" rel="stylesheet" />
-      
-        <!-- SwiperJS (Event Carousels if needed) -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js" defer></script>
-      
-        <!-- AOS (Animate On Scroll) -->
-        <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-        <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-      
-        <!-- Firebase & App Logic -->
-        <script type="module" src="/scripts/js/main.js" defer></script>
-      
-        <!-- Favicon (optional) -->
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-      </head>
-      
-<body class="bg-gray-50 text-gray-900">
+  <head>
+    <!-- Basic Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events | QYDJ</title>
+    <meta
+      name="description"
+      content="QYDJ brings unforgettable themed events to life. Join the next big experience!"
+    />
+    <meta name="keywords" content="QYDJ, events, parties, themed events, entertainment" />
+    <meta name="author" content="QYDJ Team" />
+    <meta name="robots" content="index, follow" />
 
+    <!-- Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Custom Styles -->
+    <link href="/scripts/css/main.css" rel="stylesheet" />
 
-<!-- header.html -->
-<header class="bg-black text-white p-4 flex justify-between items-center shadow-md sticky top-0 z-50">
-    <a href="/qydj/" class="text-2xl font-extrabold tracking-widest hover:text-purple-400 transition">QYDJ</a>
-    <nav class="space-x-6 hidden md:block">
-      <a href="/qydj/" class="hover:text-purple-400 transition">Home</a>
-      <a href="events/" class="hover:text-purple-400 transition">Events</a>
-      <a href="about/" class="hover:text-purple-400 transition">About</a>
-      <a href="contact/" class="hover:text-purple-400 transition">Contact</a>
+    <!-- SwiperJS (Event Carousels if needed) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js" defer></script>
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+
+    <!-- Firebase & App Logic -->
+    <script type="module" src="/scripts/js/main.js" defer></script>
+
+    <!-- Favicon (optional) -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  </head>
+
+  <body class="bg-gray-50 text-gray-900">
+    <!-- header.html -->
+    <header
+      class="bg-black text-white p-4 flex justify-between items-center shadow-md sticky top-0 z-50"
+    >
+      <a
+        href="/qydj/"
+        class="text-2xl font-extrabold tracking-widest hover:text-purple-400 transition"
+        >QYDJ</a
+      >
+      <nav class="space-x-6 hidden md:block">
+        <a href="/qydj/" class="hover:text-purple-400 transition">Home</a>
+        <a href="events/" class="hover:text-purple-400 transition">Events</a>
+        <a href="about/" class="hover:text-purple-400 transition">About</a>
+        <a href="contact/" class="hover:text-purple-400 transition">Contact</a>
+      </nav>
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden focus:outline-none"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle mobile menu"
+      >
+        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Optional: Mobile Menu -->
+    <nav
+      id="mobile-menu"
+      class="bg-black text-white px-4 py-2 space-y-2 hidden md:hidden"
+    >
+      <a href="qydj/" class="block hover:text-purple-400">Home</a>
+      <a href="events/" class="block hover:text-purple-400">Events</a>
+      <a href="about/" class="block hover:text-purple-400">About</a>
+      <a href="contact/" class="block hover:text-purple-400">Contact</a>
     </nav>
-    <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
-      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </button>
-  </header>
-  
-  <!-- Optional: Mobile Menu -->
-  <nav id="mobile-menu" class="bg-black text-white px-4 py-2 space-y-2 hidden md:hidden">
-    <a href="qydj/" class="block hover:text-purple-400">Home</a>
-    <a href="events/" class="block hover:text-purple-400">Events</a>
-    <a href="about/" class="block hover:text-purple-400">About</a>
-    <a href="contact/" class="block hover:text-purple-400">Contact</a>
-  </nav>
-  
-  <script>
-    document.getElementById("mobile-menu-btn").addEventListener("click", () => {
-      const menu = document.getElementById("mobile-menu");
-      menu.classList.toggle("hidden");
-    });
-  </script>
-  
 
-  <!-- Hero: Featured Event -->
-  <section id="featured-event" class="bg-black text-white p-10 text-center" data-aos="fade-in">
-    <h2 class="text-3xl font-bold mb-2">Next Big Event:</h2>
-    <div id="featured-title" class="text-xl mb-4"></div>
-    <div id="countdown" class="text-2xl font-mono"></div>
-  </section>
+    <script>
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
 
+      mobileMenuBtn.addEventListener("click", () => {
+        const isHidden = mobileMenu.classList.toggle("hidden");
+        mobileMenuBtn.setAttribute("aria-expanded", !isHidden);
+      });
+    </script>
 
+    <!-- Hero: Featured Event -->
+    <section
+      id="featured-event"
+      class="bg-black text-white p-10 text-center"
+      data-aos="fade-in"
+    >
+      <h2 class="text-3xl font-bold mb-2">Next Big Event:</h2>
+      <div id="featured-title" class="text-xl mb-4"></div>
+      <div id="countdown" class="text-2xl font-mono"></div>
+    </section>
 
-  <!-- Header -->
-  <div id="header-placeholder"></div>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
 
-  <!-- Page Title -->
-  <section class="text-center py-12 bg-black text-white">
-    <h1 class="text-4xl font-bold">QYDJ Events</h1>
-    <p class="mt-2 text-lg">See what's coming up — or relive past memories!</p>
-  </section>
+    <!-- Page Title -->
+    <section class="text-center py-12 bg-black text-white">
+      <h1 class="text-4xl font-bold">QYDJ Events</h1>
+      <p class="mt-2 text-lg">See what's coming up — or relive past memories!</p>
+    </section>
 
-  <!-- Filter Tabs -->
-  <div class="flex justify-center my-6 gap-4">
-    <button class="tab-btn btn" data-tab="upcoming">Upcoming Events</button>
-    <button class="tab-btn btn-outline" data-tab="past">Past Events</button>
-  </div>
+    <!-- Filter Tabs -->
+    <div class="flex justify-center my-6 gap-4">
+      <button class="tab-btn btn" data-tab="upcoming" aria-pressed="true">
+        Upcoming Events
+      </button>
+      <button class="tab-btn btn-outline" data-tab="past" aria-pressed="false">
+        Past Events
+      </button>
+    </div>
 
-  <!-- Event Sections -->
-  <section id="events-container" class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
-    <!-- Event Cards Injected Here -->
-  </section>
+    <!-- Event Sections -->
+    <section
+      id="events-container"
+      class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6"
+    >
+      <!-- Event Cards Injected Here -->
+      <p id="loading-text" class="col-span-full text-center text-gray-500">
+        Loading events...
+      </p>
+    </section>
 
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
 
-  <!-- Footer -->
-  <footer class="bg-black text-white text-center py-6 mt-10">
-    <p>&copy; 2025 QYDJ. All Rights Reserved.</p>
-    <p class="text-sm mt-2">Built by <a href="https://rw-501.github.io/Portfolio/#about" class="">Ron W</a>.</p>
-    <a href="admin/" class="">Admin</a>
-  </footer>
+    <!-- Footer -->
+    <footer
+      class="bg-black text-white text-center py-6 mt-10"
+      aria-label="Page footer"
+    >
+      <p>&copy; 2025 QYDJ. All Rights Reserved.</p>
+      <p class="text-sm mt-2">
+        Built by
+        <a href="https://rw-501.github.io/Portfolio/#about">Ron W</a>.
+      </p>
+      <a href="admin/">Admin</a>
+    </footer>
 
-  <!-- Script to load header/footer -->
-  <script>
-    fetch('/components/header.html')
-      .then(res => res.text())
-      .then(data => document.getElementById('header-placeholder').innerHTML = data);
-    fetch('/components/footer.html')
-      .then(res => res.text())
-      .then(data => document.getElementById('footer-placeholder').innerHTML = data);
-  </script>
+    <!-- Script to load header/footer -->
+    <script>
+      fetch("/components/header.html")
+        .then((res) => res.text())
+        .then((data) => (document.getElementById("header-placeholder").innerHTML = data));
 
-  <!-- Firebase + Event Loader -->
-  <script type="module">
-    import { db } from './firebase.js';
-    import {
-      collection, query, where, orderBy, getDocs
-    } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+      fetch("/components/footer.html")
+        .then((res) => res.text())
+        .then((data) => (document.getElementById("footer-placeholder").innerHTML = data));
+    </script>
 
-    const container = document.getElementById('events-container');
-    const tabs = document.querySelectorAll('.tab-btn');
+    <!-- Firebase + Event Loader -->
+    <script type="module">
+      import { db } from "./firebase.js";
+      import {
+        collection,
+        query,
+        where,
+        orderBy,
+        getDocs,
+        Timestamp,
+      } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    async function loadEvents(type = 'upcoming') {
-      container.innerHTML = '';
-      const now = new Date();
-      const q = query(
-        collection(db, 'events'),
-        where('status', '==', type),
-        orderBy('date', type === 'upcoming' ? 'asc' : 'desc')
-      );
-      const snapshot = await getDocs(q);
-      if (snapshot.empty) {
-        container.innerHTML = '<p class="col-span-full text-center text-gray-500">No events found.</p>';
-        return;
+      const container = document.getElementById("events-container");
+      const loadingText = document.getElementById("loading-text");
+      const tabs = document.querySelectorAll(".tab-btn");
+
+      async function loadEvents(type = "upcoming") {
+        container.innerHTML = "";
+        container.appendChild(loadingText);
+        loadingText.textContent = "Loading events...";
+        loadingText.style.display = "block";
+
+        const now = new Date();
+
+        try {
+          let q;
+
+          if (type === "upcoming") {
+            // Query for upcoming events where date >= now
+            q = query(
+              collection(db, "events"),
+              where("date", ">=", Timestamp.fromDate(now)),
+              orderBy("date", "asc")
+            );
+          } else if (type === "past") {
+            // Query for past events where date < now
+            q = query(
+              collection(db, "events"),
+              where("date", "<", Timestamp.fromDate(now)),
+              orderBy("date", "desc")
+            );
+          } else {
+            // Default fallback query for all events ordered by date desc
+            q = query(collection(db, "events"), orderBy("date", "desc"));
+          }
+
+          const snapshot = await getDocs(q);
+
+          if (snapshot.empty) {
+            loadingText.textContent = "No events found.";
+            return;
+          }
+
+          loadingText.style.display = "none";
+
+          snapshot.forEach((doc) => {
+            const e = doc.data();
+            const dateObj = e.date.toDate();
+            const date = dateObj.toLocaleDateString();
+            const time = dateObj.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+
+            const card = document.createElement("div");
+            card.className =
+              "card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition";
+
+            card.innerHTML = `
+              <img
+                src="${e.bannerImage}"
+                alt="${e.title}"
+                class="w-full h-48 object-cover"
+                loading="lazy"
+              />
+              <div class="p-4">
+                <h2 class="text-xl font-bold mb-2">${e.title}</h2>
+                <p class="text-sm text-gray-600 mb-1">${date} • ${time}</p>
+                <p class="text-sm text-gray-600 mb-4">${e.location}</p>
+                <div class="flex justify-between items-center">
+                  <a href="${e.rsvpLink || "#"}" target="_blank" class="btn text-sm"
+                    >RSVP</a
+                  >
+                  <div class="flex gap-2">
+                    <a
+                      href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                        location.href
+                      )}"
+                      target="_blank"
+                      title="Share on Facebook"
+                      ><img src="/icons/facebook.svg" class="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                        location.href
+                      )}&text=${encodeURIComponent(e.title)}"
+                      target="_blank"
+                      title="Share on Twitter"
+                      ><img src="/icons/twitter.svg" class="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://api.whatsapp.com/send?text=${encodeURIComponent(
+                        e.title + " - " + location.href
+                      )}"
+                      target="_blank"
+                      title="Share on WhatsApp"
+                      ><img src="/icons/whatsapp.svg" class="w-5 h-5" />
+                    </a>
+                    <a href="${e.instagramLink || "#"}" target="_blank" title="Instagram"
+                      ><img src="/icons/instagram.svg" class="w-5 h-5" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            container.appendChild(card);
+          });
+        } catch (error) {
+          console.error("Error loading events:", error);
+          loadingText.textContent =
+            "Oops! Something went wrong loading events. Please try again later.";
+        }
       }
 
-      snapshot.forEach(doc => {
-        const e = doc.data();
-        const date = new Date(e.date).toLocaleDateString();
-        const time = new Date(e.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <img src="${e.bannerImage}" alt="${e.title}" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h2 class="text-xl font-bold mb-2">${e.title}</h2>
-            <p class="text-sm text-gray-600 mb-1">${date} • ${time}</p>
-            <p class="text-sm text-gray-600 mb-4">${e.location}</p>
-            <div class="flex justify-between items-center">
-              <a href="${e.rsvpLink || '#'}" target="_blank" class="btn text-sm">RSVP</a>
-              <div class="flex gap-2">
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}" target="_blank" title="Share on Facebook">
-                  <img src="/icons/facebook.svg" class="w-5 h-5" />
-                </a>
-                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(e.title)}" target="_blank" title="Share on Twitter">
-                  <img src="/icons/twitter.svg" class="w-5 h-5" />
-                </a>
-                <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(e.title + ' - ' + location.href)}" target="_blank" title="Share on WhatsApp">
-                  <img src="/icons/whatsapp.svg" class="w-5 h-5" />
-                </a>
-                <a href="${e.instagramLink || '#'}" target="_blank" title="Instagram">
-                  <img src="/icons/instagram.svg" class="w-5 h-5" />
-                </a>
-              </div>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
+      // Tabs UI & logic
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => {
+            t.classList.remove("btn");
+            t.classList.add("btn-outline");
+            t.setAttribute("aria-pressed", "false");
+          });
+          tab.classList.add("btn");
+          tab.classList.remove("btn-outline");
+          tab.setAttribute("aria-pressed", "true");
+          loadEvents(tab.dataset.tab);
+        });
       });
-    }
 
-    tabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('btn', 'btn-outline'));
-        btn.classList.add('btn');
-        const tab = btn.getAttribute('data-tab');
-        loadEvents(tab);
+      // Initial load
+      loadEvents();
+
+      // Import and init featured event countdown from main.js
+      import { initFeaturedEventCountdown } from "./scripts/js/main.js";
+      document.addEventListener("DOMContentLoaded", () => {
+        initFeaturedEventCountdown();
+        AOS.init({ once: true });
       });
-    });
-
-    // Load default
-    loadEvents('upcoming');
-  </script>
-
-</body>
+    </script>
+  </body>
 </html>
