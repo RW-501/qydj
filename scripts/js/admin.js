@@ -150,6 +150,10 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
   
       let imageUrl = "";
       if (bannerFile) {
+        console.log("Uploading to:", `images/events/${title}/banner.jpg`);
+
+        console.log("File details:", bannerFile);
+
         try {
           const storageRef = ref(storage, `images/events/${title}/banner.jpg`);
           await uploadBytes(storageRef, bannerFile);
