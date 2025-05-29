@@ -144,6 +144,11 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
       const status = document.getElementById("status").value;
       const bannerFile = document.getElementById("bannerImage").files[0];
   
+      const facebookLink = document.getElementById("facebookLink").value.trim();
+      const eventbriteLink = document.getElementById("eventbriteLink").value.trim();
+      const otherLink = document.getElementById("otherLink").value.trim();
+      const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
+
       if (!title || !description || !location || !date || !status) {
         alert("Please fill all required fields.");
         return;
@@ -176,6 +181,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
           facebookLink,
           eventbriteLink,
           otherLink,
+          mainBuyLink,
           title,
           description,
           location,
@@ -189,6 +195,11 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
         window.editingEventId = null;
       } else {
         await addDoc(collection(db, "events"), {
+          cost,
+          facebookLink,
+          eventbriteLink,
+          otherLink,
+          mainBuyLink,
           title,
           description,
           location,
@@ -196,6 +207,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
           tags,
           status,
           imageUrl,
+          images: [],
           createdAt: serverTimestamp(),
         });
         alert("Event saved.");
