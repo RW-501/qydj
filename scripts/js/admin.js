@@ -151,13 +151,16 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
   
       let imageUrl = "";
       if (bannerFile) {
-        console.log("Uploading to:", `images/events/${title}/banner.jpg`);
 
-        console.log("File details:", bannerFile);
 
         try {
           const slugTitle = title.toLowerCase().replace(/\s+/g, "-");
           const storageRef = ref(storage, `images/events/${slugTitle}/banner.jpg`);
+
+        console.log("Uploading to:", `images/events/${slugTitle}/banner.jpg`);
+
+        console.log("File details:", bannerFile);
+
           await uploadBytes(storageRef, bannerFile);
           imageUrl = await getDownloadURL(storageRef);
         } catch (error) {
