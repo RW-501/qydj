@@ -311,6 +311,11 @@ const db = getFirestore(app);
               </div>
             `;
 
+              // Add redirect behavior
+  card.onclick = () => {
+    window.location.href = `events/details/index.html?id=${eventId}`;
+  };
+
             container.appendChild(card);
           });
         } catch (error) {
@@ -339,7 +344,7 @@ const db = getFirestore(app);
       loadEvents();
 
       // Import and init featured event countdown from main.js
-      import { initFeaturedEventCountdown } from "./scripts/js/main.js";
+      import { initFeaturedEventCountdown } from "../scripts/js/main.js";
       document.addEventListener("DOMContentLoaded", () => {
         initFeaturedEventCountdown();
         AOS.init({ once: true });
