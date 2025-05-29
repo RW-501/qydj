@@ -27,6 +27,7 @@ import {
 
 
 
+
 // 🔐 Config
 const firebaseConfig = {
   apiKey: "AIzaSyCzTA2ajYdy64FWHa2jW5R5TX1XzBdrSdY",
@@ -155,7 +156,8 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
         console.log("File details:", bannerFile);
 
         try {
-          const storageRef = ref(storage, `images/events/${title}/banner.jpg`);
+          const slugTitle = title.toLowerCase().replace(/\s+/g, "-");
+          const storageRef = ref(storage, `images/events/${slugTitle}/banner.jpg`);
           await uploadBytes(storageRef, bannerFile);
           imageUrl = await getDownloadURL(storageRef);
         } catch (error) {
