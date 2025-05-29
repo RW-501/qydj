@@ -10,16 +10,17 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// Firebase Config
+// 🔐 Config
 const firebaseConfig = {
   apiKey: "AIzaSyCzTA2ajYdy64FWHa2jW5R5TX1XzBdrSdY",
   authDomain: "qydj-65f76.firebaseapp.com",
   projectId: "qydj-65f76",
-  storageBucket: "qydj-65f76.appspot.com",
+  storageBucket: "qydj-65f76.firebasestorage.app",
   messagingSenderId: "485183277679",
   appId: "1:485183277679:web:d633e3f2b9136874dc9b9a",
   measurementId: "G-G7F0PJ5V5H"
 };
+
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
