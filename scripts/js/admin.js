@@ -168,10 +168,14 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
           alert("Failed to upload image.");
         }
       }
-  
+
       if (window.editingEventId) {
         const docRef = doc(db, "events", window.editingEventId);
         await updateDoc(docRef, {
+          cost,
+          facebookLink,
+          eventbriteLink,
+          otherLink,
           title,
           description,
           location,
