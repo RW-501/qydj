@@ -88,25 +88,33 @@ async function loadEventSlider() {
 
     if (!container) return;
 
-    querySnapshot.forEach((doc) => {
-      const event = doc.data();
-      const slide = document.createElement("div");
-      slide.classList.add("swiper-slide");
+querySnapshot.forEach((doc) => {
+  const event = doc.data();
+  const eventId = doc.id; // Grab the document ID for the detail page
+  const slide = document.createElement("div");
+  slide.classList.add("swiper-slide");
 
-      const imgUrl = event.imageUrl || "default-event.jpg";
-      const eventDate = event.date ? new Date(event.date).toLocaleDateString() : "TBD";
+  const imgUrl = event.imageUrl || "default-event.jpg";
+  const eventDate = event.date ? new Date(event.date).toLocaleDateString() : "TBD";
 
-      slide.innerHTML = `
-        <div class="bg-white shadow-lg rounded overflow-hidden">
-          <img src="${imgUrl}" alt="${event.title || 'Event'}" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h4 class="font-bold text-lg">${event.title || "Untitled Event"}</h4>
-            <p class="text-sm text-gray-600">${eventDate} | ${event.location || "Unknown"}</p>
-          </div>
-        </div>
-      `;
-      container.appendChild(slide);
-    });
+  slide.innerHTML = `
+    <div class="bg-white shadow-lg rounded overflow-hidden cursor-pointer hover:shadow-xl transition">
+      <img src="${imgUrl}" alt="${event.title || 'Event'}" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h4 class="font-bold text-lg">${event.title || "Untitled Event"}</h4>
+        <p class="text-sm text-gray-600">${eventDate} | ${event.location || "Unknown"}</p>
+      </div>
+    </div>
+  `;
+
+  // Add redirect behavior
+  slide.onclick = () => {
+    window.location.href = `event.html?id=${eventId}`;
+  };
+
+  container.appendChild(slide);
+});
+
 
     new Swiper(".mySwiper", {
       slidesPerView: 1.2,
