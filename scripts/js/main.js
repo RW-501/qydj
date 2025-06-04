@@ -118,10 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-const form = document.getElementById("subscribe-form");
-  const message = document.getElementById("subscribe-message");
 
-  form.addEventListener("submit", function (e) {
+  const form = document.getElementById("subscribe-form");
+
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const name = document.getElementById("subscriber-name").value.trim();
@@ -132,12 +132,24 @@ const form = document.getElementById("subscribe-form");
       return;
     }
 
-    // Example: Save to Firestore or send to your API
-    console.log("Subscribing:", { name, email });
+    try {
+      await addDoc(collection(db, "subscribers"), {
+        name,
+        email,
+        createdAt: serverTimestamp(),
+      });
 
-    // Show success message
-    message.classList.remove("hidden");
+      // Reset the form
+      form.reset();
 
-    // Optionally reset the form
-    form.reset();
+      // Show Thank You Modal
+      document.getElementById("thank-you-modal").classList.remove("hidden");
+    } catch (error) {
+      console.error("Error saving to Firestore:", error);
+      alert("Oops! Something went wrong. Please try again.");
+    }
   });
+
+  window.closeThankYouModal = function () {
+    document.getElementById("thank-you-modal").classList.add("hidden");
+  };
