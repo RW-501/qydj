@@ -87,7 +87,7 @@ querySnapshot.forEach((doc) => {
 
   // Add redirect behavior
   slide.onclick = () => {
-    window.location.href = `../events/details/index.html?id=${eventId}`;
+    window.location.href = `../qydj/events/details/index.html?id=${eventId}`;
   };
 
   container.appendChild(slide);

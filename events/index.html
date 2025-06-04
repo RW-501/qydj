@@ -91,25 +91,24 @@
       });
     </script>
 
-    <!-- Hero: Featured Event -->
-    <section
-      id="featured-event"
-      class="bg-black text-white p-10 text-center"
-      data-aos="fade-in"
-    >
-      <h2 class="text-3xl font-bold mb-2">Next Big Event:</h2>
-      <div id="featured-title" class="text-xl mb-4"></div>
-      <div id="countdown" class="text-2xl font-mono"></div>
-    </section>
+<!-- Hero: Featured Event -->
+<section id="featured-event" class="relative bg-black text-white" data-aos="fade-in">
+  <!-- Background Image -->
+  <div id="featured-image" class="h-[60vh] bg-center bg-cover bg-no-repeat opacity-60"></div>
 
-    <!-- Header Placeholder -->
-    <div id="header-placeholder"></div>
+  <!-- Overlay Content -->
+  <div class="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+    <h2 class="text-4xl md:text-5xl font-bold drop-shadow mb-3">Next Big Event</h2>
+    <div id="featured-title" class="text-2xl md:text-3xl font-semibold mb-4"></div>
+    <div id="countdown" class="text-xl font-mono bg-black bg-opacity-50 px-4 py-2 rounded mb-6"></div>
+    <a id="rsvp-link" href="#" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full text-lg transition shadow-lg">RSVP Now</a>
+  </div>
+</section>
 
-    <!-- Page Title -->
-    <section class="text-center py-12 bg-black text-white">
-      <h1 class="text-4xl font-bold">QYDJ Events</h1>
-      <p class="mt-2 text-lg">See what's coming up — or relive past memories!</p>
-    </section>
+
+  <section class="text-center py-12 bg-black text-white">
+      <h1 class="text-4xl font-bold">Events</h1>
+
 
     <!-- Filter Tabs -->
     <div class="flex justify-center my-6 gap-4">
@@ -120,6 +119,9 @@
         Past Events
       </button>
     </div>
+
+  </section>
+
 
     <!-- Event Sections -->
     <section
@@ -132,9 +134,8 @@
       </p>
     </section>
 
-    <!-- Footer Placeholder -->
-    <div id="footer-placeholder"></div>
-
+  
+    
     <!-- Footer -->
     <footer
       class="bg-black text-white text-center py-6 mt-10"
