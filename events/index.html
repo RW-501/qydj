@@ -23,6 +23,13 @@
     <!-- Custom Styles -->
     <link href="/scripts/css/main.css" rel="stylesheet" />
 
+    <style>
+      .active-tab {
+  background-color: #2563eb;
+  color: white;
+}
+
+    </style>
     <!-- SwiperJS (Event Carousels if needed) -->
     <link
       rel="stylesheet"
@@ -109,31 +116,28 @@
   <section class="text-center py-12 bg-black text-white">
       <h1 class="text-4xl font-bold">Events</h1>
 
-
-    <!-- Filter Tabs -->
-    <div class="flex justify-center my-6 gap-4">
-      <button class="tab-btn btn" data-tab="upcoming" aria-pressed="true">
-        Upcoming Events
-      </button>
-      <button class="tab-btn btn-outline" data-tab="past" aria-pressed="false">
-        Past Events
-      </button>
-    </div>
+<!-- Filter Tabs -->
+<div class="flex justify-center my-6 gap-4">
+  <button class="tab-btn active-tab bg-blue-600 text-white px-4 py-2 rounded" data-tab="upcoming">
+    Upcoming Events
+  </button>
+  <button class="tab-btn bg-gray-200 text-black px-4 py-2 rounded" data-tab="past">
+    Past Events
+  </button>
+</div>
 
   </section>
 
 
-    <!-- Event Sections -->
-    <section
-      id="events-container"
-      class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6"
-    >
-      <!-- Event Cards Injected Here -->
-      <p id="loading-text" class="col-span-full text-center text-gray-500">
-        Loading events...
-      </p>
-    </section>
-
+<!-- Event Container -->
+<section
+  id="events-container"
+  class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6"
+>
+  <p id="loading-text" class="col-span-full text-center text-gray-500">
+    Loading events...
+  </p>
+</section>
   
     
     <!-- Footer -->

@@ -153,3 +153,64 @@ document.addEventListener("DOMContentLoaded", () => {
   window.closeThankYouModal = function () {
     document.getElementById("thank-you-modal").classList.add("hidden");
   };
+
+
+  
+  const eventContainer = document.getElementById("events-container");
+  const loadingText = document.getElementById("loading-text");
+
+  async function loadEvents(status = "upcoming") {
+    loadingText.classList.remove("hidden");
+    eventContainer.innerHTML = "";
+
+    const q = query(
+      collection(db, "events"),
+      where("status", "==", status),
+      orderBy("date", status === "past" ? "desc" : "asc")
+    );
+
+    try {
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        eventContainer.innerHTML = `<p class="col-span-full text-center text-gray-500">No ${status} events found.</p>`;
+        return;
+      }
+
+      querySnapshot.forEach((doc) => {
+        const event = doc.data();
+        const card = document.createElement("div");
+        card.className = "bg-white rounded shadow p-4";
+
+        card.innerHTML = `
+          <h3 class="text-lg font-semibold mb-2">${event.title || "Untitled"}</h3>
+          <p class="text-gray-700 mb-1">${event.location || "Location TBD"}</p>
+          <p class="text-sm text-gray-500">${new Date(event.date).toLocaleString()}</p>
+        `;
+
+        eventContainer.appendChild(card);
+      });
+    } catch (err) {
+      eventContainer.innerHTML = `<p class="col-span-full text-center text-red-500">Error loading events.</p>`;
+      console.error("Error fetching events:", err);
+    }
+  }
+
+  // Initial load
+  loadEvents("upcoming");
+
+  // Tab button handlers
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const selected = btn.getAttribute("data-tab");
+
+      document.querySelectorAll(".tab-btn").forEach(b => {
+        b.classList.remove("active-tab", "bg-blue-600", "text-white");
+        b.classList.add("bg-gray-200", "text-black");
+      });
+
+      btn.classList.remove("bg-gray-200", "text-black");
+      btn.classList.add("active-tab", "bg-blue-600", "text-white");
+
+      loadEvents(selected);
+    });
+  });
