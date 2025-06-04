@@ -102,51 +102,91 @@
     </div>
   </section>
 
-  <!-- Admin Tools -->
-  <section id="admin-panel" class="hidden mt-10">
-    <h2 class="text-2xl font-semibold mb-4">Manage Events</h2>
-    <form id="eventForm" class="grid grid-cols-1 gap-4 max-w-xl">
+ <!-- Admin Panel Toggle Buttons -->
+<div class="flex justify-center gap-4 mt-10">
+  <button onclick="showAdminSection('events')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Manage Events</button>
+  <button onclick="showAdminSection('subscribers')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">View Subscribers</button>
+</div>
 
-      <input type="text" id="title" placeholder="Event Title" class="p-2 border rounded" required />
-      <textarea id="description" placeholder="Description" class="p-2 border rounded" required></textarea>
-      <input type="text" id="location" placeholder="Location" class="p-2 border rounded" />
-      <input type="datetime-local" id="date" class="p-2 border rounded" />
-      <input type="text" id="tags" placeholder="Tags (comma-separated)" class="p-2 border rounded" />
+<!-- Admin: Manage Events Section -->
+<section id="admin-events" class="hidden mt-10 px-4">
+  <h2 class="text-2xl font-semibold mb-4">Manage Events</h2>
+  <form id="eventForm" class="grid grid-cols-1 gap-4 max-w-xl">
 
-      <select id="status" class="p-2 border rounded">
-        <option value="upcoming">Upcoming</option>
-        <option value="past">Past</option>
-        <option value="private">Private</option>
-      </select>
+    <input type="text" id="title" placeholder="Event Title" class="p-2 border rounded" required />
+    <textarea id="description" placeholder="Description" class="p-2 border rounded" required></textarea>
+    <input type="text" id="location" placeholder="Location" class="p-2 border rounded" />
+    <input type="datetime-local" id="date" class="p-2 border rounded" />
+    <input type="text" id="tags" placeholder="Tags (comma-separated)" class="p-2 border rounded" />
+    
+    <select id="status" class="p-2 border rounded">
+      <option value="upcoming">Upcoming</option>
+      <option value="past">Past</option>
+      <option value="private">Private</option>
+    </select>
 
-      <input type="text" id="cost" placeholder="Cost" class="p-2 border rounded" />
+    <input type="text" id="cost" placeholder="Cost" class="p-2 border rounded" />
+    <input type="text" id="facebookLink" placeholder="Facebook" class="p-2 border rounded" />
+    <input type="text" id="eventbriteLink" placeholder="Eventbrite" class="p-2 border rounded" />
+    <input type="text" id="otherLink" placeholder="Other" class="p-2 border rounded" />
+    <input type="text" id="mainBuyLink" placeholder="Main Buy Link" class="p-2 border rounded" />
 
-      <input type="text" id="facebookLink" placeholder="facebook" class="p-2 border rounded" />
-      <input type="text" id="eventbriteLink" placeholder="eventbrite" class="p-2 border rounded" />
-      <input type="text" id="otherLink" placeholder="other" class="p-2 border rounded" />
-      <input type="text" id="mainBuyLink" placeholder="Main Buy Link" class="p-2 border rounded" />
+    <!-- Upload and Preview -->
+    <button type="button" onclick="document.getElementById('bannerImage').click()" class="bg-gray-200 px-3 py-2 rounded border">Upload Image</button>
+    <input type="file" id="bannerImage" accept="image/*" class="hidden" onchange="previewImage(event)" />
+    <img id="preview" alt="Image Preview" class="w-full max-w-xs rounded border mt-2" />
+
+    <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded" id="submitBtn">Save Event</button>
+  </form>
+
+  <hr class="my-8" />
+
+  <div>
+    <h3 class="text-xl font-semibold mb-2">All Events</h3>
+    <div id="eventList" class="grid gap-4"></div>
+  </div>
+</section>
+
+<!-- Admin: View Subscribers Section -->
+<section id="admin-subscribers" class="hidden mt-10 px-4">
+  <h2 class="text-2xl font-semibold mb-4">📬 Subscriber List</h2>
+  <div class="overflow-x-auto">
+    <table class="w-full table-auto border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-3 border">Name</th>
+          <th class="p-3 border">Email</th>
+          <th class="p-3 border">Subscribed On</th>
+        </tr>
+      </thead>
+      <tbody id="subscriber-table-body">
+        <!-- Data will be populated via JS -->
+      </tbody>
+    </table>
+  </div>
+</section>
 
 
+  <!-- Admin: Subscribers List -->
+<section id="admin-subscribers" class="p-6 bg-white rounded shadow mt-10 max-w-4xl mx-auto">
+  <h2 class="text-2xl font-bold mb-4">📬 Subscriber List</h2>
+  <div id="subscriber-list" class="overflow-x-auto">
+    <table class="w-full table-auto border border-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-3 border">Name</th>
+          <th class="p-3 border">Email</th>
+          <th class="p-3 border">Subscribed On</th>
+        </tr>
+      </thead>
+      <tbody id="subscriber-table-body">
+        <!-- Subscriber rows will be injected here -->
+      </tbody>
+    </table>
+  </div>
+</section>
 
-  <!-- Trigger Button -->
-  <button class="upload-btn" onclick="document.getElementById('bannerImage').click()">Upload Image</button>
 
-  <!-- Hidden File Input -->
-  <input type="file" id="bannerImage" accept="image/*" onchange="previewImage(event)" />
-
-  <!-- Preview Image -->
-  <img id="preview" alt="Image Preview" />
-      
-      <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded" id="submitBtn">Save Event</button>
-    </form>
-
-    <hr class="my-8" />
-
-    <div>
-      <h3 class="text-xl font-semibold mb-2">All Events</h3>
-      <div id="eventList" class="grid gap-4"></div>
-    </div>
-  </section>
 </main>
 
 <!-- Footer -->

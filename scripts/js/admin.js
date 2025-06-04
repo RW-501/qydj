@@ -274,6 +274,17 @@ async function loadEvents() {
 
 
 
+     function showAdminSection(section) {
+    document.getElementById("admin-events").classList.add("hidden");
+    document.getElementById("admin-subscribers").classList.add("hidden");
+
+    if (section === "events") {
+      document.getElementById("admin-events").classList.remove("hidden");
+    } else if (section === "subscribers") {
+      document.getElementById("admin-subscribers").classList.remove("hidden");
+      loadSubscribers(); // Optionally auto-load
+    }
+  }
 
     function previewImage(event) {
       const input = event.target;
@@ -290,3 +301,4 @@ async function loadEvents() {
         reader.readAsDataURL(input.files[0]);
       }
     }
+
