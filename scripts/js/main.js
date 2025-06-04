@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("subscribe-form");
 
+  if (form) {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -149,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Oops! Something went wrong. Please try again.");
     }
   });
+  }
 
   window.closeThankYouModal = function () {
     document.getElementById("thank-you-modal").classList.add("hidden");
