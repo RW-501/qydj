@@ -59,12 +59,20 @@
   </script>
   
 
-  <!-- Hero: Featured Event -->
-  <section id="featured-event" class="bg-black text-white p-10 text-center" data-aos="fade-in">
-    <h2 class="text-3xl font-bold mb-2">Next Big Event:</h2>
-    <div id="featured-title" class="text-xl mb-4"></div>
-    <div id="countdown" class="text-2xl font-mono"></div>
-  </section>
+<!-- Hero: Featured Event -->
+<section id="featured-event" class="relative bg-black text-white" data-aos="fade-in">
+  <!-- Background Image -->
+  <div id="featured-image" class="h-[60vh] bg-center bg-cover bg-no-repeat opacity-60"></div>
+
+  <!-- Overlay Content -->
+  <div class="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+    <h2 class="text-4xl md:text-5xl font-bold drop-shadow mb-3">Next Big Event</h2>
+    <div id="featured-title" class="text-2xl md:text-3xl font-semibold mb-4"></div>
+    <div id="countdown" class="text-xl font-mono bg-black bg-opacity-50 px-4 py-2 rounded mb-6"></div>
+    <a id="rsvp-link" href="#" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full text-lg transition shadow-lg">RSVP Now</a>
+  </div>
+</section>
+
 
   <!-- Event Slider -->
   <section class="my-12 px-6" data-aos="fade-up">
@@ -83,14 +91,17 @@
     <a href="events/" class="bg-purple-600 text-white py-3 px-6 rounded hover:bg-purple-700 transition-all duration-300">View All Events</a>
   </section>
 
-  <!-- Email Opt-in -->
-  <section class="bg-gray-100 py-12 text-center" data-aos="fade-up">
-    <h2 class="text-2xl font-bold mb-3">Stay in the Loop</h2>
-    <form id="subscribe-form" class="flex justify-center flex-wrap gap-2 mt-6">
-      <input type="email" placeholder="Your Email" class="p-3 border rounded w-64" required>
-      <button type="submit" class="bg-blue-500 text-white px-5 py-3 rounded hover:bg-blue-600 transition">Subscribe</button>
-    </form>
-  </section>
+<!-- Email Opt-in -->
+<section class="bg-gray-100 py-12 text-center" data-aos="fade-up">
+  <h2 class="text-2xl font-bold mb-3">Stay in the Loop</h2>
+  <form id="subscribe-form" class="flex justify-center flex-wrap gap-2 mt-6">
+    <input type="text" id="subscriber-name" placeholder="Your Name" class="p-3 border rounded w-64" required>
+    <input type="email" id="subscriber-email" placeholder="Your Email" class="p-3 border rounded w-64" required>
+    <button type="submit" class="bg-blue-500 text-white px-5 py-3 rounded hover:bg-blue-600 transition">Subscribe</button>
+  </form>
+  <p id="subscribe-message" class="mt-4 text-green-600 font-medium hidden">Thank you for subscribing!</p>
+</section>
+
 
   <!-- Footer -->
   <footer class="bg-black text-white text-center py-6 mt-10">

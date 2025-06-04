@@ -25,7 +25,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Load Featured Event
 async function loadFeaturedEvent() {
   const q = query(
     collection(db, "events"),
@@ -40,6 +39,9 @@ async function loadFeaturedEvent() {
 
     if (featured) {
       document.getElementById("featured-title").innerText = featured.title || "Upcoming Event";
+      document.getElementById("rsvp-link").href = featured.rsvpUrl || "#";
+      document.getElementById("featured-image").style.backgroundImage =
+        `url('${featured.imageUrl || 'default-banner.jpg'}')`;
       initCountdown(new Date(featured.date));
     } else {
       document.getElementById("featured-title").innerText = "Stay tuned!";
@@ -48,30 +50,6 @@ async function loadFeaturedEvent() {
   } catch (error) {
     console.error("Error loading featured event:", error);
   }
-}
-
-// Countdown Timer
-function initCountdown(targetDate) {
-  const countdown = document.getElementById("countdown");
-
-  const update = () => {
-    const now = new Date();
-    const diff = targetDate - now;
-
-    if (diff <= 0) {
-      countdown.innerText = "Event Started!";
-      return;
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / 1000 / 60) % 60);
-
-    countdown.innerText = `${days}d ${hours}h ${mins}m`;
-  };
-
-  update();
-  setInterval(update, 60000); // Update every minute
 }
 
 // Load Event Slider
@@ -137,3 +115,29 @@ document.addEventListener("DOMContentLoaded", () => {
   loadFeaturedEvent();
   loadEventSlider();
 });
+
+
+
+const form = document.getElementById("subscribe-form");
+  const message = document.getElementById("subscribe-message");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("subscriber-name").value.trim();
+    const email = document.getElementById("subscriber-email").value.trim();
+
+    if (!name || !email) {
+      alert("Please enter both your name and email.");
+      return;
+    }
+
+    // Example: Save to Firestore or send to your API
+    console.log("Subscribing:", { name, email });
+
+    // Show success message
+    message.classList.remove("hidden");
+
+    // Optionally reset the form
+    form.reset();
+  });
