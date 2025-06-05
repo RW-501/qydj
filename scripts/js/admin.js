@@ -144,7 +144,7 @@ const eventDate = new Date(formDate);
         .filter(Boolean);
       const status = document.getElementById("status").value;
       const bannerFile = document.getElementById("bannerImage").files[0];
-      
+
 const cost = document.getElementById("cost").value.trim();
 const facebookLink = document.getElementById("facebookLink").value.trim();
 const eventbriteLink = document.getElementById("eventbriteLink").value.trim();
@@ -266,6 +266,7 @@ async function loadEvents() {
       document.getElementById("title").value = event.title;
       document.getElementById("description").value = event.description;
       document.getElementById("location").value = event.location;
+      document.getElementById("preview").src = event.imageUrl;
       document.getElementById("date").value = event.date;
       document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
