@@ -538,15 +538,22 @@ document.getElementById("btn-manage-events").addEventListener("click", () => {
 document.getElementById("btn-view-subscribers").addEventListener("click", () => {
   showAdminSection("subscribers");
 });
+document.getElementById("btn-view-contacts").addEventListener("click", () => {
+  showAdminSection("contacts");
+});
 
 function showAdminSection(section) {
   document.getElementById("admin-events").classList.add("hidden");
   document.getElementById("admin-subscribers").classList.add("hidden");
+  document.getElementById("admin-contacts").classList.add("hidden");
 
   if (section === "events") {
     document.getElementById("admin-events").classList.remove("hidden");
   } else if (section === "subscribers") {
     document.getElementById("admin-subscribers").classList.remove("hidden");
+    if (typeof loadSubscribers === "function") loadSubscribers(); // Avoid error if not defined
+  } else if (section === "contacts") {
+    document.getElementById("admin-contacts").classList.remove("hidden");
     if (typeof loadSubscribers === "function") loadSubscribers(); // Avoid error if not defined
   }
 }
@@ -622,3 +629,49 @@ document.getElementById("toggleComments").addEventListener("click", () => {
 document.getElementById("toggleRSVP").addEventListener("click", () => {
   toggleCheckbox("allowRSVP");
 });
+
+
+
+
+
+    // Get messages on load
+    async function loadContacts() {
+      const contactsContainer = document.getElementById("contacts-list");
+      contactsContainer.innerHTML = "<p class='text-gray-500'>Loading...</p>";
+
+      try {
+        const q = query(collection(db, "contacts"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+          contactsContainer.innerHTML = "<p class='text-gray-500'>No contact messages yet.</p>";
+          return;
+        }
+
+        contactsContainer.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const card = document.createElement("div");
+          card.className = "bg-white p-5 border rounded shadow mb-6";
+
+          card.innerHTML = `
+            <p><strong>Name:</strong> ${data.name}</p>
+            <p><strong>Email:</strong> <a href="mailto:${data.email}" class="text-blue-600 underline">${data.email}</a></p>
+            <p><strong>Phone:</strong> ${data.phone || "—"}</p>
+            <p><strong>Type:</strong> ${data.type}</p>
+            <p class="mt-2"><strong>Message:</strong></p>
+            <p class="whitespace-pre-line text-gray-700">${data.message}</p>
+            <p class="text-sm text-gray-400 mt-4">Submitted: ${data.timestamp?.toDate().toLocaleString() || "Unknown"}</p>
+          `;
+          contactsContainer.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error loading contacts:", error);
+        contactsContainer.innerHTML = "<p class='text-red-600'>Error loading messages. Check console.</p>";
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", loadContacts);
+
+    
+
