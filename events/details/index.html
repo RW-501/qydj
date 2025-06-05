@@ -205,20 +205,19 @@ if (!snap.exists()) {
 
 
 
-  
 function formatFirebaseDate(dateInput) {
-  // Check if it's a Firestore Timestamp object
   if (typeof dateInput?.toDate === 'function') {
-    return dateInput.toDate().toLocaleString(); // Convert and format
+    return dateInput.toDate(); // ✅ Return a JS Date
   }
 
-  // If it's already a JS Date or ISO string
   try {
-    return new Date(dateInput).toLocaleString();
+    const date = new Date(dateInput);
+    if (!isNaN(date)) return date; // ✅ Valid Date
   } catch (e) {
     console.warn("Invalid date input:", dateInput);
-    return "Invalid Date";
   }
+
+  return null; // ❌ Invalid
 }
 
 
@@ -237,10 +236,18 @@ function formatFirebaseDate(dateInput) {
   document.getElementById("buyButton").href = event.mainBuyLink || event.eventbriteLink || "#";
 
   // Calendar link (Google Calendar format)
-  const startDate = formatFirebaseDate(event.date).toISOString().replace(/-|:|\.\d\d\d/g,"");
-  const endDate = formatFirebaseDate(event.endDate).toISOString().replace(/-|:|\.\d\d\d/g,"");
-  const calURL = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+const startDate = formatFirebaseDate(event.date);
+const endDate = formatFirebaseDate(event.endDate);
+
+if (startDate && endDate) {
+  const startStr = startDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
+  const endStr = endDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
+
+  const calURL = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startStr}/${endStr}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
   document.getElementById("addToCalendar").href = calURL;
+} else {
+  console.warn("Invalid start or end date for calendar URL");
+}
 
   // Gallery
   const galleryEl = document.getElementById("galleryCarousel");
