@@ -341,6 +341,8 @@ async function loadEvents() {
 
   document.querySelectorAll(".editBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
+            console.log("???????????????????????????????");
+
           document.getElementById("preview").classList.remove("hidden");
           document.getElementById("edit-event-section").classList.remove("hidden");
   document.getElementById("view-events-section").classList.add("hidden");
@@ -358,7 +360,7 @@ async function loadEvents() {
       console.log("formatFirebaseDate event.date ",formatFirebaseDate(event.date));
 
       document.getElementById("date").value = event.date;
-      
+
       document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
 
