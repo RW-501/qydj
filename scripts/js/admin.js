@@ -202,16 +202,16 @@ const allowRSVP = document.getElementById("allowRSVP").checked;
           const slugTitle = title.toLowerCase().replace(/\s+/g, "-");
           const storageRef = ref(storage, `images/events/${slugTitle}/banner.jpg`);
 
-        console.log("Uploading to:", `images/events/${slugTitle}/banner.jpg`);
-
-        console.log("File details:", bannerFile);
-
           await uploadBytes(storageRef, bannerFile);
           imageUrl = await getDownloadURL(storageRef);
         } catch (error) {
           console.error("Image upload error:", error);
           alert("Failed to upload image.");
         }
+      }else{
+
+        imageUrl = document.getElementById("preview").src;
+
       }
 
       if (window.editingEventId) {
@@ -319,7 +319,7 @@ async function loadEvents() {
       <h4 class="font-bold">${data.title}</h4>
       <p>${formatFirebaseDate(data.date)} – ${data.location}</p>
       <p>Status: ${data.status}</p>
-      <img src="${data.imageUrl || 'https://via.placeholder.com/300x150'}" class="w-full h-40 object-cover my-2"/>
+      <img id='event-image'  data-id="${docSnap.id} src="${data.imageUrl || 'https://via.placeholder.com/300x150'}" class="w-full h-40 object-cover my-2"/>
       <button class="bg-yellow-500 text-white px-3 py-1 rounded editBtn" data-id="${docSnap.id}">Edit</button>
       <button class="bg-red-500 text-white px-3 py-1 rounded deleteBtn" data-id="${docSnap.id}">Delete</button>
       <button class="bg-blue-500 text-white px-3 py-1 rounded analyticsBtn" data-id="${docSnap.id}">Analytics</button>
