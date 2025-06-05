@@ -100,11 +100,17 @@
     <iframe id="mapEmbed" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
 
     <!-- Buy / RSVP -->
-    <div class="text-center mb-4">
+    <div id="rsvpButtonMian"  class="text-center mb-4">
+      <a id="rsvpButton" class="btn btn-primary btn-lg" target="_blank">RSVP</a>
+    </div>
+
+    <div id="buyButtonMain" class="text-center mb-4">
       <a id="buyButton" class="btn btn-primary btn-lg" target="_blank">Buy Tickets</a>
     </div>
 
     <!-- Social Share -->
+         <div class="text-center mb-4">Share</div>
+
     <div class="d-flex justify-content-center gap-3 mb-3">
       <button class="btn btn-sm btn-outline-secondary" onclick="share('facebook')">Facebook</button>
       <button class="btn btn-sm btn-outline-secondary" onclick="share('twitter')">Twitter</button>
@@ -239,11 +245,26 @@ function formatFirebaseDate(dateInput) {
     `https://www.google.com/maps?q=${encodeURIComponent(event.location)}&output=embed`;
 
   // Buy Button
+  if(allowRSVP){
+  document.getElementById("rsvpButtonMain").style.display = "block";
+  }else{
+  document.getElementById("rsvpButtonMain").style.display = "none";
+  }
+
+    if(allowRSVP){
+  document.getElementById("buyButtonMain").style.display = "block";
   document.getElementById("buyButton").href = event.mainBuyLink || event.eventbriteLink || "#";
+  }else{
+  document.getElementById("buyButtonMain").style.display = "none";
+  }
+
 
   // Calendar link (Google Calendar format)
 const startDate = formatFirebaseDate(event.date);
 const endDate = formatFirebaseDate(event.endDate);
+
+  console.log("✅ startDate (original):", startDate);
+  console.log("✅ endDate (original):", endDate);
 
 if (startDate && endDate) {
 const startDate = formatFirebaseDate(event.date);
@@ -253,8 +274,7 @@ if (startDate && endDate) {
   const startStr = startDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
   const endStr = endDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
 
-  console.log("✅ startDate (original):", startDate);
-  console.log("✅ endDate (original):", endDate);
+
   console.log("📆 startStr (Google Calendar format):", startStr);
   console.log("📆 endStr (Google Calendar format):", endStr);
 
