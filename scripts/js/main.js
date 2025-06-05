@@ -190,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingText = document.getElementById("loading-text");
 
   async function loadEvents(status = "upcoming") {
+    if (eventContainer){
     loadingText.classList.remove("hidden");
     eventContainer.innerHTML = "";
 
@@ -223,6 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
       eventContainer.innerHTML = `<p class="col-span-full text-center text-red-500">Error loading events.</p>`;
       console.error("Error fetching events:", err);
     }
+  }
   }
 
   // Initial load
