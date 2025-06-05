@@ -26,6 +26,23 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+
+function formatFirebaseDate(dateInput) {
+  // Check if it's a Firestore Timestamp object
+  if (typeof dateInput?.toDate === 'function') {
+    return dateInput.toDate().toLocaleString(); // Convert and format
+  }
+
+  // If it's already a JS Date or ISO string
+  try {
+    return new Date(dateInput).toLocaleString();
+  } catch (e) {
+    console.warn("Invalid date input:", dateInput);
+    return "Invalid Date";
+  }
+}
+
+
 function initCountdown(targetDate) {
   const countdown = document.getElementById("countdown");
 
@@ -101,7 +118,7 @@ querySnapshot.forEach((doc) => {
   slide.classList.add("swiper-slide");
 
   const imgUrl = event.imageUrl || "default-event.jpg";
-  const eventDate = event.date ? new Date(event.date).toLocaleDateString() : "TBD";
+  const eventDate = event.date ? formatFirebaseDate(event.date) : "TBD";
 
   slide.innerHTML = `
     <div class="bg-white shadow-lg rounded overflow-hidden cursor-pointer hover:shadow-xl transition">
@@ -215,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
         card.innerHTML = `
           <h3 class="text-lg font-semibold mb-2">${event.title || "Untitled"}</h3>
           <p class="text-gray-700 mb-1">${event.location || "Location TBD"}</p>
-          <p class="text-sm text-gray-500">${new Date(event.date).toLocaleString()}</p>
+  <p class="text-sm text-gray-500">${formatFirebaseDate(event.date)}</p>
         `;
 
         eventContainer.appendChild(card);
