@@ -68,7 +68,7 @@
 
   <div class="container mt-5" id="event-detail">
     <h1 id="eventTitle" class="text-center"></h1>
-    <input type="datetime-local" id="eventDateTime" class="text-center text-muted"/>
+    <p id="eventDateTime" class="text-center text-muted"></p>
     <img id="bannerImage" class="img-fluid my-3" alt="Event Banner">
     
     <div id="eventDescription" class="mb-4"></div>
@@ -197,29 +197,19 @@ if (!snap.exists()) {
 
   
 function formatFirebaseDate(dateInput) {
-  let isoDateTime = "Invalid Date";
-
-  if (dateInput && typeof dateInput.toDate === "function") {
-    const jsDate = dateInput.toDate();
-    if (!isNaN(jsDate)) {
-      isoDateTime = jsDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
-
-      const input = document.getElementById("date");
-      if (input) {
-        input.value = isoDateTime;
-      } else {
-        console.warn('Input element with id="date" not found.');
-      }
-    } else {
-      console.warn("Invalid JS date from Firestore timestamp:", dateInput);
-    }
-  } else {
-    console.warn("Invalid Firestore timestamp:", dateInput);
+  // Check if it's a Firestore Timestamp object
+  if (typeof dateInput?.toDate === 'function') {
+    return dateInput.toDate().toLocaleString(); // Convert and format
   }
 
-  return isoDateTime; // Still return a value for display
+  // If it's already a JS Date or ISO string
+  try {
+    return new Date(dateInput).toLocaleString();
+  } catch (e) {
+    console.warn("Invalid date input:", dateInput);
+    return "Invalid Date";
+  }
 }
-
 
 
   document.getElementById("eventTitle").innerText = event.title;
