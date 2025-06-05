@@ -15,7 +15,7 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
-  doc,
+  doc, query, 
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import {
