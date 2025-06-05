@@ -369,12 +369,18 @@ async function loadEvents() {
       document.getElementById("description").value = event.description;
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
+      
 
 
 const eventDate = event.date?.toDate(); // Convert Firestore Timestamp to JS Date
 if (eventDate instanceof Date && !isNaN(eventDate)) {
   const isoString = eventDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
   document.getElementById("date").value = isoString;
+}
+const eventEndDate = event.date?.toDate(); // Convert Firestore Timestamp to JS Date
+if (eventEndDate instanceof Date && !isNaN(eventEndDate)) {
+  const isoString = eventEndDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
+  document.getElementById("endDate").value = isoString;
 }
 
       document.getElementById("tags").value = event.tags.join(", ");

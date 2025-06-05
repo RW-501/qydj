@@ -237,8 +237,8 @@ function formatFirebaseDate(dateInput) {
   document.getElementById("buyButton").href = event.mainBuyLink || event.eventbriteLink || "#";
 
   // Calendar link (Google Calendar format)
-  const startDate = new Date(event.date).toISOString().replace(/-|:|\.\d\d\d/g,"");
-  const endDate = new Date(new Date(event.date).getTime() + 2 * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d\d\d/g,"");
+  const startDate = formatFirebaseDate(event.date).toISOString().replace(/-|:|\.\d\d\d/g,"");
+  const endDate = formatFirebaseDate(event.endDate).toISOString().replace(/-|:|\.\d\d\d/g,"");
   const calURL = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
   document.getElementById("addToCalendar").href = calURL;
 
@@ -246,7 +246,7 @@ function formatFirebaseDate(dateInput) {
   const galleryEl = document.getElementById("galleryCarousel");
   if (event.images && event.images.length) {
     event.images.forEach(img => {
-      galleryEl.innerHTML += `
+      galleryEl.innerHTML += `  
         <div class="swiper-slide">
           <img src="${img}" class="img-fluid rounded">
         </div>`;
