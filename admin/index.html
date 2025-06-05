@@ -139,9 +139,12 @@
     <input type="text" id="mainBuyLink" placeholder="Main Buy Link" class="p-2 border rounded" />
 
     <!-- Upload and Preview -->
-    <button type="button" onclick="document.getElementById('bannerImage').click()" class="bg-gray-200 px-3 py-2 rounded border">Upload Image</button>
-    <input type="file" id="bannerImage" accept="image/*" class="hidden" onchange="previewImage(event)" />
-    <img id="preview" alt="Image Preview" class="w-full max-w-xs rounded border mt-2" />
+<button id="uploadTrigger" type="button" class="bg-gray-200 px-3 py-2 rounded border">
+  Upload Image
+</button>
+
+<input type="file" id="bannerImage" accept="image/*" class="hidden" />
+<img id="preview" alt="Image Preview" class="w-full max-w-xs rounded border mt-2" />
 
     <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded" id="submitBtn">Save Event</button>
   </form>

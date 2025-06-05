@@ -301,20 +301,30 @@ window.addEventListener("DOMContentLoaded", () => {
   showAdminSection("events"); // or "subscribers"
 });
 
+// Handle button click to open file picker
+document.getElementById('uploadTrigger').addEventListener('click', () => {
+  document.getElementById('bannerImage').click();
+});
 
-    function previewImage(event) {
-      const input = event.target;
-      const preview = document.getElementById('preview');
+// Handle image file input and preview
+document.getElementById('bannerImage').addEventListener('change', previewImage);
 
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
+// Define preview function
+function previewImage(event) {
+  const input = event.target;
+  const preview = document.getElementById('preview');
 
-        reader.onload = function(e) {
-          preview.src = e.target.result;
-          preview.style.display = 'block';
-        }
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
 
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
 
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// Optional: make function globally accessible
+window.previewImage = previewImage;
