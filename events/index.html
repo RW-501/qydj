@@ -35,6 +35,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
+
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js" defer></script>
 
     <!-- AOS (Animate On Scroll) -->
@@ -276,53 +282,58 @@ const db = getFirestore(app);
             card.className =
               "card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition";
 
-            card.innerHTML = `
-              <img
-                src="${e.imageUrl}"
-                alt="${e.title}"
-                class="w-full h-48 object-cover"
-                loading="lazy"
-              />
-              <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">${e.title}</h2>
-                <p class="text-sm text-gray-600 mb-1">${date} • ${time}</p>
-                <p class="text-sm text-gray-600 mb-4">${e.location}</p>
-                <div class="flex justify-between items-center">
-                  <a href="${e.rsvpLink || "#"}" target="_blank" class="btn text-sm"
-                    >RSVP</a
-                  >
-                  <div class="flex gap-2">
-                    <a
-                      href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                        location.href
-                      )}"
-                      target="_blank"
-                      title="Share on Facebook"
-                      ><img src="/icons/facebook.svg" class="w-5 h-5" />
-                    </a>
-                    <a
-                      href="https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                        location.href
-                      )}&text=${encodeURIComponent(e.title)}"
-                      target="_blank"
-                      title="Share on Twitter"
-                      ><img src="/icons/twitter.svg" class="w-5 h-5" />
-                    </a>
-                    <a
-                      href="https://api.whatsapp.com/send?text=${encodeURIComponent(
-                        e.title + " - " + location.href
-                      )}"
-                      target="_blank"
-                      title="Share on WhatsApp"
-                      ><img src="/icons/whatsapp.svg" class="w-5 h-5" />
-                    </a>
-                    <a href="${e.instagramLink || "#"}" target="_blank" title="Instagram"
-                      ><img src="/icons/instagram.svg" class="w-5 h-5" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            `;
+card.innerHTML = `
+  <img
+    src="${e.imageUrl}"
+    alt="${e.title}"
+    class="w-full h-48 object-cover"
+    loading="lazy"
+  />
+  <div class="p-4">
+    <h2 class="text-xl font-bold mb-2">${e.title}</h2>
+    <p class="text-sm text-gray-600 mb-1">${date} • ${time}</p>
+    <p class="text-sm text-gray-600 mb-4">${e.location}</p>
+    <div class="flex justify-between items-center">
+      <a href="${e.rsvpLink || "#"}" target="_blank" class="btn text-sm">RSVP</a>
+      <div class="flex gap-3 text-gray-600 text-lg">
+        <a
+          href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            location.href
+          )}"
+          target="_blank"
+          title="Share on Facebook"
+        >
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a
+          href="https://twitter.com/intent/tweet?url=${encodeURIComponent(
+            location.href
+          )}&text=${encodeURIComponent(e.title)}"
+          target="_blank"
+          title="Share on Twitter"
+        >
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a
+          href="https://api.whatsapp.com/send?text=${encodeURIComponent(
+            e.title + " - " + location.href
+          )}"
+          target="_blank"
+          title="Share on WhatsApp"
+        >
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a
+          href="${e.instagramLink || "#"}"
+          target="_blank"
+          title="Instagram"
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+`;
 
               // Add redirect behavior
   card.onclick = () => {
