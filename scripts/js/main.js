@@ -25,6 +25,34 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+function initCountdown(targetDate) {
+  const countdown = document.getElementById("countdown");
+
+  const updateCountdown = () => {
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      countdown.innerText = "Event Started!";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / 1000 / 60) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    countdown.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
+
+  updateCountdown(); // Run immediately
+  setInterval(updateCountdown, 1000); // Update every second
+}
+
+
+
+
 async function loadFeaturedEvent() {
   const q = query(
     collection(db, "events"),
