@@ -198,18 +198,18 @@ if (!snap.exists()) {
   
 
 function formatFirebaseDate(dateInput) {
-  // Check if it's a Firestore Timestamp object
-  if (typeof dateInput?.toDate === 'function') {
-    return dateInput.toDate().toLocaleString(); // Convert and format
+if (event.date && typeof event.date.toDate === "function") {
+  const jsDate = event.date.toDate();
+  if (!isNaN(jsDate)) {
+    const isoDateTime = jsDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
+    document.getElementById("date").value = isoDateTime;
+  } else {
+    console.warn("Invalid JS date from Firestore timestamp:", event.date);
   }
+} else {
+  console.warn("event.date is not a Firestore Timestamp:", event.date);
+}
 
-  // If it's already a JS Date or ISO string
-  try {
-    return new Date(dateInput).toLocaleString();
-  } catch (e) {
-    console.warn("Invalid date input:", dateInput);
-    return "Invalid Date";
-  }
 }
 
 
