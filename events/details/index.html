@@ -240,8 +240,24 @@ const startDate = formatFirebaseDate(event.date);
 const endDate = formatFirebaseDate(event.endDate);
 
 if (startDate && endDate) {
+const startDate = formatFirebaseDate(event.date);
+const endDate = formatFirebaseDate(event.endDate);
+
+if (startDate && endDate) {
   const startStr = startDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
   const endStr = endDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
+
+  console.log("✅ startDate (original):", startDate);
+  console.log("✅ endDate (original):", endDate);
+  console.log("📆 startStr (Google Calendar format):", startStr);
+  console.log("📆 endStr (Google Calendar format):", endStr);
+
+  const calURL = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startStr}/${endStr}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+  document.getElementById("addToCalendar").href = calURL;
+} else {
+  console.warn("❌ Invalid start or end date. Calendar URL not generated.");
+}
+
 
   const calURL = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startStr}/${endStr}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
   document.getElementById("addToCalendar").href = calURL;
