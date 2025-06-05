@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - QYDJ</title>
+  <meta name="description" content="Get in touch with QYDJ to become a vendor, partner, or sponsor an event." />
+  <meta name="keywords" content="QYDJ, contact, vendors, sponsorship, partnerships" />
+  <meta name="author" content="QYDJ Team" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+<!-- Header -->
+<header class="bg-black text-white p-4 flex justify-between items-center shadow-md sticky top-0 z-50">
+  <a href="/qydj/" class="text-2xl font-extrabold tracking-widest hover:text-purple-400 transition">QYDJ</a>
+  <nav class="space-x-6 hidden md:block">
+    <a href="/qydj/" class="hover:text-purple-400">Home</a>
+    <a href="events/" class="hover:text-purple-400">Events</a>
+    <a href="about/" class="hover:text-purple-400">About</a>
+    <a href="contact/" class="hover:text-purple-400">Contact</a>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="bg-black text-white py-16 px-4 text-center">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4">Let’s Work Together</h1>
+  <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">Whether you're a vendor, venue owner, media outlet, or just interested in collaborating—we’d love to hear from you.</p>
+</section>
+
+<!-- Contact Form -->
+<section class="py-16 px-6 max-w-3xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6 text-center">Send Us a Message</h2>
+  <form id="contactForm" class="space-y-6">
+    <div>
+      <label class="block font-semibold mb-1" for="name">Name</label>
+      <input type="text" id="name" name="name" required class="w-full border px-4 py-2 rounded"/>
+    </div>
+
+    <div>
+  <label class="block font-semibold mb-1" for="phone">Phone Number</label>
+  <input type="tel" id="phone" name="phone" required class="w-full border px-4 py-2 rounded"/>
+</div>
+
+    <div>
+      <label class="block font-semibold mb-1" for="email">Email</label>
+      <input type="email" id="email" name="email" required class="w-full border px-4 py-2 rounded"/>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1" for="type">I’m contacting you as a:</label>
+      <select id="type" name="type" required class="w-full border px-4 py-2 rounded">
+        <option value="">Select one</option>
+        <option>Vendor</option>
+        <option>Sponsor</option>
+        <option>Partner</option>
+        <option>Media</option>
+        <option>Patron / Guest</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1" for="message">Message</label>
+      <textarea id="message" name="message" rows="6" required class="w-full border px-4 py-2 rounded"></textarea>
+    </div>
+
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded font-semibold transition">Submit Message</button>
+    <p id="contact-success" class="text-green-600 font-medium hidden mt-4">Thank you! We’ll get back to you shortly.</p>
+  </form>
+</section>
+
+<!-- Optional Contact Info Section -->
+<section class="bg-gray-100 py-12 px-6 text-center">
+  <h2 class="text-xl font-bold mb-4">Want to reach us directly?</h2>
+  <p class="mb-2">📧 Email: <a href="mailto:info@qydjevents.com" class="text-blue-600 hover:underline">info@qydjevents.com</a></p>
+  <p>📍 Location: Based in ATL — Throwing vibes everywhere</p>
+</section>
+
+<!-- Footer -->
+<footer class="bg-black text-white text-center py-6 mt-10">
+  <p>&copy; 2025 QYDJ. All Rights Reserved.</p>
+  <p class="text-sm mt-2">Built by <a href="https://rw-501.github.io/Portfolio/#about" class="">Ron W</a>.</p>
+</footer>
+
+<script type="module">
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCzTA2ajYdy64FWHa2jW5R5TX1XzBdrSdY",
+  authDomain: "qydj-65f76.firebaseapp.com",
+  projectId: "qydj-65f76",
+  storageBucket: "qydj-65f76.firebasestorage.app",
+  messagingSenderId: "485183277679",
+  appId: "1:485183277679:web:d633e3f2b9136874dc9b9a",
+  measurementId: "G-G7F0PJ5V5H"
+};
+
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const type = document.getElementById("type").value;
+    const message = document.getElementById("message").value.trim();
+
+    try {
+      await addDoc(collection(db, "contacts"), {
+        name,
+        email,
+        phone,
+        type,
+        message,
+        timestamp: serverTimestamp()
+      });
+
+      document.getElementById("contact-success").classList.remove("hidden");
+      this.reset();
+    } catch (error) {
+      alert("❌ There was an error sending your message. Please try again.");
+      console.error("Error adding contact: ", error);
+    }
+  });
+</script>
+
+
+</body>
+</html>
