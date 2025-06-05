@@ -7,7 +7,11 @@ import {
   where,
   orderBy,
   limit,
-  getDocs
+  addDoc,
+  getDocs,
+  updateDoc,
+  doc,
+  serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // 🔐 Config
