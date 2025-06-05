@@ -272,6 +272,8 @@ const db = getFirestore(app);
 
           snapshot.forEach((doc) => {
             const e = doc.data();
+          const eventId = doc.id; // Grab the document ID for the detail page
+
             const dateObj = e.date.toDate();
             const date = dateObj.toLocaleDateString();
             const time = dateObj.toLocaleTimeString([], {
@@ -336,9 +338,9 @@ card.innerHTML = `
   </div>
 `;
 
-              // Add redirect behavior
-  card.onclick = () => {
-    window.location.href = `../events/details/index.html?id=${e.id}`;
+  // Add redirect behavior
+  slide.onclick = () => {
+    window.location.href = `../events/details/index.html?id=${eventId}`;
   };
 
             container.appendChild(card);
