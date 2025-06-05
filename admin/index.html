@@ -102,11 +102,16 @@
     </div>
   </section>
 
- <!-- Admin Panel Toggle Buttons -->
+<!-- Admin Panel Toggle Buttons -->
 <div class="flex justify-center gap-4 mt-10">
-  <button onclick="showAdminSection('events')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Manage Events</button>
-  <button onclick="showAdminSection('subscribers')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">View Subscribers</button>
+  <button id="btn-manage-events" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+    Manage Events
+  </button>
+  <button id="btn-view-subscribers" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+    View Subscribers
+  </button>
 </div>
+
 
 <!-- Admin: Manage Events Section -->
 <section id="admin-events" class="hidden mt-10 px-4">
@@ -147,24 +152,6 @@
   </div>
 </section>
 
-<!-- Admin: View Subscribers Section -->
-<section id="admin-subscribers" class="hidden mt-10 px-4">
-  <h2 class="text-2xl font-semibold mb-4">📬 Subscriber List</h2>
-  <div class="overflow-x-auto">
-    <table class="w-full table-auto border border-gray-300">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="p-3 border">Name</th>
-          <th class="p-3 border">Email</th>
-          <th class="p-3 border">Subscribed On</th>
-        </tr>
-      </thead>
-      <tbody id="subscriber-table-body">
-        <!-- Data will be populated via JS -->
-      </tbody>
-    </table>
-  </div>
-</section>
 
 
   <!-- Admin: Subscribers List -->

@@ -274,18 +274,30 @@ async function loadEvents() {
 
 
 
+document.getElementById("btn-manage-events").addEventListener("click", () => {
+  showAdminSection("events");
+});
 
-     function showAdminSection(section) {
-    document.getElementById("admin-events").classList.add("hidden");
-    document.getElementById("admin-subscribers").classList.add("hidden");
+document.getElementById("btn-view-subscribers").addEventListener("click", () => {
+  showAdminSection("subscribers");
+});
 
-    if (section === "events") {
-      document.getElementById("admin-events").classList.remove("hidden");
-    } else if (section === "subscribers") {
-      document.getElementById("admin-subscribers").classList.remove("hidden");
-      loadSubscribers(); // Optionally auto-load
-    }
+function showAdminSection(section) {
+  document.getElementById("admin-events").classList.add("hidden");
+  document.getElementById("admin-subscribers").classList.add("hidden");
+
+  if (section === "events") {
+    document.getElementById("admin-events").classList.remove("hidden");
+  } else if (section === "subscribers") {
+    document.getElementById("admin-subscribers").classList.remove("hidden");
+    if (typeof loadSubscribers === "function") loadSubscribers(); // Avoid error if not defined
   }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  showAdminSection("events"); // or "subscribers"
+});
+
 
     function previewImage(event) {
       const input = event.target;
