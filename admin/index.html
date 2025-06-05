@@ -258,16 +258,26 @@
 
 
 
-  <!-- Admin: Subscribers List -->
-<section id="admin-subscribers" class="p-6 bg-white rounded shadow mt-10 max-w-4xl mx-auto">
+<section id="admin-subscribers" class="p-6 bg-white rounded shadow mt-10 max-w-5xl mx-auto">
   <h2 class="text-2xl font-bold mb-4">📬 Subscriber List</h2>
-  <div id="subscriber-list" class="overflow-x-auto">
-    <table class="w-full table-auto border border-gray-200">
-      <thead class="bg-gray-100">
+
+  <!-- Filter Input -->
+  <input
+    type="text"
+    id="subscriber-search"
+    placeholder="Search by name or email..."
+    class="w-full mb-4 p-2 border rounded"
+  />
+
+  <!-- Scrollable Table -->
+  <div class="overflow-auto max-h-96 border border-gray-200 rounded">
+    <table class="w-full table-auto text-sm">
+      <thead class="bg-gray-100 sticky top-0 z-10">
         <tr>
           <th class="p-3 border">Name</th>
           <th class="p-3 border">Email</th>
           <th class="p-3 border">Subscribed On</th>
+          <th class="p-3 border text-center">Actions</th>
         </tr>
       </thead>
       <tbody id="subscriber-table-body">
@@ -276,6 +286,7 @@
     </table>
   </div>
 </section>
+
 
 
 </div>

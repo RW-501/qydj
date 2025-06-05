@@ -392,41 +392,83 @@ async function loadEvents() {
   });
 }
 
-
+let allSubscribers = [];
 
 async function loadSubscribers() {
   const tbody = document.getElementById("subscriber-table-body");
-  tbody.innerHTML = ""; // Clear existing data
+  const searchInput = document.getElementById("subscriber-search");
+
+  tbody.innerHTML = "Loading...";
+  allSubscribers = [];
 
   try {
     const querySnapshot = await getDocs(collection(db, "subscribers"));
-
-    if (querySnapshot.empty) {
-      tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-gray-500">No subscribers found.</td></tr>`;
-      return;
-    }
-
-    querySnapshot.forEach((doc) => {
-      const subscriber = doc.data();
-      const tr = document.createElement("tr");
-
-      const name = subscriber.name || "—";
-      const email = subscriber.email || "—";
-      const date = subscriber.createdAt?.toDate
-        ? subscriber.createdAt.toDate().toLocaleString()
-        : "—";
-
-      tr.innerHTML = `
-        <td class="p-3 border">${name}</td>
-        <td class="p-3 border">${email}</td>
-        <td class="p-3 border">${date}</td>
-      `;
-
-      tbody.appendChild(tr);
+    querySnapshot.forEach((docSnap) => {
+      const subscriber = docSnap.data();
+      allSubscribers.push({ id: docSnap.id, ...subscriber });
     });
-  } catch (error) {
-    console.error("Error loading subscribers:", error);
-    tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">Failed to load subscribers.</td></tr>`;
+
+    renderSubscribers(allSubscribers);
+
+    searchInput.addEventListener("input", () => {
+      const filter = searchInput.value.toLowerCase();
+      const filtered = allSubscribers.filter(
+        (s) =>
+          s.name?.toLowerCase().includes(filter) ||
+          s.email?.toLowerCase().includes(filter)
+      );
+      renderSubscribers(filtered);
+    });
+
+  } catch (err) {
+    console.error("Error loading subscribers:", err);
+    tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-red-500">Failed to load subscribers.</td></tr>`;
+  }
+}
+
+function renderSubscribers(list) {
+  const tbody = document.getElementById("subscriber-table-body");
+  tbody.innerHTML = "";
+
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-500">No matching subscribers.</td></tr>`;
+    return;
+  }
+
+  list.forEach((s) => {
+    const date = s.createdAt?.toDate
+      ? s.createdAt.toDate().toLocaleString()
+      : "—";
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="p-3 border">${s.name || "—"}</td>
+      <td class="p-3 border">${s.email || "—"}</td>
+      <td class="p-3 border">${date}</td>
+      <td class="p-3 border text-center">
+        <button
+          class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs"
+          onclick="removeSubscriber('${s.id}')"
+        >
+          Remove
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+async function removeSubscriber(id) {
+  const confirmed = confirm("Are you sure you want to remove this subscriber?");
+  if (!confirmed) return;
+
+  try {
+    await deleteDoc(doc(db, "subscribers", id));
+    allSubscribers = allSubscribers.filter((s) => s.id !== id);
+    renderSubscribers(allSubscribers);
+  } catch (err) {
+    console.error("Failed to delete subscriber:", err);
+    alert("Failed to delete subscriber.");
   }
 }
 
