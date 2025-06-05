@@ -234,7 +234,7 @@ const db = getFirestore(app);
   console.log("Event filter type:", type);
   console.log("Current JS Date:", now);
   console.log("Current Firebase Timestamp:", Timestamp.fromDate(now));
-  
+
     if (type === "upcoming") {
       q = query(
         collection(db, "events"),
@@ -256,8 +256,9 @@ const db = getFirestore(app);
 
 
           const snapshot = await getDocs(q);
+    console.log("Query snapshot size:", snapshot.size);
 
-          if (snapshot.empty) {
+          if (!snapshot.size) {
             loadingText.textContent = "No events found.";
             return;
           }
