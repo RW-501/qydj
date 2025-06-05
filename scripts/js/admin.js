@@ -160,7 +160,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
       const title = document.getElementById("title").value.trim();
       const description = document.getElementById("description").value.trim();
       const location = document.getElementById("location").value.trim();
-      
+
 const formDate = document.getElementById("date").value;
 const eventDate = new Date(formDate);
 
@@ -353,7 +353,7 @@ async function loadEvents() {
       document.getElementById("description").value = event.description;
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
-      document.getElementById("date").value = formatFirebaseDate(event.date);
+      document.getElementById("date").value = event.date;
       document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
       window.editingEventId = id;
