@@ -91,9 +91,16 @@ async function loadFeaturedEvent() {
     const querySnapshot = await getDocs(q);
     const featured = querySnapshot.docs[0]?.data();
 
-    if (featured) {
+    if (featured && featured.isFeatured) {
       document.getElementById("featured-title").innerText = featured.title || "Upcoming Event";
+          if (featured.allowRSVP) {
+      document.getElementById("rsvp-link").style.display = "block";
       document.getElementById("rsvp-link").href = featured.rsvpUrl || "#";
+          }else{
+                  document.getElementById("rsvp-link").style.display = "none";
+
+          }
+
       document.getElementById("featured-image").style.backgroundImage =
         `url('${featured.imageUrl || 'default-banner.jpg'}')`;
       initCountdown(new Date(formatFirebaseDate(featured.date)));
