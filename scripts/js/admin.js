@@ -285,7 +285,8 @@ async function loadEvents() {
 
   document.querySelectorAll(".editBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
-          document.getElementById("bannerImage").classList.remove("hidden");
+          document.getElementById("preview").classList.remove("hidden");
+          document.getElementById("preview").classList.add("block");
           document.getElementById("edit-event-section").classList.remove("hidden");
   document.getElementById("view-events-section").classList.add("hidden");
   document.getElementById("view-events-section").classList.remove("block");
