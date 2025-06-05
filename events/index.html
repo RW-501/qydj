@@ -231,25 +231,29 @@ const db = getFirestore(app);
 
         try {
           let q;
+  console.log("Event filter type:", type);
+  console.log("Current JS Date:", now);
+  console.log("Current Firebase Timestamp:", Timestamp.fromDate(now));
+  
+    if (type === "upcoming") {
+      q = query(
+        collection(db, "events"),
+        where("date", ">=", Timestamp.fromDate(now)),
+        orderBy("date", "asc")
+      );
+      console.log("Querying for UPCOMING events...");
+    } else if (type === "past") {
+      q = query(
+        collection(db, "events"),
+        where("date", "<", Timestamp.fromDate(now)),
+        orderBy("date", "desc")
+      );
+      console.log("Querying for PAST events...");
+    } else {
+      q = query(collection(db, "events"), orderBy("date", "desc"));
+      console.log("Querying for ALL events...");
+    }
 
-          if (type === "upcoming") {
-            // Query for upcoming events where date >= now
-            q = query(
-              collection(db, "events"),
-              where("date", ">=", Timestamp.fromDate(now)),
-              orderBy("date", "asc")
-            );
-          } else if (type === "past") {
-            // Query for past events where date < now
-            q = query(
-              collection(db, "events"),
-              where("date", "<", Timestamp.fromDate(now)),
-              orderBy("date", "desc")
-            );
-          } else {
-            // Default fallback query for all events ordered by date desc
-            q = query(collection(db, "events"), orderBy("date", "desc"));
-          }
 
           const snapshot = await getDocs(q);
 
