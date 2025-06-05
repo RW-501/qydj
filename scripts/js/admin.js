@@ -558,12 +558,22 @@ document.getElementById('editEventBtn').addEventListener('click', () => {
 
 
 
-function toggleCheckbox(id) {
-  const checkbox = document.getElementById(id);
+function toggleCheckbox(checkboxId) {
+  const checkbox = document.getElementById(checkboxId);
   if (checkbox) {
     checkbox.checked = !checkbox.checked;
-
-    // Optional: manually dispatch a change event if you need to listen for it elsewhere
-    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+    checkbox.dispatchEvent(new Event('change')); // trigger any change listener if needed
   }
 }
+
+document.getElementById("toggleFeatured").addEventListener("click", () => {
+  toggleCheckbox("isFeatured");
+});
+
+document.getElementById("toggleComments").addEventListener("click", () => {
+  toggleCheckbox("allowComments");
+});
+
+document.getElementById("toggleRSVP").addEventListener("click", () => {
+  toggleCheckbox("allowRSVP");
+});
