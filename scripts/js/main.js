@@ -92,7 +92,7 @@ async function loadFeaturedEvent() {
       document.getElementById("rsvp-link").href = featured.rsvpUrl || "#";
       document.getElementById("featured-image").style.backgroundImage =
         `url('${featured.imageUrl || 'default-banner.jpg'}')`;
-      initCountdown(new Date(featured.date));
+      initCountdown(new Date(formatFirebaseDate(featured.date)));
     } else {
       document.getElementById("featured-title").innerText = "Stay tuned!";
       document.getElementById("countdown").innerText = "";
