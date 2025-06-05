@@ -320,6 +320,7 @@ async function loadEvents() {
       <p>${formatFirebaseDate(data.date)} – ${data.location}</p>
       <p>Status: ${data.status}</p>
       <img id="test101" src="${data.imageUrl || 'https://via.placeholder.com/300x150'}" class="w-full h-40 object-cover my-2"/>
+      <button class="bg-green-500 text-white px-3 py-1 rounded viewBtn" data-id="${docSnap.id}">View</button>
       <button class="bg-yellow-500 text-white px-3 py-1 rounded editBtn" data-id="${docSnap.id}">Edit</button>
       <button class="bg-red-500 text-white px-3 py-1 rounded deleteBtn" data-id="${docSnap.id}">Delete</button>
       <button class="bg-blue-500 text-white px-3 py-1 rounded analyticsBtn" data-id="${docSnap.id}">Analytics</button>
@@ -329,6 +330,16 @@ async function loadEvents() {
 
     eventList.appendChild(card);
   });
+
+  // 📌 Attach Edit/Delete Listeners
+  document.querySelectorAll(".viewBtn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.getAttribute("data-id");
+    window.location.href = `../events/details/index.html?id=${id}`;
+    });
+  });
+
+
 
   // 📌 Attach Edit/Delete Listeners
   document.querySelectorAll(".deleteBtn").forEach((btn) => {
@@ -343,8 +354,8 @@ async function loadEvents() {
 
   document.querySelectorAll(".editBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
-            console.log("???????????????????????????????");
 
+      
           document.getElementById("preview").classList.remove("hidden");
           document.getElementById("edit-event-section").classList.remove("hidden");
   document.getElementById("view-events-section").classList.add("hidden");
@@ -358,7 +369,7 @@ async function loadEvents() {
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
 
-      
+
 const eventDate = event.date?.toDate(); // Convert Firestore Timestamp to JS Date
 if (eventDate instanceof Date && !isNaN(eventDate)) {
   const isoString = eventDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
