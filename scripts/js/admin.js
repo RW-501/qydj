@@ -144,11 +144,13 @@ const eventDate = new Date(formDate);
         .filter(Boolean);
       const status = document.getElementById("status").value;
       const bannerFile = document.getElementById("bannerImage").files[0];
-  
-      const facebookLink = document.getElementById("facebookLink").value.trim();
-      const eventbriteLink = document.getElementById("eventbriteLink").value.trim();
-      const otherLink = document.getElementById("otherLink").value.trim();
-      const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
+      
+const cost = document.getElementById("cost").value.trim();
+const facebookLink = document.getElementById("facebookLink").value.trim();
+const eventbriteLink = document.getElementById("eventbriteLink").value.trim();
+const otherLink = document.getElementById("otherLink").value.trim();
+const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
+
 
       if (!title || !description || !location || !eventDate || !status) {
         alert("Please fill all required fields.");
