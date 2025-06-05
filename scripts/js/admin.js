@@ -291,6 +291,7 @@ async function loadEvents() {
           document.getElementById("edit-event-section").classList.remove("hidden");
   document.getElementById("view-events-section").classList.add("hidden");
   document.getElementById("view-events-section").classList.remove("block");
+          document.getElementById("analytics-section").classList.add("hidden");
 
       const id = btn.getAttribute("data-id");
       const event = snapshot.docs.find((d) => d.id === id).data();
@@ -341,7 +342,7 @@ async function loadEvents() {
     commentsList.appendChild(li);
   });
 
-  
+
     });
   });
 }
@@ -406,11 +407,15 @@ window.previewImage = previewImage;
 document.getElementById('viewEventsBtn').addEventListener('click', () => {
   document.getElementById('view-events-section').classList.remove('hidden');
   document.getElementById('edit-event-section').classList.add('hidden');
+  document.getElementById("analytics-section").classList.add("hidden");
+
 });
 
 document.getElementById('editEventBtn').addEventListener('click', () => {
   document.getElementById('edit-event-section').classList.remove('hidden');
   document.getElementById('view-events-section').classList.add('hidden');
+  document.getElementById("analytics-section").classList.add("hidden");
+
 });
 
 
