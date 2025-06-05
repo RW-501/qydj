@@ -120,8 +120,28 @@ if (!snap.exists()) {
     viewCount: increment(1)
   });
 
+
+
+  
+
+function formatFirebaseDate(dateInput) {
+  // Check if it's a Firestore Timestamp object
+  if (typeof dateInput?.toDate === 'function') {
+    return dateInput.toDate().toLocaleString(); // Convert and format
+  }
+
+  // If it's already a JS Date or ISO string
+  try {
+    return new Date(dateInput).toLocaleString();
+  } catch (e) {
+    console.warn("Invalid date input:", dateInput);
+    return "Invalid Date";
+  }
+}
+
+
   document.getElementById("eventTitle").innerText = event.title;
-  document.getElementById("eventDateTime").innerText = new Date(event.date).toLocaleString();
+  document.getElementById("eventDateTime").innerText = formatFirebaseDate(event.date);
   document.getElementById("eventDescription").innerHTML = event.description;
   document.getElementById("eventLocation").innerHTML = `<strong>Location:</strong> ${event.location}`;
   document.getElementById("bannerImage").src = event.imageUrl;

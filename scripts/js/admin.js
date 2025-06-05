@@ -252,6 +252,7 @@ const allowRSVP = document.getElementById("allowRSVP").checked;
           imageUrl,
           images: [],
             isFeatured,
+            viewCount: 0,
   allowComments,
   allowRSVP,
           createdAt: serverTimestamp(),
