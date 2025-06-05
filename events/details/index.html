@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
 
       <!-- Custom Styles -->
-    <link href="../scripts/css/main.css" rel="stylesheet" />
+    <link href="/qydj/scripts/css/main.css" rel="stylesheet" />
 
 </head>
   <body class="bg-gray-50 text-gray-900">
@@ -68,7 +68,7 @@
 
   <div class="container mt-5" id="event-detail">
     <h1 id="eventTitle" class="text-center"></h1>
-    <p id="eventDateTime" class="text-center text-muted"></p>
+    <input type="datetime-local" id="eventDateTime" class="text-center text-muted"/>
     <img id="bannerImage" class="img-fluid my-3" alt="Event Banner">
     
     <div id="eventDescription" class="mb-4"></div>
@@ -196,21 +196,30 @@ if (!snap.exists()) {
 
 
   
-
 function formatFirebaseDate(dateInput) {
-if (event.date && typeof event.date.toDate === "function") {
-  const jsDate = event.date.toDate();
-  if (!isNaN(jsDate)) {
-    const isoDateTime = jsDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
-    document.getElementById("date").value = isoDateTime;
+  let isoDateTime = "Invalid Date";
+
+  if (dateInput && typeof dateInput.toDate === "function") {
+    const jsDate = dateInput.toDate();
+    if (!isNaN(jsDate)) {
+      isoDateTime = jsDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
+
+      const input = document.getElementById("date");
+      if (input) {
+        input.value = isoDateTime;
+      } else {
+        console.warn('Input element with id="date" not found.');
+      }
+    } else {
+      console.warn("Invalid JS date from Firestore timestamp:", dateInput);
+    }
   } else {
-    console.warn("Invalid JS date from Firestore timestamp:", event.date);
+    console.warn("Invalid Firestore timestamp:", dateInput);
   }
-} else {
-  console.warn("event.date is not a Firestore Timestamp:", event.date);
+
+  return isoDateTime; // Still return a value for display
 }
 
-}
 
 
   document.getElementById("eventTitle").innerText = event.title;
