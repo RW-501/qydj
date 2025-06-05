@@ -42,9 +42,14 @@ function formatFirebaseDate(dateInput) {
   }
 }
 
-
 function initCountdown(targetDate) {
   const countdown = document.getElementById("countdown");
+
+  if (!(targetDate instanceof Date) || isNaN(targetDate)) {
+    countdown.innerText = "Invalid countdown date";
+    console.error("Countdown failed: invalid targetDate", targetDate);
+    return;
+  }
 
   const updateCountdown = () => {
     const now = new Date();
