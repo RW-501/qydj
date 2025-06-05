@@ -356,6 +356,10 @@ async function loadEvents() {
       document.getElementById("date").value = event.date;
       document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
+
+      document.getElementById("isFeatured").checked = event.isFeatured;
+      document.getElementById("allowComments").checked = event.allowComments;
+      document.getElementById("allowRSVP").checked = event.allowRSVP;
       window.editingEventId = id;
     });
   });
@@ -554,3 +558,12 @@ document.getElementById('editEventBtn').addEventListener('click', () => {
 
 
 
+function toggleCheckbox(id) {
+  const checkbox = document.getElementById(id);
+  if (checkbox) {
+    checkbox.checked = !checkbox.checked;
+
+    // Optional: manually dispatch a change event if you need to listen for it elsewhere
+    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+}
