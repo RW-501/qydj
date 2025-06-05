@@ -325,6 +325,8 @@ async function loadEvents() {
       <button class="bg-blue-500 text-white px-3 py-1 rounded analyticsBtn" data-id="${docSnap.id}">Analytics</button>
 
     `;
+          console.log("data.imageUrl ",data.imageUrl);
+
     eventList.appendChild(card);
   });
 
