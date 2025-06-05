@@ -554,7 +554,7 @@ function showAdminSection(section) {
     if (typeof loadSubscribers === "function") loadSubscribers(); // Avoid error if not defined
   } else if (section === "contacts") {
     document.getElementById("admin-contacts").classList.remove("hidden");
-    if (typeof loadSubscribers === "function") loadSubscribers(); // Avoid error if not defined
+    if (typeof loadContacts === "function") loadContacts(); // Avoid error if not defined
   }
 }
 
@@ -671,7 +671,6 @@ document.getElementById("toggleRSVP").addEventListener("click", () => {
       }
     }
 
-    window.addEventListener("DOMContentLoaded", loadContacts);
 
     
 
