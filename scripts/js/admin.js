@@ -485,36 +485,21 @@ async function loadSubscribers() {
 }
 
 
-function renderSubscribers(list) {
+function renderSubscribers(subscribers) {
   const tbody = document.getElementById("subscriber-table-body");
-  tbody.innerHTML = "";
-
-  if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-500">No matching subscribers.</td></tr>`;
+  if (subscribers.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-500">No subscribers found.</td></tr>`;
     return;
   }
 
-  list.forEach((s) => {
-    const date = s.createdAt?.toDate
-      ? s.createdAt.toDate().toLocaleString()
-      : "—";
-
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td class="p-3 border">${s.name || "—"}</td>
-      <td class="p-3 border">${s.email || "—"}</td>
-      <td class="p-3 border">${date}</td>
-      <td class="p-3 border text-center">
-        <button
-          class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs"
-          onclick="removeSubscriber('${s.id}')"
-        >
-          Remove
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
+  tbody.innerHTML = subscribers.map((s) => `
+    <tr class="border-b">
+      <td class="p-2">${s.name || "-"}</td>
+      <td class="p-2">${s.email || "-"}</td>
+      <td class="p-2">${s.phone || "-"}</td>
+      <td class="p-2 text-gray-500 text-sm">${s.createdAt?.toDate().toLocaleString() || "-"}</td>
+    </tr>
+  `).join("");
 }
 
 async function removeSubscriber(id) {
