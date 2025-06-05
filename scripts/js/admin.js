@@ -358,10 +358,12 @@ async function loadEvents() {
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
 
-      console.log("event.date ",event.date);
-      console.log("formatFirebaseDate event.date ",formatFirebaseDate(event.date));
-
-      document.getElementById("date").value = event.date;
+      
+const eventDate = event.date?.toDate(); // Convert Firestore Timestamp to JS Date
+if (eventDate instanceof Date && !isNaN(eventDate)) {
+  const isoString = eventDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
+  document.getElementById("date").value = isoString;
+}
 
       document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
