@@ -125,6 +125,30 @@ document.getElementById("verifyBtn").addEventListener("click", async () => {
 
 document.getElementById("logoutBtn").addEventListener("click", logoutUser);
 
+
+
+
+
+
+function formatFirebaseDate(dateInput) {
+  // Check if it's a Firestore Timestamp object
+  if (typeof dateInput?.toDate === 'function') {
+    return dateInput.toDate().toLocaleString(); // Convert and format
+  }
+
+  // If it's already a JS Date or ISO string
+  try {
+    return new Date(dateInput).toLocaleString();
+  } catch (e) {
+    console.warn("Invalid date input:", dateInput);
+    return "Invalid Date";
+  }
+}
+
+
+
+
+
 // 📤 Add/Update Events
 document.getElementById("eventForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -239,7 +263,7 @@ async function loadEvents() {
     card.className = "bg-white p-4 shadow rounded mb-4";
     card.innerHTML = `
       <h4 class="font-bold">${data.title}</h4>
-      <p>${data.date} – ${data.location}</p>
+      <p>${formatFirebaseDate(data.date)} – ${data.location}</p>
       <p>Status: ${data.status}</p>
       <img src="${data.imageUrl || 'https://via.placeholder.com/300x150'}" class="w-full h-40 object-cover my-2"/>
       <button class="bg-yellow-500 text-white px-3 py-1 rounded editBtn" data-id="${docSnap.id}">Edit</button>
@@ -267,7 +291,7 @@ async function loadEvents() {
       document.getElementById("description").value = event.description;
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
-      document.getElementById("date").value = event.date;
+      document.getElementById("date").value = formatFirebaseDate(event.date);
       document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
       window.editingEventId = id;
