@@ -111,11 +111,13 @@
     <!-- Social Share -->
          <div class="text-center mb-4">Share</div>
 
-    <div class="d-flex justify-content-center gap-3 mb-3">
-      <button class="btn btn-sm btn-outline-secondary" onclick="share('facebook')">Facebook</button>
-      <button class="btn btn-sm btn-outline-secondary" onclick="share('twitter')">Twitter</button>
-      <button class="btn btn-sm btn-outline-secondary" onclick="share('whatsapp')">WhatsApp</button>
-    </div>
+<!-- Social Share -->
+<div class="d-flex justify-content-center gap-3 mb-3" id="socialShareButtons">
+  <button class="btn btn-sm btn-outline-secondary" data-platform="facebook">Facebook</button>
+  <button class="btn btn-sm btn-outline-secondary" data-platform="twitter">Twitter</button>
+  <button class="btn btn-sm btn-outline-secondary" data-platform="whatsapp">WhatsApp</button>
+</div>
+
 
     <!-- Add to Calendar -->
     <div class="text-center mb-5">
@@ -311,10 +313,22 @@ if (startDate && endDate) {
   }
 }
 
-// Social share logic
+// 🔁 Add event listeners to social share buttons
+document.addEventListener("DOMContentLoaded", () => {
+  const shareButtons = document.querySelectorAll('#socialShareButtons [data-platform]');
+  
+  shareButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const platform = button.getAttribute("data-platform");
+      share(platform);
+    });
+  });
+});
+
+// 🚀 Share function
 function share(platform) {
   const pageUrl = window.location.href;
-  const title = document.getElementById("eventTitle").innerText;
+  const title = document.getElementById("eventTitle")?.innerText || "this event";
   const text = `Check out this event: ${title}`;
   let url = "";
 
@@ -328,9 +342,14 @@ function share(platform) {
     case "whatsapp":
       url = `https://api.whatsapp.com/send?text=${text} ${pageUrl}`;
       break;
+    default:
+      console.warn("Unsupported share platform:", platform);
+      return;
   }
+
   window.open(url, "_blank");
 }
+
 
   </script>
 </body>
