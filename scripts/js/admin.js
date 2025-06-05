@@ -160,8 +160,17 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
       const title = document.getElementById("title").value.trim();
       const description = document.getElementById("description").value.trim();
       const location = document.getElementById("location").value.trim();
-const formDate = document.getElementById("date").value; // "2025-05-24T09:43"
+      
+const formDate = document.getElementById("date").value;
 const eventDate = new Date(formDate);
+
+// Validate date
+if (!formDate || isNaN(eventDate.getTime())) {
+  alert("Please enter a valid date and time.");
+  submitBtn.disabled = false;
+  return;
+}
+
       const tags = document.getElementById("tags").value
         .split(",")
         .map((t) => t.trim().toLowerCase())
