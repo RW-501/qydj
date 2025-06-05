@@ -268,6 +268,8 @@ async function loadEvents() {
       <img src="${data.imageUrl || 'https://via.placeholder.com/300x150'}" class="w-full h-40 object-cover my-2"/>
       <button class="bg-yellow-500 text-white px-3 py-1 rounded editBtn" data-id="${docSnap.id}">Edit</button>
       <button class="bg-red-500 text-white px-3 py-1 rounded deleteBtn" data-id="${docSnap.id}">Delete</button>
+      <button class="bg-blue-500 text-white px-3 py-1 rounded analyticsBtn" data-id="${docSnap.id}">Analytics</button>
+
     `;
     eventList.appendChild(card);
   });
@@ -286,7 +288,6 @@ async function loadEvents() {
   document.querySelectorAll(".editBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
           document.getElementById("preview").classList.remove("hidden");
-          document.getElementById("preview").classList.add("block");
           document.getElementById("edit-event-section").classList.remove("hidden");
   document.getElementById("view-events-section").classList.add("hidden");
   document.getElementById("view-events-section").classList.remove("block");
@@ -303,8 +304,28 @@ async function loadEvents() {
       window.editingEventId = id;
     });
   });
-}
 
+
+
+  document.querySelectorAll(".analyticsBtn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+          document.getElementById("analytics-section").classList.remove("hidden");
+  document.getElementById("view-events-section").classList.add("hidden");
+  document.getElementById("view-events-section").classList.remove("block");
+
+      const id = btn.getAttribute("data-id");
+      const event = snapshot.docs.find((d) => d.id === id).data();
+      document.getElementById("title").value = event.title;
+      document.getElementById("description").value = event.description;
+      document.getElementById("location").value = event.location;
+      document.getElementById("preview").src = event.imageUrl;
+      document.getElementById("date").value = formatFirebaseDate(event.date);
+      document.getElementById("tags").value = event.tags.join(", ");
+      document.getElementById("status").value = event.status;
+      window.editingEventId = id;
+    });
+  });
+}
 
 
 document.getElementById("btn-manage-events").addEventListener("click", () => {
