@@ -119,11 +119,43 @@
 
   <h2 class="text-2xl font-semibold mb-4">Manage Events</h2>
 
-  <!-- Toggle Buttons -->
-  <div class="flex gap-4 mb-6">
-    <button id="viewEventsBtn" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded text-black">View Events</button>
-    <button id="editEventBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Add / Edit Event</button>
+<!-- Toggle Buttons -->
+<div class="flex gap-4 mb-6">
+  <button id="viewEventsBtn" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded text-black">View Events</button>
+  <button id="editEventBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Add / Edit Event</button>
+  <button id="analyticsBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded">Event Analytics</button>
+</div>
+
+<!-- Analytics Section -->
+<div id="analytics-section" class="hidden">
+  <h3 class="text-xl font-semibold mb-4">Event Analytics</h3>
+  <div id="analyticsContent" class="space-y-4">
+
+    <div class="bg-white border rounded p-4 shadow">
+      <h4 class="font-semibold mb-1">Total Views:</h4>
+      <p id="analyticsViews" class="text-gray-700">Loading...</p>
+    </div>
+
+    <div class="bg-white border rounded p-4 shadow">
+      <h4 class="font-semibold mb-1">Total RSVPs:</h4>
+      <p id="analyticsRSVPs" class="text-gray-700">Loading...</p>
+    </div>
+
+    <div class="bg-white border rounded p-4 shadow">
+      <h4 class="font-semibold mb-1">Comments:</h4>
+      <ul id="analyticsComments" class="text-gray-700 list-disc pl-5">
+        <li>Loading...</li>
+      </ul>
+    </div>
+
+    <div class="bg-white border rounded p-4 shadow">
+      <h4 class="font-semibold mb-1">Other Metrics:</h4>
+      <p class="text-gray-700">You can add custom stats here like ticket sales, shares, etc.</p>
+    </div>
+
   </div>
+</div>
+
 
   <!-- View Events Section -->
   <div id="view-events-section" class="block">

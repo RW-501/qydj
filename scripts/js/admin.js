@@ -285,6 +285,11 @@ async function loadEvents() {
 
   document.querySelectorAll(".editBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
+          document.getElementById("bannerImage").classList.remove("hidden");
+          document.getElementById("edit-event-section").classList.remove("hidden");
+  document.getElementById("view-events-section").classList.add("hidden");
+  document.getElementById("view-events-section").classList.remove("block");
+
       const id = btn.getAttribute("data-id");
       const event = snapshot.docs.find((d) => d.id === id).data();
       document.getElementById("title").value = event.title;
@@ -366,3 +371,6 @@ document.getElementById('editEventBtn').addEventListener('click', () => {
   document.getElementById('edit-event-section').classList.remove('hidden');
   document.getElementById('view-events-section').classList.add('hidden');
 });
+
+
+
