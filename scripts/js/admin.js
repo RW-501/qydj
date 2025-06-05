@@ -251,6 +251,35 @@ const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
   });
   
 
+
+  function resetEventForm() {
+  const form = document.getElementById("eventForm");
+  form.reset();
+
+  // Clear the preview image
+  const preview = document.getElementById("preview");
+  if (preview) {
+    preview.src = "";
+    preview.style.display = "none";
+  }
+
+  // Reset file input manually
+  const bannerInput = document.getElementById("bannerImage");
+  if (bannerInput) {
+    bannerInput.value = "";
+  }
+
+  // Clear editing state
+  window.editingEventId = null;
+}
+
+// Attach event listener to reset button
+document.getElementById("resetFormBtn").addEventListener("click", () => {
+  if (confirm("Are you sure you want to clear the form?")) {
+    resetEventForm();
+  }
+});
+
 // 📋 Load Events
 async function loadEvents() {
   const eventList = document.getElementById("eventList");
