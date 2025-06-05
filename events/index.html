@@ -231,9 +231,7 @@ const db = getFirestore(app);
 
         try {
           let q;
-  console.log("Event filter type:", type);
-  console.log("Current JS Date:", now);
-  console.log("Current Firebase Timestamp:", Timestamp.fromDate(now));
+
 
     if (type === "upcoming") {
       q = query(

@@ -136,7 +136,8 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
       const title = document.getElementById("title").value.trim();
       const description = document.getElementById("description").value.trim();
       const location = document.getElementById("location").value.trim();
-      const date = document.getElementById("date").value;
+const formDate = document.getElementById("date").value; // "2025-05-24T09:43"
+const eventDate = new Date(formDate);
       const tags = document.getElementById("tags").value
         .split(",")
         .map((t) => t.trim().toLowerCase())
@@ -149,7 +150,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
       const otherLink = document.getElementById("otherLink").value.trim();
       const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
 
-      if (!title || !description || !location || !date || !status) {
+      if (!title || !description || !location || !eventDate || !status) {
         alert("Please fill all required fields.");
         return;
       }
@@ -185,7 +186,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
           title,
           description,
           location,
-          date,
+          date: eventDate,
           tags,
           status,
           imageUrl,
@@ -203,7 +204,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
           title,
           description,
           location,
-          date,
+          date: eventDate,
           tags,
           status,
           imageUrl,
