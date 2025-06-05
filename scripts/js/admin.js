@@ -316,13 +316,32 @@ async function loadEvents() {
       const id = btn.getAttribute("data-id");
       const event = snapshot.docs.find((d) => d.id === id).data();
       document.getElementById("title").value = event.title;
-      document.getElementById("description").value = event.description;
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
       document.getElementById("date").value = formatFirebaseDate(event.date);
-      document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
       window.editingEventId = id;
+
+      
+  // You can dynamically fetch event ID or loop over multiple events
+  document.getElementById("analyticsViews").innerText = "254 views";
+  document.getElementById("analyticsRSVPs").innerText = "78 RSVPs";
+
+  const comments = [
+    "Great event!",
+    "Had a wonderful time.",
+    "Looking forward to the next one."
+  ];
+
+  const commentsList = document.getElementById("analyticsComments");
+  commentsList.innerHTML = "";
+  comments.forEach(comment => {
+    const li = document.createElement("li");
+    li.textContent = comment;
+    commentsList.appendChild(li);
+  });
+
+  
     });
   });
 }
