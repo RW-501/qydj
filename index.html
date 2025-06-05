@@ -96,16 +96,18 @@
     <a href="events/" class="bg-purple-600 text-white py-3 px-6 rounded hover:bg-purple-700 transition-all duration-300">View All Events</a>
   </section>
 
-<!-- Email Opt-in -->
+<!-- Email/Phone Opt-in -->
 <section class="bg-gray-100 py-12 text-center" data-aos="fade-up">
   <h2 class="text-2xl font-bold mb-3">Stay in the Loop</h2>
-  <form id="subscribe-form" class="flex justify-center flex-wrap gap-2 mt-6">
+  <form id="subscribe-form" class="flex justify-center flex-wrap gap-2 mt-6 max-w-xl mx-auto">
     <input type="text" id="subscriber-name" placeholder="Your Name" class="p-3 border rounded w-64" required>
-    <input type="email" id="subscriber-email" placeholder="Your Email" class="p-3 border rounded w-64" required>
+    <input type="email" id="subscriber-email" placeholder="Your Email (optional)" class="p-3 border rounded w-64">
+    <input type="tel" id="subscriber-phone" placeholder="Your Phone (optional)" class="p-3 border rounded w-64">
     <button type="submit" class="bg-blue-500 text-white px-5 py-3 rounded hover:bg-blue-600 transition">Subscribe</button>
   </form>
-  <p id="subscribe-message" class="mt-4 text-green-600 font-medium hidden">Thank you for subscribing!</p>
+  <p id="subscribe-message" class="mt-4 text-green-600 font-medium hidden">✅ Thank you for subscribing!</p>
 </section>
+
 
 </main>
 

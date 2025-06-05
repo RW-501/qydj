@@ -456,7 +456,7 @@ async function loadSubscribers() {
   const tbody = document.getElementById("subscriber-table-body");
   const searchInput = document.getElementById("subscriber-search");
 
-  tbody.innerHTML = "Loading...";
+  tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4">Loading...</td></tr>`;
   allSubscribers = [];
 
   try {
@@ -470,10 +470,10 @@ async function loadSubscribers() {
 
     searchInput.addEventListener("input", () => {
       const filter = searchInput.value.toLowerCase();
-      const filtered = allSubscribers.filter(
-        (s) =>
-          s.name?.toLowerCase().includes(filter) ||
-          s.email?.toLowerCase().includes(filter)
+      const filtered = allSubscribers.filter((s) =>
+        s.name?.toLowerCase().includes(filter) ||
+        s.email?.toLowerCase().includes(filter) ||
+        s.phone?.toLowerCase().includes(filter)
       );
       renderSubscribers(filtered);
     });
@@ -483,6 +483,7 @@ async function loadSubscribers() {
     tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-red-500">Failed to load subscribers.</td></tr>`;
   }
 }
+
 
 function renderSubscribers(list) {
   const tbody = document.getElementById("subscriber-table-body");

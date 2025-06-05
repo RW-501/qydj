@@ -184,45 +184,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+
   const form = document.getElementById("subscribe-form");
 
   if (form) {
-form.addEventListener("submit", async function (e) {
-  e.preventDefault();
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-  const name = document.getElementById("subscriber-name").value.trim();
-  const email = document.getElementById("subscriber-email").value.trim().toLowerCase();
+      const name = document.getElementById("subscriber-name").value.trim();
+      const email = document.getElementById("subscriber-email").value.trim().toLowerCase();
+      const phone = document.getElementById("subscriber-phone").value.trim();
 
-  if (!name || !email) {
-    alert("Please enter both your name and email.");
-    return;
-  }
+      if (!name || (!email && !phone)) {
+        alert("Please enter your name and at least an email or phone number.");
+        return;
+      }
 
-  try {
-    // Check if the email already exists
-    const q = query(collection(db, "subscribers"), where("email", "==", email));
-    const querySnapshot = await getDocs(q);
+      try {
+        // Avoid duplicate subscriptions by email
+        if (email) {
+          const q = query(collection(db, "subscribers"), where("email", "==", email));
+          const existing = await getDocs(q);
+          if (!existing.empty) {
+            alert("This email is already subscribed.");
+            return;
+          }
+        }
 
-    if (!querySnapshot.empty) {
-      alert("This email is already subscribed.");
-      return;
-    }
+        await addDoc(collection(db, "subscribers"), {
+          name,
+          email: email || null,
+          phone: phone || null,
+          createdAt: serverTimestamp()
+        });
 
-    await addDoc(collection(db, "subscribers"), {
-      name,
-      email,
-      createdAt: serverTimestamp(),
+        form.reset();
+        document.getElementById("subscribe-message").classList.remove("hidden");
+      } catch (error) {
+        console.error("Error subscribing:", error);
+        alert("❌ Something went wrong. Please try again.");
+      }
     });
-
-    form.reset();
-    document.getElementById("thank-you-modal").classList.remove("hidden");
-  } catch (error) {
-    console.error("Error saving to Firestore:", error);
-    alert("Oops! Something went wrong. Please try again.");
   }
-});
-  }
-
   
   const eventContainer = document.getElementById("events-container");
   const loadingText = document.getElementById("loading-text");
