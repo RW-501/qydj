@@ -322,6 +322,7 @@ async function loadEvents() {
       <p>Status: ${data.status}</p>
       <img id="test101" src="${data.imageUrl || 'https://via.placeholder.com/300x150'}" class="w-full h-40 object-cover my-2"/>
       <button class="bg-green-500 text-white px-3 py-1 rounded viewBtn" data-id="${docSnap.id}">View</button>
+      <button class="bg-blue-500 text-white px-3 py-1 rounded galleryBtn" data-id="${docSnap.id}">Gallery</button>
       <button class="bg-yellow-500 text-white px-3 py-1 rounded editBtn" data-id="${docSnap.id}">Edit</button>
       <button class="bg-red-500 text-white px-3 py-1 rounded deleteBtn" data-id="${docSnap.id}">Delete</button>
       <button class="bg-blue-500 text-white px-3 py-1 rounded analyticsBtn" data-id="${docSnap.id}">Analytics</button>
@@ -353,6 +354,102 @@ async function loadEvents() {
     });
   });
 
+
+    document.querySelectorAll(".galleryBtn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+
+      
+          document.getElementById("preview").classList.add("hidden");
+          document.getElementById("edit-event-section").classList.add("hidden");
+  document.getElementById("view-events-section").classList.add("hidden");
+  document.getElementById("view-events-section").classList.remove("block");
+          document.getElementById("analytics-section").classList.add("hidden");
+          document.getElementById("gallery-section").classList.remove("hidden");
+
+      const eventId = btn.getAttribute("data-id");
+
+    loadGallery(eventId);
+  });
+
+    });
+
+const gallerySection = document.getElementById("gallery-section");
+const galleryForm = document.getElementById("gallery-upload-form");
+const galleryGrid = document.getElementById("gallery-grid");
+
+async function loadGallery(eventId) {
+  galleryGrid.innerHTML = "<p class='col-span-full text-gray-500'>Loading gallery...</p>";
+
+  const q = query(collection(db, "events", eventId, "gallery"), orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
+
+  galleryGrid.innerHTML = "";
+
+  if (snapshot.empty) {
+    galleryGrid.innerHTML = "<p class='col-span-full text-gray-500'>No media uploaded yet.</p>";
+    return;
+  }
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    const card = document.createElement("div");
+    card.className = "relative group";
+
+    const isVideo = data.type === "video";
+    const mediaElement = isVideo
+      ? `<video src="${data.url}" controls class="w-full h-40 object-cover rounded"></video>`
+      : `<img src="${data.url}" alt="Gallery" class="w-full h-40 object-cover rounded" />`;
+
+    card.innerHTML = `
+      ${mediaElement}
+      <button onclick="deleteGalleryItem('${eventId}', '${docSnap.id}', '${data.path}')" 
+              class="absolute top-2 right-2 bg-red-600 text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
+        Delete
+      </button>
+    `;
+
+    galleryGrid.appendChild(card);
+  });
+}
+
+galleryForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const fileInput = document.getElementById("mediaFile");
+  const type = document.getElementById("mediaType").value;
+  const file = fileInput.files[0];
+  if (!file || !window.editingEventId) return;
+
+  const fileRef = ref(storage, `events/${window.editingEventId}/gallery/${Date.now()}-${file.name}`);
+  const uploadTask = await uploadBytes(fileRef, file);
+  const downloadURL = await getDownloadURL(uploadTask.ref);
+
+  await addDoc(collection(db, "events", window.editingEventId, "gallery"), {
+    url: downloadURL,
+    type,
+    path: fileRef.fullPath,
+    createdAt: serverTimestamp()
+  });
+
+  galleryForm.reset();
+  loadGallery(window.editingEventId);
+});
+
+async function deleteGalleryItem(eventId, docId, filePath) {
+  if (!confirm("Delete this item?")) return;
+
+  try {
+    await deleteDoc(doc(db, "events", eventId, "gallery", docId));
+    await deleteObject(ref(storage, filePath));
+    loadGallery(eventId);
+  } catch (err) {
+    console.error("Error deleting gallery item:", err);
+    alert("Failed to delete media.");
+  }
+}
+
+
+
   document.querySelectorAll(".editBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
 
@@ -362,6 +459,7 @@ async function loadEvents() {
   document.getElementById("view-events-section").classList.add("hidden");
   document.getElementById("view-events-section").classList.remove("block");
           document.getElementById("analytics-section").classList.add("hidden");
+          document.getElementById("gallery-section").classList.add("hidden");
 
       const id = btn.getAttribute("data-id");
       const event = snapshot.docs.find((d) => d.id === id).data();
@@ -440,6 +538,7 @@ async function loadAnalytics(eventId) {
           document.getElementById("analytics-section").classList.remove("hidden");
   document.getElementById("view-events-section").classList.add("hidden");
   document.getElementById("view-events-section").classList.remove("block");
+          document.getElementById("gallery-section").classList.add("hidden");
 
       const id = btn.getAttribute("data-id");
     window.editingEventId = id;
@@ -449,6 +548,9 @@ loadAnalytics(id);
     });
   });
 }
+
+
+
 
 let allSubscribers = [];
 
@@ -584,6 +686,7 @@ document.getElementById('viewEventsBtn').addEventListener('click', () => {
   document.getElementById('view-events-section').classList.remove('hidden');
   document.getElementById('edit-event-section').classList.add('hidden');
   document.getElementById("analytics-section").classList.add("hidden");
+  document.getElementById("gallery-section").classList.add("hidden");
 
 });
 
@@ -591,6 +694,8 @@ document.getElementById('editEventBtn').addEventListener('click', () => {
   document.getElementById('edit-event-section').classList.remove('hidden');
   document.getElementById('view-events-section').classList.add('hidden');
   document.getElementById("analytics-section").classList.add("hidden");
+   document.getElementById("gallery-section").classList.add("hidden");
+
 
 });
 

@@ -309,6 +309,25 @@
   </div>
 </section>
 
+<!-- Gallery Admin Section -->
+<section id="gallery-section" class="hidden p-6 bg-white border rounded shadow">
+  <h2 class="text-2xl font-bold mb-4">Event Gallery</h2>
+
+  <!-- Upload Form -->
+  <form id="gallery-upload-form" class="flex flex-col gap-4 mb-6">
+    <input type="file" id="mediaFile" accept="image/*,video/*" required class="border p-2 rounded">
+    <select id="mediaType" class="border p-2 rounded">
+      <option value="image">Image</option>
+      <option value="video">Video</option>
+    </select>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+      Upload to Gallery
+    </button>
+  </form>
+
+  <!-- Gallery Grid -->
+  <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+</section>
 
 </div>
 
