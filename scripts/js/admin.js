@@ -394,6 +394,46 @@ if (eventEndDate instanceof Date && !isNaN(eventEndDate)) {
   });
 
 
+async function loadAnalytics(eventId) {
+  const eventRef = doc(db, "events", eventId);
+  const eventSnap = await getDoc(eventRef);
+
+  // 📊 Load view counts
+  const data = eventSnap.data();
+  const totalViews = data?.viewCount || 0;
+  const uniqueViews = data?.uniqueViewCount || 0;
+  document.getElementById("analyticsViews").innerText = `${totalViews} total views (${uniqueViews} unique)`;
+
+  // 📅 Load RSVPs (assuming RSVP collection exists)
+  const rsvpSnap = await getDocs(collection(db, "events", eventId, "rsvps"));
+  document.getElementById("analyticsRSVPs").innerText = `${rsvpSnap.size} RSVPs`;
+
+  // 💬 Load Comments
+  const commentsSnap = await getDocs(query(
+    collection(db, "events", eventId, "comments"),
+    where("visible", "==", true),
+    orderBy("createdAt", "desc")
+  ));
+
+  const commentsList = document.getElementById("analyticsComments");
+  commentsList.innerHTML = "";
+
+  if (commentsSnap.empty) {
+    const li = document.createElement("li");
+    li.textContent = "No comments yet.";
+    commentsList.appendChild(li);
+  } else {
+    commentsSnap.forEach((doc) => {
+      const c = doc.data();
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${c.name || "Anonymous"}:</strong> ${c.content}`;
+      commentsList.appendChild(li);
+    });
+  }
+
+  // 👁️ Show the analytics section
+  document.getElementById("analytics-section").classList.remove("hidden");
+}
 
   document.querySelectorAll(".analyticsBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -402,32 +442,8 @@ if (eventEndDate instanceof Date && !isNaN(eventEndDate)) {
   document.getElementById("view-events-section").classList.remove("block");
 
       const id = btn.getAttribute("data-id");
-      const event = snapshot.docs.find((d) => d.id === id).data();
-      document.getElementById("title").value = event.title;
-      document.getElementById("location").value = event.location;
-      document.getElementById("preview").src = event.imageUrl;
-      document.getElementById("date").value = formatFirebaseDate(event.date);
-      document.getElementById("status").value = event.status;
-      window.editingEventId = id;
-
-      
-  // You can dynamically fetch event ID or loop over multiple events
-  document.getElementById("analyticsViews").innerText = "254 views";
-  document.getElementById("analyticsRSVPs").innerText = "78 RSVPs";
-
-  const comments = [
-    "Great event!",
-    "Had a wonderful time.",
-    "Looking forward to the next one."
-  ];
-
-  const commentsList = document.getElementById("analyticsComments");
-  commentsList.innerHTML = "";
-  comments.forEach(comment => {
-    const li = document.createElement("li");
-    li.textContent = comment;
-    commentsList.appendChild(li);
-  });
+    window.editingEventId = id;
+loadAnalytics(id);
 
 
     });

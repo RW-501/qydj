@@ -127,7 +127,34 @@
     <p class="text-center text-muted">👀 Views: <span id="viewCount">0</span></p>
   </div>
 
-    
+    <section id="event-comments" class="max-w-2xl mx-auto my-10 bg-white p-6 rounded shadow">
+  <h3 class="text-xl font-bold mb-4">💬 Comments</h3>
+
+  <form id="commentForm" class="space-y-4">
+    <input type="hidden" id="userIp" name="ip" />
+    <input type="hidden" id="eventId" value="<!-- YOUR EVENT ID HERE -->" />
+
+    <input type="text" id="commenterName" placeholder="Your name (optional)"
+           class="w-full border rounded px-4 py-2" />
+
+    <textarea id="commentContent" placeholder="Write your comment here..." required
+              class="w-full border rounded px-4 py-2"></textarea>
+
+    <label class="inline-flex items-center gap-2">
+      <input type="checkbox" id="commentVisible" checked class="form-checkbox">
+      Show this comment publicly
+    </label>
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Post Comment
+    </button>
+  </form>
+
+  <div id="commentsContainer" class="mt-6">
+    <!-- Comments will be dynamically rendered here -->
+  </div>
+</section>
+
     
     <!-- Footer -->
     <footer
@@ -211,11 +238,6 @@ if (!snap.exists()) {
   document.getElementById("event-detail").innerHTML = "<p>Event not found.</p>";
 } else {
   const event = snap.data();
-
-  // Update view count
-  await updateDoc(eventRef, {
-    viewCount: increment(1)
-  });
 
 
 
@@ -349,6 +371,91 @@ function share(platform) {
 
   window.open(url, "_blank");
 }
+
+async function getUserIpDetails() {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    return {
+      ip: data.ip,
+      city: data.city,
+      region: data.region,
+      country: data.country_name,
+      timezone: data.timezone,
+      org: data.org,
+      userAgent: navigator.userAgent
+    };
+  } catch (error) {
+    console.error("IP lookup failed", error);
+    return {
+      ip: "unknown",
+      city: "",
+      region: "",
+      country: "",
+      timezone: "",
+      org: "",
+      userAgent: navigator.userAgent
+    };
+  }
+}
+
+
+async function trackEventView(eventId) {
+  const eventRef = doc(db, "events", eventId);
+  const viewsCollection = collection(db, "events", eventId, "views");
+
+  const ipDetails = await getUserIpDetails();
+  const ipDocRef = doc(viewsCollection, ipDetails.ip);
+  const ipDocSnap = await getDoc(ipDocRef);
+
+  const updateData = {
+    viewCount: increment(1)
+  };
+
+  if (!ipDocSnap.exists()) {
+    await setDoc(ipDocRef, {
+      ...ipDetails,
+      timestamp: serverTimestamp()
+    });
+    updateData.uniqueViewCount = increment(1);
+  }
+
+  await updateDoc(eventRef, updateData);
+}
+
+
+
+document.getElementById("commentForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const eventId = document.getElementById("eventId").value;
+  const name = document.getElementById("commenterName").value.trim();
+  const content = document.getElementById("commentContent").value.trim();
+  const visible = document.getElementById("commentVisible").checked;
+
+  if (!content) return alert("Comment cannot be empty.");
+
+  const ipDetails = await getUserIpDetails();
+
+  await addDoc(collection(db, "events", eventId, "comments"), {
+    name: name || "Anonymous",
+    content,
+    visible,
+    parentId: null,
+    ...ipDetails,
+    createdAt: serverTimestamp()
+  });
+
+  document.getElementById("commentForm").reset();
+  loadComments(eventId);
+});
+
+
+
+
+
+
 
 
   </script>
