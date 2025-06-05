@@ -131,7 +131,7 @@
 
 <!-- Event Container -->
 <section
-  id="events-container"
+  id="events-container-main"
   class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6"
 >
   <p id="loading-text" class="col-span-full text-center text-gray-500">
@@ -212,7 +212,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-      const container = document.getElementById("events-container");
+      const container = document.getElementById("events-container-main");
       const loadingText = document.getElementById("loading-text");
       const tabs = document.querySelectorAll(".tab-btn");
 
