@@ -97,7 +97,7 @@ async function loadFeaturedEvent() {
       document.getElementById("rsvp-link").style.display = "block";
       document.getElementById("rsvp-link").href = featured.rsvpUrl || "#";
           }else{
-                  document.getElementById("rsvp-link").style.display = "none";
+      document.getElementById("rsvp-link").style.display = "none";
 
           }
 
@@ -107,6 +107,10 @@ async function loadFeaturedEvent() {
     } else {
       document.getElementById("featured-title").innerText = "Stay tuned!";
       document.getElementById("countdown").innerText = "";
+      document.getElementById("featured-image").style.backgroundImage =
+        `url('${'default-banner.jpg'}')`;
+      document.getElementById("rsvp-link").style.display = "none";
+
     }
   } catch (error) {
     console.error("Error loading featured event:", error);
