@@ -344,6 +344,8 @@ function previewImage(event) {
     reader.onload = function(e) {
       preview.src = e.target.result;
       preview.style.display = 'block';
+      preview.classList.remove('hidden');
+
     };
 
     reader.readAsDataURL(input.files[0]);
@@ -352,3 +354,15 @@ function previewImage(event) {
 
 // Optional: make function globally accessible
 window.previewImage = previewImage;
+
+
+
+document.getElementById('viewEventsBtn').addEventListener('click', () => {
+  document.getElementById('view-events-section').classList.remove('hidden');
+  document.getElementById('edit-event-section').classList.add('hidden');
+});
+
+document.getElementById('editEventBtn').addEventListener('click', () => {
+  document.getElementById('edit-event-section').classList.remove('hidden');
+  document.getElementById('view-events-section').classList.add('hidden');
+});
