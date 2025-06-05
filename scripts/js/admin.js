@@ -619,44 +619,73 @@ document.getElementById("toggleRSVP").addEventListener("click", () => {
 
 
 
+let contactsOrder = "desc"; // Start with newest first
 
-    // Get messages on load
-    async function loadContacts() {
-      const contactsContainer = document.getElementById("contacts-list");
-      contactsContainer.innerHTML = "<p class='text-gray-500'>Loading...</p>";
+document.getElementById("sortToggle").addEventListener("click", () => {
+  contactsOrder = contactsOrder === "desc" ? "asc" : "desc";
+  document.getElementById("sortToggle").innerText =
+    contactsOrder === "desc" ? "Sort: Newest First" : "Sort: Oldest First";
+  loadContacts();
+});
 
-      try {
-        const q = query(collection(db, "contacts"), orderBy("timestamp", "desc"));
-        const snapshot = await getDocs(q);
+async function deleteContact(id) {
+  if (confirm("Are you sure you want to delete this contact message?")) {
+    try {
+      await deleteDoc(doc(db, "contacts", id));
+      loadContacts();
+    } catch (err) {
+      console.error("Error deleting contact:", err);
+      alert("❌ Failed to delete. Check the console.");
+    }
+  }
+}
 
-        if (snapshot.empty) {
-          contactsContainer.innerHTML = "<p class='text-gray-500'>No contact messages yet.</p>";
-          return;
-        }
+async function loadContacts() {
+  const contactsContainer = document.getElementById("contacts-list");
+  contactsContainer.innerHTML = "<p class='text-gray-500'>Loading...</p>";
 
-        contactsContainer.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          const card = document.createElement("div");
-          card.className = "bg-white p-5 border rounded shadow mb-6";
+  try {
+    const q = query(collection(db, "contacts"), orderBy("timestamp", contactsOrder));
+    const snapshot = await getDocs(q);
 
-          card.innerHTML = `
-            <p><strong>Name:</strong> ${data.name}</p>
-            <p><strong>Email:</strong> <a href="mailto:${data.email}" class="text-blue-600 underline">${data.email}</a></p>
-            <p><strong>Phone:</strong> ${data.phone || "—"}</p>
-            <p><strong>Type:</strong> ${data.type}</p>
-            <p class="mt-2"><strong>Message:</strong></p>
-            <p class="whitespace-pre-line text-gray-700">${data.message}</p>
-            <p class="text-sm text-gray-400 mt-4">Submitted: ${data.timestamp?.toDate().toLocaleString() || "Unknown"}</p>
-          `;
-          contactsContainer.appendChild(card);
-        });
-      } catch (error) {
-        console.error("Error loading contacts:", error);
-        contactsContainer.innerHTML = "<p class='text-red-600'>Error loading messages. Check console.</p>";
-      }
+    if (snapshot.empty) {
+      contactsContainer.innerHTML = "<p class='text-gray-500'>No contact messages yet.</p>";
+      return;
     }
 
+    contactsContainer.innerHTML = "";
+
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const id = docSnap.id;
+
+      const card = document.createElement("div");
+      card.className = "bg-white border rounded shadow mb-4";
+
+      card.innerHTML = `
+        <div class="p-4 flex justify-between items-center cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-t" onclick="this.nextElementSibling.classList.toggle('hidden')">
+          <div>
+            <p class="font-semibold">${data.name}</p>
+            <p class="text-sm text-gray-500">${data.timestamp?.toDate().toLocaleString() || "Unknown"}</p>
+          </div>
+          <button onclick="event.stopPropagation(); deleteContact('${id}')" class="text-red-600 hover:underline text-sm">Delete</button>
+        </div>
+        <div class="hidden px-4 pb-4 pt-2">
+          <p><strong>Email:</strong> <a href="mailto:${data.email}" class="text-blue-600 underline">${data.email}</a></p>
+          <p><strong>Phone:</strong> ${data.phone || "—"}</p>
+          <p><strong>Type:</strong> ${data.type}</p>
+          <p class="mt-2"><strong>Message:</strong></p>
+          <p class="whitespace-pre-line text-gray-700">${data.message}</p>
+        </div>
+      `;
+
+      contactsContainer.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error loading contacts:", error);
+    contactsContainer.innerHTML = "<p class='text-red-600'>Error loading messages. Check console.</p>";
+  }
+}
 
     
 
