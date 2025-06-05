@@ -353,10 +353,12 @@ async function loadEvents() {
       document.getElementById("description").value = event.description;
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
+
       console.log("event.date ",event.date);
       console.log("formatFirebaseDate event.date ",formatFirebaseDate(event.date));
 
       document.getElementById("date").value = event.date;
+      
       document.getElementById("tags").value = event.tags.join(", ");
       document.getElementById("status").value = event.status;
 
