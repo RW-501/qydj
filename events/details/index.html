@@ -245,13 +245,13 @@ function formatFirebaseDate(dateInput) {
     `https://www.google.com/maps?q=${encodeURIComponent(event.location)}&output=embed`;
 
   // Buy Button
-  if(allowRSVP){
+  if(event.allowRSVP){
   document.getElementById("rsvpButtonMain").style.display = "block";
   }else{
   document.getElementById("rsvpButtonMain").style.display = "none";
   }
 
-    if(allowRSVP){
+    if(event.mainBuyLink || event.eventbriteLink){
   document.getElementById("buyButtonMain").style.display = "block";
   document.getElementById("buyButton").href = event.mainBuyLink || event.eventbriteLink || "#";
   }else{
