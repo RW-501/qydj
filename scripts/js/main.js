@@ -284,3 +284,8 @@ form.addEventListener("submit", async function (e) {
       loadEvents(selected);
     });
   });
+
+
+  document.getElementById("close-modal-btn")?.addEventListener("click", () => {
+  document.getElementById("thank-you-modal").classList.add("hidden");
+});
