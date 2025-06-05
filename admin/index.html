@@ -180,6 +180,38 @@
       <input type="text" id="otherLink" placeholder="Other" class="p-2 border rounded" />
       <input type="text" id="mainBuyLink" placeholder="Main Buy Link" class="p-2 border rounded" />
 
+
+<!-- Toggle Switches -->
+<div class="grid gap-4">
+  <!-- Featured Toggle -->
+  <label class="flex items-center gap-3">
+    <span class="text-sm font-medium">Featured Event</span>
+    <input type="checkbox" id="isFeatured" class="sr-only peer">
+    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 relative transition">
+      <div class="absolute w-5 h-5 bg-white rounded-full top-0.5 left-0.5 peer-checked:translate-x-full transition"></div>
+    </div>
+  </label>
+
+  <!-- Allow Comments Toggle -->
+  <label class="flex items-center gap-3">
+    <span class="text-sm font-medium">Allow Comments</span>
+    <input type="checkbox" id="allowComments" class="sr-only peer">
+    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 relative transition">
+      <div class="absolute w-5 h-5 bg-white rounded-full top-0.5 left-0.5 peer-checked:translate-x-full transition"></div>
+    </div>
+  </label>
+
+  <!-- Allow RSVP Toggle -->
+  <label class="flex items-center gap-3">
+    <span class="text-sm font-medium">Allow RSVP</span>
+    <input type="checkbox" id="allowRSVP" class="sr-only peer">
+    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 relative transition">
+      <div class="absolute w-5 h-5 bg-white rounded-full top-0.5 left-0.5 peer-checked:translate-x-full transition"></div>
+    </div>
+  </label>
+</div>
+
+
       <!-- Upload and Preview -->
       <button id="uploadTrigger" type="button" class="bg-gray-200 px-3 py-2 rounded border">Upload Image</button>
       <input type="file" id="bannerImage" accept="image/*" class="hidden" />

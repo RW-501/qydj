@@ -175,6 +175,10 @@ const eventbriteLink = document.getElementById("eventbriteLink").value.trim();
 const otherLink = document.getElementById("otherLink").value.trim();
 const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
 
+const isFeatured = document.getElementById("isFeatured").checked;
+const allowComments = document.getElementById("allowComments").checked;
+const allowRSVP = document.getElementById("allowRSVP").checked;
+
 
       if (!title || !description || !location || !eventDate || !status) {
         alert("Please fill all required fields.");
@@ -216,7 +220,10 @@ const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
           tags,
           status,
           imageUrl,
-          updatedAt: serverTimestamp(),
+            isFeatured,
+  allowComments,
+  allowRSVP,
+  updatedAt: serverTimestamp(),
         });
         alert("Event updated.");
         window.editingEventId = null;
@@ -235,6 +242,9 @@ const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
           status,
           imageUrl,
           images: [],
+            isFeatured,
+  allowComments,
+  allowRSVP,
           createdAt: serverTimestamp(),
         });
         alert("Event saved.");
@@ -262,6 +272,12 @@ const mainBuyLink = document.getElementById("mainBuyLink").value.trim();
     preview.src = "";
     preview.style.display = "none";
   }
+
+  
+// Reset toggles
+["isFeatured", "allowComments", "allowRSVP"].forEach(id => {
+  document.getElementById(id).checked = false;
+});
 
   // Reset file input manually
   const bannerInput = document.getElementById("bannerImage");
