@@ -393,6 +393,44 @@ async function loadEvents() {
 }
 
 
+
+async function loadSubscribers() {
+  const tbody = document.getElementById("subscriber-table-body");
+  tbody.innerHTML = ""; // Clear existing data
+
+  try {
+    const querySnapshot = await getDocs(collection(db, "subscribers"));
+
+    if (querySnapshot.empty) {
+      tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-gray-500">No subscribers found.</td></tr>`;
+      return;
+    }
+
+    querySnapshot.forEach((doc) => {
+      const subscriber = doc.data();
+      const tr = document.createElement("tr");
+
+      const name = subscriber.name || "—";
+      const email = subscriber.email || "—";
+      const date = subscriber.createdAt?.toDate
+        ? subscriber.createdAt.toDate().toLocaleString()
+        : "—";
+
+      tr.innerHTML = `
+        <td class="p-3 border">${name}</td>
+        <td class="p-3 border">${email}</td>
+        <td class="p-3 border">${date}</td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+  } catch (error) {
+    console.error("Error loading subscribers:", error);
+    tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">Failed to load subscribers.</td></tr>`;
+  }
+}
+
+
 document.getElementById("btn-manage-events").addEventListener("click", () => {
   showAdminSection("events");
 });
