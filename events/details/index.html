@@ -586,17 +586,21 @@ loadComments(eventId);
   });
 
 
-  function openRSVPModal(eventId) {
+  function openRSVPModal(type) {
     document.getElementById("rsvpEventIdModal").value = eventId;
-    toggleRSVPModal(true);
+    toggleRSVPModal(type);
   }
 
 
-  const RSVPModal = document.getElementById('rsvpButton');
-    RSVPModal.addEventListener("click", () => {
-       openRSVPModal(eventId);
+  const RSVPModalClose = document.getElementById('RSVPModal');
+    RSVPModalClose.addEventListener("click", () => {
+       openRSVPModal(false);
     });
 
+      const RSVPModalOpen = document.getElementById('rsvpButton');
+    RSVPModalOpen.addEventListener("click", () => {
+       openRSVPModal(true);
+    });
 
   // Close on outside click
   window.addEventListener("click", function (e) {
