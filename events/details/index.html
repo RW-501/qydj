@@ -234,25 +234,6 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 
-// Parse ID from URL
-const urlParams = new URLSearchParams(window.location.search);
-const eventId = urlParams.get("id");
-
-if (!eventId) {
-  document.getElementById("event-detail").innerHTML = "<p>Event not found.</p>";
-  throw new Error("Missing event ID");
-}
-
-// Get event data
-const eventRef = doc(db, "events", eventId);
-const snap = await getDoc(eventRef);
-
-if (!snap.exists()) {
-  document.getElementById("event-detail").innerHTML = "<p>Event not found.</p>";
-} else {
-  const event = snap.data();
-
-
 
 function formatFirebaseDate(dateInput) {
   if (typeof dateInput?.toDate === 'function') {
@@ -268,14 +249,6 @@ function formatFirebaseDate(dateInput) {
 
   return null; // ❌ Invalid
 }
-
-
-  document.getElementById("eventTitle").innerText = event.title;
-  document.getElementById("eventDateTime").innerText = formatFirebaseDate(event.date);
-  document.getElementById("eventDescription").innerHTML = event.description;
-  document.getElementById("eventLocation").innerHTML = `<strong>Location:</strong> ${event.location}`;
-  document.getElementById("bannerImage").src = event.imageUrl;
-  document.getElementById("viewCount").innerText = event.viewCount + 1;
 
 
 async function loadEventGallery(eventId) {
@@ -316,6 +289,37 @@ async function loadEventGallery(eventId) {
     galleryGrid.innerHTML = "<p class='col-span-full text-red-500'>Failed to load media.</p>";
   }
 }
+
+
+
+
+// Parse ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const eventId = urlParams.get("id");
+
+if (!eventId) {
+  document.getElementById("event-detail").innerHTML = "<p>Event not found.</p>";
+  throw new Error("Missing event ID");
+}
+
+// Get event data
+const eventRef = doc(db, "events", eventId);
+const snap = await getDoc(eventRef);
+
+if (!snap.exists()) {
+  document.getElementById("event-detail").innerHTML = "<p>Event not found.</p>";
+} else {
+  const event = snap.data();
+
+
+
+  document.getElementById("eventTitle").innerText = event.title;
+  document.getElementById("eventDateTime").innerText = formatFirebaseDate(event.date);
+  document.getElementById("eventDescription").innerHTML = event.description;
+  document.getElementById("eventLocation").innerHTML = `<strong>Location:</strong> ${event.location}`;
+  document.getElementById("bannerImage").src = event.imageUrl;
+  document.getElementById("viewCount").innerText = event.viewCount + 1;
+
 
   // Google Maps Embed
   document.getElementById("mapEmbed").src =
@@ -386,7 +390,19 @@ if (startDate && endDate) {
       },
     });
   }
+
 }
+
+  loadEventGallery(eventId);
+
+
+
+
+
+
+
+
+  
 
 // 🔁 Add event listeners to social share buttons
 document.addEventListener("DOMContentLoaded", () => {
