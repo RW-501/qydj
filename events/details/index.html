@@ -132,6 +132,35 @@
     </main>
 
 
+
+<!-- RSVP Modal (Include on Event Detail Page) -->
+<div id="rsvpModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+  <div class="bg-white p-6 rounded shadow-xl max-w-md w-full relative">
+    <button id="RSVPModal" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
+    <h2 class="text-xl font-bold mb-4">RSVP to This Event</h2>
+    <form id="rsvpFormModal">
+      <input type="hidden" id="rsvpEventIdModal" />
+      <input type="text" id="rsvpNameModal" placeholder="Your Name" required class="w-full p-2 mb-2 border rounded">
+      <input type="tel" id="rsvpPhoneModal" placeholder="Phone Number" required class="w-full p-2 mb-2 border rounded">
+      <input type="email" id="rsvpEmailModal" placeholder="Email Address" required class="w-full p-2 mb-4 border rounded">
+      <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 w-full">Submit RSVP</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Footer -->
     <footer
       class="bg-black text-white text-center py-6 mt-10"
@@ -529,6 +558,53 @@ document.getElementById("commentForm").addEventListener("submit", async (e) => {
 
 
 loadComments(eventId); 
+
+
+
+  function toggleRSVPModal(show) {
+    const modal = document.getElementById('rsvpModal');
+    document.getElementById('rsvpEventIdModal').value = eventId;
+    modal.classList.toggle('hidden', !show);
+  }
+
+  document.getElementById('rsvpFormModal').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const eventId = document.getElementById('rsvpEventIdModal').value;
+    const name = document.getElementById('rsvpNameModal').value.trim();
+    const phone = document.getElementById('rsvpPhoneModal').value.trim();
+    const email = document.getElementById('rsvpEmailModal').value.trim();
+
+    if (!name || !phone || !email) return alert('All fields are required.');
+
+    await addDoc(collection(db, 'events', eventId, 'rsvps'), {
+      name, phone, email,
+      createdAt: serverTimestamp()
+    });
+
+    alert('RSVP Submitted!');
+    toggleRSVPModal(false);
+  });
+
+
+  function openRSVPModal(eventId) {
+    document.getElementById("rsvpEventIdModal").value = eventId;
+    toggleRSVPModal(true);
+  }
+
+
+  const RSVPModal = document.getElementById('RSVPModal');
+    RSVPModal.addEventListener("click", () => {
+       openRSVPModal(eventId);
+    });
+
+
+  // Close on outside click
+  window.addEventListener("click", function (e) {
+    const modal = document.getElementById("rsvpModal");
+    if (e.target === modal) {
+      toggleRSVPModal(false);
+    }
+  });
 
   </script>
 </body>
