@@ -42,36 +42,19 @@
 </head>
 <body class="bg-white text-gray-900 font-sans">
 
-<!-- Header -->
-<header class="bg-black text-white p-4 flex justify-between items-center shadow-md sticky top-0 z-50">
-  <a href="/qydj/" class="text-2xl font-extrabold tracking-widest hover:text-purple-400 transition">QYDJ</a>
-  <nav class="space-x-6 hidden md:block">
-    <a href="/qydj/" class="hover:text-purple-400 transition">Home</a>
-    <a href="/qydj/events/" class="hover:text-purple-400 transition">Events</a>
-    <a href="/qydj/about/" class="hover:text-purple-400 transition">About</a>
-    <a href="/qydj/contact/" class="hover:text-purple-400 transition">Contact</a>
-  </nav>
-  <button id="mobile-menu-btn" aria-label="Toggle menu" class="md:hidden focus:outline-none">
-    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-      <path d="M4 6h16M4 12h16M4 18h16"/>
-    </svg>
-  </button>
-</header>
+<!-- Header placeholder -->
+<div id="header-container"></div>
 
-<!-- Mobile Nav -->
-<nav id="mobile-menu" class="bg-black text-white px-4 py-2 space-y-2 hidden md:hidden">
-  <a href="/qydj/" class="block hover:text-purple-400">Home</a>
-  <a href="/qydj/events/" class="block hover:text-purple-400">Events</a>
-  <a href="/qydj/about/" class="block hover:text-purple-400">About</a>
-  <a href="/qydj/contact/" class="block hover:text-purple-400">Contact</a>
-</nav>
-
-<!-- Mobile Toggle Script -->
+<!-- Load header dynamically -->
 <script>
-  document.getElementById("mobile-menu-btn").addEventListener("click", () => {
-    document.getElementById("mobile-menu").classList.toggle("hidden");
-  });
+  fetch("https://rw-501.github.io/qydj/scripts/includes/header.html") // Adjust the path as needed
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header-container").innerHTML = html;
+    })
+    .catch(err => console.error("Failed to load header:", err));
 </script>
+
 
 <!-- Admin Container -->
 <main class="bg-gray-100 min-h-screen p-6">
