@@ -121,6 +121,14 @@
   <button class="btn btn-sm btn-outline-secondary" data-platform="whatsapp">WhatsApp</button>
 </div>
 
+<!-- Event Gallery -->
+<section id="event-gallery-section" class="py-12 px-4 max-w-6xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6 text-center">🎥 Event Gallery</h2>
+  <div id="event-gallery-grid" class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4"></div>
+</section>
+
+
+
 
     <!-- Add to Calendar -->
     <div class="text-center mb-5">
@@ -268,6 +276,46 @@ function formatFirebaseDate(dateInput) {
   document.getElementById("eventLocation").innerHTML = `<strong>Location:</strong> ${event.location}`;
   document.getElementById("bannerImage").src = event.imageUrl;
   document.getElementById("viewCount").innerText = event.viewCount + 1;
+
+
+async function loadEventGallery(eventId) {
+  const galleryGrid = document.getElementById("event-gallery-grid");
+  galleryGrid.innerHTML = "<p class='col-span-full text-gray-500'>Loading media...</p>";
+
+  try {
+    const q = query(collection(db, "events", eventId, "gallery"), orderBy("createdAt", "desc"));
+    const snapshot = await getDocs(q);
+    galleryGrid.innerHTML = "";
+
+    if (snapshot.empty) {
+      galleryGrid.innerHTML = "<p class='col-span-full text-gray-400 text-center'>No media yet for this event.</p>";
+      return;
+    }
+
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const mediaDiv = document.createElement("div");
+
+      if (data.type === "video") {
+        mediaDiv.innerHTML = `
+          <video controls class="rounded shadow w-full h-48 object-cover">
+            <source src="${data.url}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        `;
+      } else {
+        mediaDiv.innerHTML = `
+          <img src="${data.url}" alt="Event Media" class="rounded shadow w-full h-48 object-cover hover:scale-105 transition-transform duration-300" loading="lazy">
+        `;
+      }
+
+      galleryGrid.appendChild(mediaDiv);
+    });
+  } catch (error) {
+    console.error("Failed to load event gallery:", error);
+    galleryGrid.innerHTML = "<p class='col-span-full text-red-500'>Failed to load media.</p>";
+  }
+}
 
   // Google Maps Embed
   document.getElementById("mapEmbed").src =
