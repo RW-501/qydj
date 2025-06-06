@@ -106,7 +106,7 @@
 
   <form id="commentForm" class="space-y-4">
     <input type="hidden" id="userIp" name="ip" />
-    <input type="hidden" id="eventId" value="<!-- YOUR EVENT ID HERE -->" />
+    <input type="hidden" id="eventId" name="eventId"/>
 
     <input type="text" id="commenterName" placeholder="Your name (optional)"
            class="w-full border rounded px-4 py-2" />
@@ -501,7 +501,7 @@ async function loadComments(eventId) {
 document.getElementById("commentForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const eventId = document.getElementById("eventId").value;
+ // const eventId = document.getElementById("eventId").value;
   const name = document.getElementById("commenterName").value.trim();
   const content = document.getElementById("commentContent").value.trim();
   const visible = document.getElementById("commentVisible").checked;
