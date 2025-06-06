@@ -367,6 +367,7 @@ async function loadEvents() {
           document.getElementById("gallery-section").classList.remove("hidden");
 
       const eventId = btn.getAttribute("data-id");
+      window.editingEventId = eventId;
 
     loadGallery(eventId);
   });
