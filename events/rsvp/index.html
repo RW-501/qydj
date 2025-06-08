@@ -50,7 +50,26 @@
     <div id="thankYouMessage" class="text-center text-green-600 font-semibold hidden">
       Thank you for RSVPing! See you there.
     </div>
+
+
+
   </main>
+
+  
+<!-- Footer placeholder -->
+<div id="footer-container"></div>
+
+<!-- Load footer dynamically -->
+<script>
+  fetch("https://rw-501.github.io/qydj/scripts/includes/footer.html") // Adjust the path as needed
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footer-container").innerHTML = html;
+    })
+    .catch(err => console.error("Failed to load footer:", err));
+</script>
+
+
 
   <script type="module">
     import { db } from '/scripts/js/firebase-config.js';

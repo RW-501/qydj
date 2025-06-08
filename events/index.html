@@ -116,31 +116,21 @@
   
   </main>
 
-    <!-- Footer -->
-    <footer
-      class="bg-black text-white text-center py-6 mt-10"
-      aria-label="Page footer"
-    >
-      <p>&copy; 2025 QYDJ. All Rights Reserved.</p>
-      <p class="text-sm mt-2">
-        Built by
-        <a href="https://rw-501.github.io/Portfolio/#about">Ron W</a>.
-      </p>
-      <a href="admin/">Admin</a>
-    </footer>
 
-    <!-- Script to load header/footer -->
-    <script>
-        /*
-      fetch("/components/header.html")
-        .then((res) => res.text())
-        .then((data) => (document.getElementById("header-placeholder").innerHTML = data));
+<!-- Footer placeholder -->
+<div id="footer-container"></div>
 
-      fetch("/components/footer.html")
-        .then((res) => res.text())
-        .then((data) => (document.getElementById("footer-placeholder").innerHTML = data));
-        */
-    </script>
+<!-- Load footer dynamically -->
+<script>
+  fetch("https://rw-501.github.io/qydj/scripts/includes/footer.html") // Adjust the path as needed
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footer-container").innerHTML = html;
+    })
+    .catch(err => console.error("Failed to load footer:", err));
+</script>
+
+
 
     <!-- Firebase + Event Loader -->
     <script type="module">

@@ -1,0 +1,32 @@
+<footer class="bg-black text-white py-6 mt-10">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm">
+    
+    <!-- Site Links -->
+    <div class="mb-4 md:mb-0 text-center md:text-left space-x-4">
+      <a href="https://rw-501.github.io/qydj/" class="hover:text-purple-400">Home</a>
+      <a href="https://rw-501.github.io/qydj/events/" class="hover:text-purple-400">Events</a>
+      <a href="https://rw-501.github.io/qydj/about/" class="hover:text-purple-400">About</a>
+      <a href="https://rw-501.github.io/qydj/contact/" class="hover:text-purple-400">Contact</a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center mb-4 md:mb-0">
+      <p>&copy; <span id="current-year"></span> QYDJ. All Rights Reserved.</p>
+      <p class="text-xs">Created by <a href="https://rw-501.github.io/Portfolio/#about" class="underline hover:text-purple-400">Ron W</a></p>
+    </div>
+
+    <!-- Social/Admin -->
+    <div class="text-center md:text-right space-x-4">
+      <a href="admin/" class="hover:text-purple-400">Admin</a>
+      <a href="https://www.facebook.com/Blueprints3" target="_blank" class="inline-block bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
+        Facebook
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  // Auto-update copyright year
+  document.getElementById("current-year").textContent = new Date().getFullYear();
+</script>

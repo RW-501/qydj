@@ -97,12 +97,19 @@
 
 </main>
 
-  <!-- Footer -->
-  <footer class="bg-black text-white text-center py-6 mt-10">
-    <p>&copy; 2025 QYDJ. All Rights Reserved.</p>
-    <p class="text-sm mt-2">Built by <a href="https://rw-501.github.io/Portfolio/#about" class="">Ron W</a>.</p>
-    <a href="admin/" class="">Admin</a>
-  </footer>
+<!-- Footer placeholder -->
+<div id="footer-container"></div>
+
+<!-- Load footer dynamically -->
+<script>
+  fetch("https://rw-501.github.io/qydj/scripts/includes/footer.html") // Adjust the path as needed
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footer-container").innerHTML = html;
+    })
+    .catch(err => console.error("Failed to load footer:", err));
+</script>
+
 
 
 
