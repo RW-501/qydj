@@ -22,10 +22,10 @@
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
     <!-- AOS (Animate On Scroll) -->
-    <link href="scripts/css/main.css" rel="stylesheet" />
+    <link href="https://rw-501.github.io/qydj/scripts/css/main.css" rel="stylesheet" />
 
   <!-- Firebase -->
-  <script type="module" src="scripts/js/main.js" defer></script>
+  <script type="module" src="https://rw-501.github.io/qydj/scripts/js/main.js" defer></script>
 </head>
 <body>
 
@@ -34,34 +34,20 @@
 
 <main class="bg-white text-gray-900 font-sans">
 
-<!-- header.html -->
-<header class="bg-black text-white p-4 flex justify-between items-center shadow-md sticky top-0 z-50">
-    <a href="/qydj/" class="text-2xl font-extrabold tracking-widest hover:text-purple-400 transition">QYDJ</a>
-    <nav class="space-x-6 hidden md:block">
-      <a href="/qydj/" class="hover:text-purple-400 transition">Home</a>
-      <a href="/events/" class="hover:text-purple-400 transition">Events</a>
-      <a href="/about/" class="hover:text-purple-400 transition">About</a>
-      <a href="/contact/" class="hover:text-purple-400 transition">Contact</a>
-    </nav>
-    <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
-      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </button>
-  </header>
-  
-  <!-- Optional: Mobile Menu -->
-  <nav id="mobile-menu" class="bg-black text-white px-4 py-2 space-y-2 hidden md:hidden">
-    <a href="/qydj/" class="block hover:text-purple-400">Home</a>
-    <a href="/events/" class="block hover:text-purple-400">Events</a>
-    <a href="/about/" class="block hover:text-purple-400">About</a>
-    <a href="/contact/" class="block hover:text-purple-400">Contact</a>
-  </nav>
-  
-  <script>
-    document.getElementById("mobile-menu-btn").addEventListener("click", () => {
-      const menu = document.getElementById("mobile-menu");
-      menu.classList.toggle("hidden");
-    });
-  </script>
+<!-- Header placeholder -->
+<div id="header-container"></div>
+
+<!-- Load header dynamically -->
+<script>
+  fetch("https://rw-501.github.io/qydj/scripts/includes/header.html") // Adjust the path as needed
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header-container").innerHTML = html;
+    })
+    .catch(err => console.error("Failed to load header:", err));
+</script>
+
+
   
 
 <!-- Hero: Featured Event -->
