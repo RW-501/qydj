@@ -385,6 +385,15 @@ async function loadEvents() {
         </tr>`
       )
       .join("");
+
+        
+          document.getElementById("preview").classList.add("hidden");
+          document.getElementById("edit-event-section").classList.add("hidden");
+  document.getElementById("view-events-section").classList.add("hidden");
+  document.getElementById("view-events-section").classList.remove("block");
+          document.getElementById("analytics-section").classList.add("hidden");
+          document.getElementById("gallery-section").classList.add("hidden");
+          document.getElementById("RSVP-section").classList.remove("hidden");
   }
 
   // Sort RSVPs
@@ -454,7 +463,7 @@ async function loadEvents() {
   document.getElementById("view-events-section").classList.remove("block");
           document.getElementById("analytics-section").classList.add("hidden");
           document.getElementById("gallery-section").classList.remove("hidden");
-          document.getElementById("RSVP-section").classList.remove("hidden");
+          document.getElementById("RSVP-section").classList.add("hidden");
 
       const eventId = btn.getAttribute("data-id");
       window.editingEventId = eventId;
@@ -551,7 +560,7 @@ async function deleteGalleryItem(eventId, docId, filePath) {
   document.getElementById("view-events-section").classList.remove("block");
           document.getElementById("analytics-section").classList.add("hidden");
           document.getElementById("gallery-section").classList.add("hidden");
-          document.getElementById("RSVP-section").classList.remove("hidden");
+          document.getElementById("RSVP-section").classList.add("hidden");
 
       const id = btn.getAttribute("data-id");
       const event = snapshot.docs.find((d) => d.id === id).data();
