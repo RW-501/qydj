@@ -455,15 +455,14 @@ async function loadEvents() {
 
     document.querySelectorAll(".galleryBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
-
       
-          document.getElementById("preview").classList.add("hidden");
-          document.getElementById("edit-event-section").classList.add("hidden");
-  document.getElementById("view-events-section").classList.add("hidden");
-  document.getElementById("view-events-section").classList.remove("block");
-          document.getElementById("analytics-section").classList.add("hidden");
-          document.getElementById("gallery-section").classList.remove("hidden");
-          document.getElementById("RSVP-section").classList.add("hidden");
+document.getElementById("preview").classList.add("hidden");
+document.getElementById("edit-event-section").classList.add("hidden");
+document.getElementById("view-events-section").classList.add("hidden");
+document.getElementById("view-events-section").classList.remove("block");
+document.getElementById("analytics-section").classList.add("hidden");
+document.getElementById("gallery-section").classList.remove("hidden");
+document.getElementById("RSVP-section").classList.add("hidden");
 
       const eventId = btn.getAttribute("data-id");
       window.editingEventId = eventId;
@@ -554,13 +553,13 @@ async function deleteGalleryItem(eventId, docId, filePath) {
     btn.addEventListener("click", () => {
 
       
-          document.getElementById("preview").classList.remove("hidden");
-          document.getElementById("edit-event-section").classList.remove("hidden");
-  document.getElementById("view-events-section").classList.add("hidden");
-  document.getElementById("view-events-section").classList.remove("block");
-          document.getElementById("analytics-section").classList.add("hidden");
-          document.getElementById("gallery-section").classList.add("hidden");
-          document.getElementById("RSVP-section").classList.add("hidden");
+document.getElementById("preview").classList.remove("hidden");
+document.getElementById("edit-event-section").classList.remove("hidden");
+document.getElementById("view-events-section").classList.add("hidden");
+document.getElementById("view-events-section").classList.remove("block");
+document.getElementById("analytics-section").classList.add("hidden");
+document.getElementById("gallery-section").classList.add("hidden");
+document.getElementById("RSVP-section").classList.add("hidden");
 
       const id = btn.getAttribute("data-id");
       const event = snapshot.docs.find((d) => d.id === id).data();
@@ -636,11 +635,11 @@ async function loadAnalytics(eventId) {
 
   document.querySelectorAll(".analyticsBtn").forEach((btn) => {
     btn.addEventListener("click", () => {
-          document.getElementById("analytics-section").classList.remove("hidden");
+  document.getElementById("analytics-section").classList.remove("hidden");
   document.getElementById("view-events-section").classList.add("hidden");
   document.getElementById("view-events-section").classList.remove("block");
-          document.getElementById("gallery-section").classList.add("hidden");
-          document.getElementById("RSVP-section").classList.remove("hidden");
+  document.getElementById("gallery-section").classList.add("hidden");
+  document.getElementById("RSVP-section").classList.add("hidden");
 
       const id = btn.getAttribute("data-id");
     window.editingEventId = id;
@@ -789,6 +788,7 @@ document.getElementById('viewEventsBtn').addEventListener('click', () => {
   document.getElementById('edit-event-section').classList.add('hidden');
   document.getElementById("analytics-section").classList.add("hidden");
   document.getElementById("gallery-section").classList.add("hidden");
+  document.getElementById("RSVP-section").classList.add("hidden");
 
 });
 
@@ -796,7 +796,9 @@ document.getElementById('editEventBtn').addEventListener('click', () => {
   document.getElementById('edit-event-section').classList.remove('hidden');
   document.getElementById('view-events-section').classList.add('hidden');
   document.getElementById("analytics-section").classList.add("hidden");
-   document.getElementById("gallery-section").classList.add("hidden");
+  document.getElementById("gallery-section").classList.add("hidden");
+  document.getElementById("RSVP-section").classList.add("hidden");
+
 
 
 });
