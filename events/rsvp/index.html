@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP to Event | QYDJ</title>
+  <meta name="description" content="RSVP to an unforgettable QYDJ event!" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <main class="max-w-3xl mx-auto px-4 py-10">
+    <!-- Header placeholder -->
+<div id="header-container"></div>
+
+<!-- Load header dynamically -->
+<script>
+  fetch("https://rw-501.github.io/qydj/scripts/includes/header.html") // Adjust the path as needed
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header-container").innerHTML = html;
+    })
+    .catch(err => console.error("Failed to load header:", err));
+</script>
+
+    <div id="eventInfo" class="mb-10 text-center">
+      <h1 id="eventTitle" class="text-3xl font-bold mb-2">Loading...</h1>
+      <p id="eventDate" class="text-lg text-gray-600"></p>
+      <p id="eventLocation" class="text-lg text-gray-600"></p>
+    </div>
+
+    <form id="rsvpForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 class="text-2xl font-bold mb-4">RSVP Now</h2>
+      <input type="hidden" id="rsvpEventId">
+      <label class="block mb-2">Name</label>
+      <input type="text" id="rsvpName" class="w-full p-2 border rounded mb-4" required>
+
+      <label class="block mb-2">Phone</label>
+      <input type="tel" id="rsvpPhone" class="w-full p-2 border rounded mb-4" required>
+
+      <label class="block mb-2">Email</label>
+      <input type="email" id="rsvpEmail" class="w-full p-2 border rounded mb-4" required>
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+        Submit RSVP
+      </button>
+    </form>
+
+    <div id="thankYouMessage" class="text-center text-green-600 font-semibold hidden">
+      Thank you for RSVPing! See you there.
+    </div>
+  </main>
+
+  <script type="module">
+    import { db } from '/scripts/js/firebase-config.js';
+    import { doc, getDoc, addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+    // 🔐 Config
+const firebaseConfig = {
+  apiKey: "AIzaSyCzTA2ajYdy64FWHa2jW5R5TX1XzBdrSdY",
+  authDomain: "qydj-65f76.firebaseapp.com",
+  projectId: "qydj-65f76",
+  storageBucket: "qydj-65f76.firebasestorage.app",
+  messagingSenderId: "485183277679",
+  appId: "1:485183277679:web:d633e3f2b9136874dc9b9a",
+  measurementId: "G-G7F0PJ5V5H"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get("id");
+    document.getElementById("rsvpEventId").value = eventId;
+
+    async function loadEventDetails() {
+      if (!eventId) return;
+      const eventRef = doc(db, "events", eventId);
+      const eventSnap = await getDoc(eventRef);
+      if (eventSnap.exists()) {
+        const data = eventSnap.data();
+        document.getElementById("eventTitle").textContent = data.title || "Untitled Event";
+        document.getElementById("eventDate").textContent = data.date ? new Date(data.date).toLocaleString() : "TBD";
+        document.getElementById("eventLocation").textContent = data.location || "Location TBA";
+      } else {
+        document.getElementById("eventTitle").textContent = "Event not found.";
+      }
+    }
+
+    document.getElementById("rsvpForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("rsvpName").value.trim();
+      const phone = document.getElementById("rsvpPhone").value.trim();
+      const email = document.getElementById("rsvpEmail").value.trim();
+
+      if (!name || !phone || !email) return alert("All fields are required.");
+
+      await addDoc(collection(db, "events", eventId, "rsvps"), {
+        name,
+        phone,
+        email,
+        createdAt: serverTimestamp(),
+      });
+
+      document.getElementById("rsvpForm").reset();
+      document.getElementById("thankYouMessage").classList.remove("hidden");
+    });
+
+    loadEventDetails();
+  </script>
+</body>
+</html>

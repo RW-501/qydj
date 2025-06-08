@@ -91,10 +91,16 @@ async function loadFeaturedEvent() {
     const querySnapshot = await getDocs(q);
     const featured = querySnapshot.docs[0]?.data();
 
+
     if (featured && featured.isFeatured) {
+        const featured = featuredDoc.data();
+  const featuredId = featuredDoc.id;
       document.getElementById("featured-title").innerText = featured.title || "Upcoming Event";
           if (featured.allowRSVP) {
       document.getElementById("rsvp-link").style.display = "block";
+
+      const rsvpLink = `https://rw-501.github.io/qydj/events/rsvp/index.html?id=${featuredId}`;
+
       document.getElementById("rsvp-link").href = featured.rsvpUrl || "#";
           }else{
       document.getElementById("rsvp-link").style.display = "none";
