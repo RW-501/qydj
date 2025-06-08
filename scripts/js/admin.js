@@ -324,6 +324,7 @@ async function loadEvents() {
       <button class="bg-green-500 text-white px-3 py-1 rounded viewBtn" data-id="${docSnap.id}">View</button>
       <button class="bg-blue-500 text-white px-3 py-1 rounded galleryBtn" data-id="${docSnap.id}">Gallery</button>
       <button class="bg-yellow-500 text-white px-3 py-1 rounded editBtn" data-id="${docSnap.id}">Edit</button>
+      <button class="bg-green-500 text-white px-3 py-1 rounded RSVPBtn" data-id="${docSnap.id}">RSVPs</button>
       <button class="bg-red-500 text-white px-3 py-1 rounded deleteBtn" data-id="${docSnap.id}">Delete</button>
       <button class="bg-blue-500 text-white px-3 py-1 rounded analyticsBtn" data-id="${docSnap.id}">Analytics</button>
 
@@ -332,6 +333,94 @@ async function loadEvents() {
 
     eventList.appendChild(card);
   });
+
+
+
+
+
+  // 📌 Attach RSVP Listeners
+  document.querySelectorAll(".RSVPBtn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const eventId = btn.getAttribute("data-id");
+      loadRSVPs(eventId);
+    })
+  });
+
+
+
+
+  const eventSelect = document.getElementById("eventSelect");
+  const rsvpTableBody = document.getElementById("rsvpTableBody");
+  let currentRSVPs = [];
+
+  // Load RSVPs for a specific event
+  async function loadRSVPs(eventId) {
+    const q = query(collection(db, "events", eventId, "rsvps"), orderBy("createdAt", "desc"));
+    const snapshot = await getDocs(q);
+
+    currentRSVPs = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      currentRSVPs.push({
+        name: data.name || "N/A",
+        phone: data.phone || "N/A",
+        email: data.email || "N/A",
+        createdAt: data.createdAt?.toDate?.() || new Date(),
+      });
+    });
+
+    renderTable(currentRSVPs);
+  }
+
+  // Render table
+  function renderTable(rsvps) {
+    rsvpTableBody.innerHTML = rsvps
+      .map(
+        (r) => `
+        <tr>
+          <td class="p-3">${r.name}</td>
+          <td class="p-3">${r.phone}</td>
+          <td class="p-3">${r.email}</td>
+          <td class="p-3">${r.createdAt.toLocaleString()}</td>
+        </tr>`
+      )
+      .join("");
+  }
+
+  // Sort RSVPs
+  function sortTableBy(key) {
+    const direction = eventSelect.getAttribute(`data-sort-${key}`) === "asc" ? "desc" : "asc";
+    currentRSVPs.sort((a, b) => {
+      if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
+      if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+    eventSelect.setAttribute(`data-sort-${key}`, direction);
+    renderTable(currentRSVPs);
+  }
+
+  // Add click listeners to headers for sorting
+  document.querySelectorAll("#rsvpTable th[data-sort]").forEach((th) => {
+    th.addEventListener("click", () => {
+      const key = th.getAttribute("data-sort");
+      sortTableBy(key);
+    });
+  });
+
+  // Handle event select
+  eventSelect.addEventListener("change", (e) => {
+    const eventId = e.target.value;
+    if (eventId) {
+      loadRSVPs(eventId);
+    } else {
+      rsvpTableBody.innerHTML = "";
+    }
+  });
+
+
+
+
+
 
   // 📌 Attach Edit/Delete Listeners
   document.querySelectorAll(".viewBtn").forEach((btn) => {
@@ -365,6 +454,7 @@ async function loadEvents() {
   document.getElementById("view-events-section").classList.remove("block");
           document.getElementById("analytics-section").classList.add("hidden");
           document.getElementById("gallery-section").classList.remove("hidden");
+          document.getElementById("RSVP-section").classList.remove("hidden");
 
       const eventId = btn.getAttribute("data-id");
       window.editingEventId = eventId;
@@ -461,6 +551,7 @@ async function deleteGalleryItem(eventId, docId, filePath) {
   document.getElementById("view-events-section").classList.remove("block");
           document.getElementById("analytics-section").classList.add("hidden");
           document.getElementById("gallery-section").classList.add("hidden");
+          document.getElementById("RSVP-section").classList.remove("hidden");
 
       const id = btn.getAttribute("data-id");
       const event = snapshot.docs.find((d) => d.id === id).data();
@@ -540,6 +631,7 @@ async function loadAnalytics(eventId) {
   document.getElementById("view-events-section").classList.add("hidden");
   document.getElementById("view-events-section").classList.remove("block");
           document.getElementById("gallery-section").classList.add("hidden");
+          document.getElementById("RSVP-section").classList.remove("hidden");
 
       const id = btn.getAttribute("data-id");
     window.editingEventId = id;
