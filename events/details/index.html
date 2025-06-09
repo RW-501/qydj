@@ -20,7 +20,16 @@
 
 
 
+<style>
 
+  #mediaModal {
+  display: none;
+}
+#mediaModal.show {
+  display: flex;
+}
+
+</style>
 
 
 
@@ -186,6 +195,13 @@
 
 
 
+<!-- Media Popup Modal -->
+<div id="mediaModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+  <div class="relative bg-white rounded shadow-lg max-w-3xl w-full p-4">
+    <button id="closeMediaModal" class="absolute top-2 right-2 text-gray-600 hover:text-black text-xl">&times;</button>
+    <div id="mediaModalContent" class="w-full max-h-[80vh] overflow-auto text-center"></div>
+  </div>
+</div>
 
 
 
@@ -280,7 +296,6 @@ function formatFirebaseDate(dateInput) {
   return null; // ❌ Invalid
 }
 
-
 async function loadEventGallery(eventId) {
   const galleryGrid = document.getElementById("event-gallery-grid");
   galleryGrid.innerHTML = "<p class='col-span-full text-gray-500'>Loading media...</p>";
@@ -298,10 +313,11 @@ async function loadEventGallery(eventId) {
     snapshot.forEach((docSnap) => {
       const data = docSnap.data();
       const mediaDiv = document.createElement("div");
+      mediaDiv.classList.add("cursor-pointer");
 
       if (data.type === "video") {
         mediaDiv.innerHTML = `
-          <video controls class="rounded shadow w-full h-48 object-cover">
+          <video class="rounded shadow w-full h-48 object-cover" muted>
             <source src="${data.url}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
@@ -312,6 +328,18 @@ async function loadEventGallery(eventId) {
         `;
       }
 
+      mediaDiv.addEventListener("click", () => {
+        const modal = document.getElementById("mediaModal");
+        const modalContent = document.getElementById("mediaModalContent");
+
+        modalContent.innerHTML = data.type === "video"
+          ? `<video controls autoplay class="w-full rounded"><source src="${data.url}" type="video/mp4"></video>`
+          : `<img src="${data.url}" alt="Event Media" class="w-full rounded">`;
+
+        modal.classList.add("show");
+        modal.classList.remove("hidden");
+      });
+
       galleryGrid.appendChild(mediaDiv);
     });
   } catch (error) {
@@ -320,8 +348,11 @@ async function loadEventGallery(eventId) {
   }
 }
 
-
-
+document.getElementById("closeMediaModal").addEventListener("click", () => {
+  const modal = document.getElementById("mediaModal");
+  modal.classList.remove("show");
+  modal.classList.add("hidden");
+});
 
 // Parse ID from URL
 const urlParams = new URLSearchParams(window.location.search);
