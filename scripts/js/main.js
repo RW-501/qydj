@@ -93,7 +93,7 @@ async function loadFeaturedEvent() {
 
 
     if (featured && featured.isFeatured) {
-  const featuredId = featured.id;
+const featuredId = featuredDoc?.id;
 
   
   console.log("Featured Event ID:", featuredId);
