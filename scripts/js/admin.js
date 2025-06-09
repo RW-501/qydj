@@ -958,3 +958,28 @@ async function loadContacts() {
 
     
 
+  // Handle file upload preview
+  const uploadTrigger = document.getElementById("uploadTrigger");
+  const bannerInput = document.getElementById("bannerImage");
+  const preview = document.getElementById("preview");
+
+  uploadTrigger.addEventListener("click", () => bannerInput.click());
+
+  bannerInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+      preview.classList.remove("hidden");
+    }
+  });
+
+  // Handle preset image selection
+  document.querySelectorAll(".preset-thumb").forEach(img => {
+    img.addEventListener("click", () => {
+      preview.src = img.src;
+      preview.classList.remove("hidden");
+
+      // If you're storing imageUrl, you may want to save this value
+      // e.g. window.selectedImageUrl = img.src;
+    });
+  });
