@@ -282,18 +282,30 @@ const storage = getStorage(app);
 
 
 function formatFirebaseDate(dateInput) {
+  let dateObj;
+
   if (typeof dateInput?.toDate === 'function') {
-    return dateInput.toDate(); // ✅ Return a JS Date
+    dateObj = dateInput.toDate(); // Firestore Timestamp
+  } else {
+    try {
+      dateObj = new Date(dateInput);
+    } catch (e) {
+      console.warn("Invalid date input:", dateInput);
+      return null;
+    }
   }
 
-  try {
-    const date = new Date(dateInput);
-    if (!isNaN(date)) return date; // ✅ Valid Date
-  } catch (e) {
-    console.warn("Invalid date input:", dateInput);
-  }
+  if (isNaN(dateObj)) return null;
 
-  return null; // ❌ Invalid
+  return dateObj.toLocaleString("en-US", {
+    weekday: "long",        // "Saturday"
+    year: "numeric",        // "2025"
+    month: "long",          // "October"
+    day: "numeric",         // "26"
+    hour: "numeric",        // "7"
+    minute: "2-digit",      // "00"
+    hour12: true            // "PM"
+  });
 }
 
 async function loadEventGallery(eventId) {

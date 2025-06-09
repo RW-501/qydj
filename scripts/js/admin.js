@@ -131,19 +131,32 @@ document.getElementById("logoutBtn").addEventListener("click", logoutUser);
 
 
 function formatFirebaseDate(dateInput) {
-  // Check if it's a Firestore Timestamp object
+  let dateObj;
+
   if (typeof dateInput?.toDate === 'function') {
-    return dateInput.toDate().toLocaleString(); // Convert and format
+    dateObj = dateInput.toDate(); // Firestore Timestamp
+  } else {
+    try {
+      dateObj = new Date(dateInput);
+    } catch (e) {
+      console.warn("Invalid date input:", dateInput);
+      return null;
+    }
   }
 
-  // If it's already a JS Date or ISO string
-  try {
-    return new Date(dateInput).toLocaleString();
-  } catch (e) {
-    console.warn("Invalid date input:", dateInput);
-    return "Invalid Date";
-  }
+  if (isNaN(dateObj)) return null;
+
+  return dateObj.toLocaleString("en-US", {
+    weekday: "long",        // "Saturday"
+    year: "numeric",        // "2025"
+    month: "long",          // "October"
+    day: "numeric",         // "26"
+    hour: "numeric",        // "7"
+    minute: "2-digit",      // "00"
+    hour12: true            // "PM"
+  });
 }
+
 
 
 
