@@ -96,26 +96,34 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       size: "invisible",
       callback: (response) => {
-        console.log("reCAPTCHA solved");
+        console.log("reCAPTCHA solved:", response);
       },
     },
     auth
   );
+
+  // 👇 This goes here!
+  recaptchaVerifier.render().then((widgetId) => {
+    console.log("reCAPTCHA rendered:", widgetId);
+  });
 });
+
 
 
 document.getElementById("sendCode").addEventListener("click", async () => {
   const phone = document.getElementById("phoneInput").value.trim();
   if (!allowedPhones.includes(phone)) return alert("Unauthorized phone number.");
 
-  try {
-    const appVerifier = recaptchaVerifier;
-    const confirmationResult = await signInWithPhoneNumber(auth, phone, appVerifier);
-    window.confirmationResult = confirmationResult;
-    document.getElementById("codeSection").classList.remove("hidden");
-  } catch (error) {
-    alert("Error sending code: " + error.message);
-  }
+try {
+  const confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
+  console.log("Code sent!", confirmationResult);
+  window.confirmationResult = confirmationResult;
+  document.getElementById("codeSection").classList.remove("hidden");
+} catch (error) {
+  console.error("signInWithPhoneNumber error:", error);
+  alert("Error sending code: " + error.message);
+}
+
 });
 
 
@@ -137,12 +145,6 @@ document.getElementById("verifyBtn").addEventListener("click", async () => {
 
 
 document.getElementById("logoutBtn").addEventListener("click", logoutUser);
-
-
-recaptchaVerifier.render().then((widgetId) => {
-  console.log("reCAPTCHA rendered:", widgetId);
-});
-
 
 
 
