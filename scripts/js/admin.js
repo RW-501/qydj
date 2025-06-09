@@ -724,6 +724,7 @@ async function removeSubscriber(id) {
 
 
 document.getElementById("btn-manage-events").addEventListener("click", () => {
+    document.getElementById("viewEventsBtn").click();
   showAdminSection("events");
 });
 
