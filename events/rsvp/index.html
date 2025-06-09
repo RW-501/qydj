@@ -137,6 +137,7 @@ function formatFirebaseDate(dateInput) {
         const link = `https://rw-501.github.io/qydj/events/details/index.html?id=${eventId}`;
 
     async function loadEventDetails() {
+        
       if (!eventId) return;
       const eventRef = doc(db, "events", eventId);
       const eventSnap = await getDoc(eventRef);
@@ -147,7 +148,7 @@ function formatFirebaseDate(dateInput) {
         document.getElementById("eventLocation").textContent = data.location || "Location TBA";
               
 
-        document.getElementById("pageTitle").href = link;
+        document.getElementById("eventTitle").href = link;
         document.getElementById("pageLink").href = link;
       } else {
         document.getElementById("eventTitle").textContent = "Event not found.";
