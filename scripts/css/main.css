@@ -82,6 +82,7 @@ main {
   background-position: center;
   filter: brightness(0.6);
   z-index: 0;
+  height: 100%;
 }
 
 #featured-event .absolute {
