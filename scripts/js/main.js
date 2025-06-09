@@ -93,12 +93,10 @@ async function loadFeaturedEvent() {
 
 
     if (featured && featured.isFeatured) {
-  const featuredDoc = featured.data();
-  const featuredId = featuredDoc.id;
+  const featuredId = featured.id;
 
   
   console.log("Featured Event ID:", featuredId);
-  console.log("featuredDoc Event Data:", featuredDoc);
   console.log("Featured Event Data:", featured);
 
       document.getElementById("featured-title").innerText = featured.title || "Upcoming Event";
