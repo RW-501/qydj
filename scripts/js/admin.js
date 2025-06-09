@@ -160,7 +160,7 @@ document.getElementById("eventForm").addEventListener("submit", async (e) => {
       const title = document.getElementById("title").value.trim();
       const description = document.getElementById("description").value.trim();
       const location = document.getElementById("location").value.trim();
-
+const hostedBy = document.getElementById("hostedBy").value.trim();
 const formDate = document.getElementById("date").value;
 const eventDate = new Date(formDate);
 
@@ -218,6 +218,7 @@ const allowRSVP = document.getElementById("allowRSVP").checked;
         const docRef = doc(db, "events", window.editingEventId);
         await updateDoc(docRef, {
           cost,
+          hostedBy,
           facebookLink,
           eventbriteLink,
           otherLink,
@@ -239,6 +240,7 @@ const allowRSVP = document.getElementById("allowRSVP").checked;
       } else {
         await addDoc(collection(db, "events"), {
           cost,
+          hostedBy,
           facebookLink,
           eventbriteLink,
           otherLink,
@@ -567,7 +569,8 @@ document.getElementById("RSVP-section").classList.add("hidden");
       document.getElementById("description").value = event.description;
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
-      
+      document.getElementById("hostedBy").value  = event.hostedBy;
+
 
 
 const eventDate = event.date?.toDate(); // Convert Firestore Timestamp to JS Date
