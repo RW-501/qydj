@@ -170,7 +170,15 @@ if (!formDate || isNaN(eventDate.getTime())) {
   submitBtn.disabled = false;
   return;
 }
+const formEndDate = document.getElementById("endDate").value;
+const eventEndDate = new Date(formEndDate);
 
+// Validate date
+if (!formEndDate || isNaN(eventEndDate.getTime())) {
+  alert("Please enter a valid End date and time.");
+  submitBtn.disabled = false;
+  return;
+}
       const tags = document.getElementById("tags").value
         .split(",")
         .map((t) => t.trim().toLowerCase())
@@ -227,6 +235,7 @@ const allowRSVP = document.getElementById("allowRSVP").checked;
           description,
           location,
           date: eventDate,
+          endDate: eventEndDate,
           tags,
           status,
           imageUrl,
@@ -249,6 +258,7 @@ const allowRSVP = document.getElementById("allowRSVP").checked;
           description,
           location,
           date: eventDate,
+          endDate: eventEndDate,
           tags,
           status,
           imageUrl,
