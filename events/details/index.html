@@ -344,9 +344,9 @@ if (!snap.exists()) {
   document.getElementById("eventDescription").innerHTML = event.description;
   document.getElementById("eventLocation").innerHTML = `<strong>Location:</strong> ${event.location}`;
   document.getElementById("bannerImage").src = event.imageUrl;
+  document.getElementById("eventCost").innerText = event.cost;
   document.getElementById("hostedBy").innerText = event.hostedBy;
   document.getElementById("viewCount").innerText = event.viewCount + 1;
-
 
   // Google Maps Embed
   document.getElementById("mapEmbed").src =
