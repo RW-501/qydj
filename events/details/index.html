@@ -412,7 +412,7 @@ if (!snap.exists()) {
   const event = snap.data();
 
 
-
+console.log("event.date, event.endDate ",event.date, event.endDate);
   document.getElementById("eventTitle").innerText = event.title;
 document.getElementById("eventDateTime").innerText = formatEventDateRange(event.date, event.endDate);
   document.getElementById("eventDescription").innerHTML = event.description;
