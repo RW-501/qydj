@@ -387,6 +387,7 @@ function formatEventDateRange(start, end) {
 
 function normalizeUrl(url) {
   if (!url) return null;
+  url = url.trim();
   return url.startsWith("http://") || url.startsWith("https://")
     ? url
     : `https://${url}`;
