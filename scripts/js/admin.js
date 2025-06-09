@@ -570,6 +570,11 @@ document.getElementById("RSVP-section").classList.add("hidden");
       document.getElementById("location").value = event.location;
       document.getElementById("preview").src = event.imageUrl;
       document.getElementById("hostedBy").value  = event.hostedBy;
+      document.getElementById("cost").value  = event.cost;
+      document.getElementById("facebookLink").value  = event.facebookLink;
+      document.getElementById("eventbriteLink").value  = event.eventbriteLink;
+      document.getElementById("otherLink").value  = event.otherLink;
+      document.getElementById("mainBuyLink").value  = event.mainBuyLink;
 
 
 
