@@ -614,28 +614,56 @@ async function loadAnalytics(eventId) {
   const rsvpSnap = await getDocs(collection(db, "events", eventId, "rsvps"));
   document.getElementById("analyticsRSVPs").innerText = `${rsvpSnap.size} RSVPs`;
 
-  // 💬 Load Comments
-  const commentsSnap = await getDocs(query(
-    collection(db, "events", eventId, "comments"),
-    where("visible", "==", true),
-    orderBy("createdAt", "desc")
-  ));
+// 💬 Load All Comments (Admin/Analytics View)
+const commentsSnap = await getDocs(query(
+  collection(db, "events", eventId, "comments"),
+  orderBy("createdAt", "desc")
+));
 
-  const commentsList = document.getElementById("analyticsComments");
-  commentsList.innerHTML = "";
+const commentsList = document.getElementById("analyticsComments");
+commentsList.innerHTML = "";
 
-  if (commentsSnap.empty) {
+if (commentsSnap.empty) {
+  const li = document.createElement("li");
+  li.textContent = "No comments yet.";
+  commentsList.appendChild(li);
+} else {
+  commentsSnap.forEach((doc) => {
+    const c = doc.data();
+    const id = doc.id;
+
     const li = document.createElement("li");
-    li.textContent = "No comments yet.";
-    commentsList.appendChild(li);
-  } else {
-    commentsSnap.forEach((doc) => {
-      const c = doc.data();
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>${c.name || "Anonymous"}:</strong> ${c.content}`;
-      commentsList.appendChild(li);
+    li.className = "mb-3 p-3 border rounded bg-light";
+
+    const visibility = c.visible ? `<span class="badge bg-success">Public</span>` : `<span class="badge bg-secondary">Private</span>`;
+    const createdAt = c.createdAt?.toDate().toLocaleString() || "Unknown";
+
+    li.innerHTML = `
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <strong>${c.name || "Anonymous"}</strong> 
+          <small class="text-muted">(${createdAt})</small>
+          ${visibility}
+        </div>
+        <button class="btn btn-sm btn-danger" data-id="${id}">Remove</button>
+      </div>
+      <p class="mt-2 mb-1">${c.content}</p>
+      <div class="text-muted small">
+        IP: ${c.ip || "unknown"}, ${c.city || ""}, ${c.region || ""}, ${c.country || ""}
+      </div>
+    `;
+
+    // Add click event to remove comment
+    li.querySelector("button").addEventListener("click", async () => {
+      if (confirm("Are you sure you want to delete this comment?")) {
+        await deleteDoc(doc(db, "events", eventId, "comments", id));
+        li.remove();
+      }
     });
-  }
+
+    commentsList.appendChild(li);
+  });
+}
 
   // 👁️ Show the analytics section
   document.getElementById("analytics-section").classList.remove("hidden");
