@@ -37,10 +37,10 @@ a, button {
   
   /* Button styles */
   .btn {
-    @apply inline-block px-6 py-2 rounded font-medium text-white bg-purple-600 hover:bg-purple-700;
+    @apply inline-block px-6 py-2 rounded font-medium text-white bg-blue-600 hover:bg-blue-700;
   }
   .btn-outline {
-    @apply border border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white transition;
+    @apply border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition;
   }
   
 
@@ -117,12 +117,12 @@ main {
 
 /* === CTA Section === */
 section.text-center a {
-  box-shadow: 0 4px 15px rgba(128, 0, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(13, 0, 255, 0.3);
 }
 
 section.text-center a:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(128, 0, 255, 0.5);
+  box-shadow: 0 6px 20px rgba(13, 0, 255, 0.5);
 }
 
 /* === Subscription Section === */
@@ -134,8 +134,8 @@ section.text-center a:hover {
 
 #subscribe-form input:focus {
   outline: none;
-  border-color: #7c3aed;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+  border-color: #3a43ed;
+  box-shadow: 0 0 0 3px rgba(76, 58, 237, 0.2);
 }
 
 #subscribe-form button:hover {
@@ -168,7 +168,7 @@ input[type="submit"] {
 button:focus,
 a.button:focus {
   outline: none;
-  ring: 2px solid #7c3aed;
+  ring: 2px solid #3a3ded;
 }
 
 /* === Footer (optional enhancement) === */
@@ -183,5 +183,5 @@ footer a {
 }
 
 footer a:hover {
-  color: #7c3aed;
+  color: #2563eb;
 }
