@@ -103,7 +103,7 @@ if (featured && featured.isFeatured) {
 
       const rsvpLink = `https://rw-501.github.io/qydj/events/rsvp/index.html?id=${featuredId}`;
 
-      document.getElementById("rsvp-link").href = featured.rsvpUrl || "#";
+      document.getElementById("rsvp-link").href = rsvpLink;
           }else{
       document.getElementById("rsvp-link").style.display = "none";
 
