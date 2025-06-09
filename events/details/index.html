@@ -79,6 +79,16 @@
       <a id="addToCalendar" class="btn btn-outline-success" target="_blank">Add to Calendar</a>
     </div>
 
+    <div id="facebookLinkBtn" class="text-center mb-4">
+      <a id="facebookLink" class="btn btn-primary btn-lg" target="_blank">View on Facebook</a>
+    </div>
+
+
+    <div id="otherLinkBtn" class="text-center mb-4">
+      <a id="otherLink" class="btn btn-primary btn-lg" target="_blank">View</a>
+    </div>
+
+
     <!-- Social Share -->
 <div class="text-center mb-4">Share</div>
 
@@ -342,6 +352,20 @@ if (!snap.exists()) {
   document.getElementById("buyButtonMain").style.display = "none";
   }
 
+    if(event.facebookLink){
+  document.getElementById("facebookLinkBtn").style.display = "block";
+  document.getElementById("facebookLink").href = event.facebookLink;
+  }else{
+  document.getElementById("facebookLinkBtn").style.display = "none";
+  }
+
+    if(event.otherLink){
+  document.getElementById("otherLinkBtn").style.display = "block";
+  document.getElementById("otherLink").href = event.otherLink;
+  document.getElementById("otherLink").innerText = event.otherLink;
+  }else{
+  document.getElementById("otherLinkBtn").style.display = "none";
+  }
 
   // Calendar link (Google Calendar format)
 const startDate = formatFirebaseDate(event.date);
