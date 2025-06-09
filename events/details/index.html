@@ -279,34 +279,21 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-
-
 function formatFirebaseDate(dateInput) {
-  let dateObj;
-
   if (typeof dateInput?.toDate === 'function') {
-    dateObj = dateInput.toDate(); // Firestore Timestamp
-  } else {
-    try {
-      dateObj = new Date(dateInput);
-    } catch (e) {
-      console.warn("Invalid date input:", dateInput);
-      return null;
-    }
+    return dateInput.toDate(); // Firestore Timestamp → JS Date
   }
 
-  if (isNaN(dateObj)) return null;
+  try {
+    const dateObj = new Date(dateInput);
+    if (!isNaN(dateObj)) return dateObj;
+  } catch (e) {
+    console.warn("Invalid date input:", dateInput);
+  }
 
-  return dateObj.toLocaleString("en-US", {
-    weekday: "long",        // "Saturday"
-    year: "numeric",        // "2025"
-    month: "long",          // "October"
-    day: "numeric",         // "26"
-    hour: "numeric",        // "7"
-    minute: "2-digit",      // "00"
-    hour12: true            // "PM"
-  });
+  return null;
 }
+
 
 async function loadEventGallery(eventId) {
   const galleryGrid = document.getElementById("event-gallery-grid");
@@ -367,29 +354,26 @@ document.getElementById("closeMediaModal").addEventListener("click", () => {
 });
 
 
-
 function formatEventDateRange(start, end) {
   const startDate = formatFirebaseDate(start);
   const endDate = formatFirebaseDate(end);
 
   if (!startDate || !endDate) return "Date Unavailable";
 
-  const options = {
-    weekday: "short",  // e.g., "Thu"
+  const formatOptions = {
+    weekday: "short",
     year: "numeric",
-    month: "short",    // e.g., "Jun"
+    month: "short",
     day: "numeric",
     hour: "numeric",
     minute: "2-digit",
-    hour12: true
+    hour12: true,
   };
 
-  const formattedStart = startDate.toLocaleString("en-US", options);
-  const formattedEnd = endDate.toLocaleString("en-US", options);
+  const formattedStart = startDate.toLocaleString("en-US", formatOptions);
+  const formattedEnd = endDate.toLocaleString("en-US", formatOptions);
 
-  // If same day, show only time for end
-  const sameDay =
-    startDate.toDateString() === endDate.toDateString();
+  const sameDay = startDate.toDateString() === endDate.toDateString();
 
   return sameDay
     ? `${formattedStart} – ${endDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })}`
