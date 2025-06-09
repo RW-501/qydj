@@ -240,6 +240,11 @@ const db = getFirestore(app);
               minute: "2-digit",
             });
 
+                  
+          const link = `https://rw-501.github.io/qydj/events/details/index.html?id=${eventId}`;
+      const rsvpLink = `https://rw-501.github.io/qydj/events/rsvp/index.html?id=${eventId}`;
+
+
             const card = document.createElement("div");
             card.className =
               "card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition";
@@ -256,11 +261,11 @@ card.innerHTML = `
     <p class="text-sm text-gray-600 mb-1">${date} • ${time}</p>
     <p class="text-sm text-gray-600 mb-4">${e.location}</p>
     <div class="flex justify-between items-center">
-      <a href="${e.rsvpLink || "#"}" target="_blank" class="btn text-sm">RSVP</a>
+      <a href="${rsvpLink}" target="_blank" class="btn text-sm">RSVP</a>
       <div class="flex gap-3 text-gray-600 text-lg">
         <a
           href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-            location.href
+            link
           )}"
           target="_blank"
           title="Share on Facebook"
@@ -269,7 +274,7 @@ card.innerHTML = `
         </a>
         <a
           href="https://twitter.com/intent/tweet?url=${encodeURIComponent(
-            location.href
+            link
           )}&text=${encodeURIComponent(e.title)}"
           target="_blank"
           title="Share on Twitter"
@@ -278,7 +283,7 @@ card.innerHTML = `
         </a>
         <a
           href="https://api.whatsapp.com/send?text=${encodeURIComponent(
-            e.title + " - " + location.href
+            e.title + " - " + link
           )}"
           target="_blank"
           title="Share on WhatsApp"
@@ -286,7 +291,7 @@ card.innerHTML = `
           <i class="fab fa-whatsapp"></i>
         </a>
         <a
-          href="${e.instagramLink || "#"}"
+          href="${link || "#"}"
           target="_blank"
           title="Instagram"
         >
