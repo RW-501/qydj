@@ -93,14 +93,14 @@ async function loadFeaturedEvent() {
 
 
     if (featured && featured.isFeatured) {
-  const  featuredDoc = featured;
-  const featured = featuredDoc.data();
+  const featuredDoc = featured.data();
   const featuredId = featuredDoc.id;
 
   
   console.log("Featured Event ID:", featuredId);
+  console.log("featuredDoc Event Data:", featuredDoc);
   console.log("Featured Event Data:", featured);
-  
+
       document.getElementById("featured-title").innerText = featured.title || "Upcoming Event";
           if (featured.allowRSVP) {
       document.getElementById("rsvp-link").style.display = "block";
