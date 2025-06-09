@@ -65,38 +65,46 @@
     <div id="eventLocation" class="mb-4"></div>
     <iframe id="mapEmbed" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
 
-    <!-- Buy / RSVP -->
-    <div id="rsvpButtonMain"  class="text-center mt-4 mb-4">
-      <a id="rsvpButton" class="btn btn-primary btn-lg" target="_blank">RSVP</a>
+<!-- Event Action Panel -->
+<div class="container my-5">
+  <div class="row g-4 justify-content-center">
+
+    <!-- RSVP + Buy Tickets -->
+    <div class="col-md-6">
+      <div class="card shadow-sm text-center p-4">
+        <h5 class="card-title mb-3"><i class="bi bi-calendar-check-fill me-2"></i>Join the Event</h5>
+        <div class="d-grid gap-3">
+          <a id="rsvpButton" target="_blank" class="btn btn-primary btn-lg"><i class="bi bi-envelope-fill me-2"></i>RSVP</a>
+          <a id="buyButton" target="_blank" class="btn btn-warning btn-lg text-dark"><i class="bi bi-ticket-perforated-fill me-2"></i>Buy Tickets</a>
+        </div>
+      </div>
     </div>
 
-    <div id="buyButtonMain" class="text-center mb-4">
-      <a id="buyButton" class="btn btn-primary btn-lg" target="_blank">Buy Tickets</a>
+    <!-- Calendar + Links -->
+    <div class="col-md-6">
+      <div class="card shadow-sm text-center p-4">
+        <h5 class="card-title mb-3"><i class="bi bi-link-45deg me-2"></i>Stay Connected</h5>
+        <div class="d-grid gap-3">
+          <a id="addToCalendar" target="_blank" class="btn btn-outline-success"><i class="bi bi-calendar-plus me-2"></i>Add to Calendar</a>
+          <a id="facebookLink" target="_blank" class="btn btn-primary"><i class="bi bi-facebook me-2"></i>Facebook Page</a>
+          <a id="otherLink" target="_blank" class="btn btn-secondary"><i class="bi bi-box-arrow-up-right me-2"></i>Other Link</a>
+        </div>
+      </div>
     </div>
-
-    <!-- Add to Calendar -->
-    <div class="text-center mb-5">
-      <a id="addToCalendar" class="btn btn-outline-success" target="_blank">Add to Calendar</a>
-    </div>
-
-    <div id="facebookLinkBtn" class="text-center mb-4">
-      <a id="facebookLink" class="btn btn-primary btn-lg" target="_blank">View on Facebook</a>
-    </div>
-
-
-    <div id="otherLinkBtn" class="text-center mb-4">
-      <a id="otherLink" class="btn btn-primary btn-lg" target="_blank">View</a>
-    </div>
-
 
     <!-- Social Share -->
-<div class="text-center mb-4">Share</div>
+    <div class="col-12">
+      <div class="card shadow-sm text-center p-4">
+        <h5 class="card-title mb-3"><i class="bi bi-share-fill me-2"></i>Share This Event</h5>
+        <div class="d-flex justify-content-center gap-3 flex-wrap" id="socialShareButtons">
+          <button class="btn btn-outline-secondary btn-sm" data-platform="facebook"><i class="bi bi-facebook me-1"></i>Facebook</button>
+          <button class="btn btn-outline-secondary btn-sm" data-platform="twitter"><i class="bi bi-twitter-x me-1"></i>Twitter</button>
+          <button class="btn btn-outline-secondary btn-sm" data-platform="whatsapp"><i class="bi bi-whatsapp me-1"></i>WhatsApp</button>
+        </div>
+      </div>
+    </div>
 
-<!-- Social Share -->
-<div class="d-flex justify-content-center gap-3 mb-3" id="socialShareButtons">
-  <button class="btn btn-sm btn-outline-secondary" data-platform="facebook">Facebook</button>
-  <button class="btn btn-sm btn-outline-secondary" data-platform="twitter">Twitter</button>
-  <button class="btn btn-sm btn-outline-secondary" data-platform="whatsapp">WhatsApp</button>
+  </div>
 </div>
 
 <!-- Event Gallery -->
