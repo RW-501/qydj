@@ -561,8 +561,10 @@ function share(platform) {
 
 async function getUserIpDetails() {
   try {
+    console.log("Fetching IP details...");
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
+    console.log("IP details fetched:", data);
 
     return {
       ip: data.ip,
@@ -574,7 +576,7 @@ async function getUserIpDetails() {
       userAgent: navigator.userAgent
     };
   } catch (error) {
-    console.error("IP lookup failed", error);
+    console.error("IP lookup failed:", error);
     return {
       ip: "unknown",
       city: "",
@@ -589,18 +591,23 @@ async function getUserIpDetails() {
 
 
 async function trackEventView(eventId) {
+  console.log("Tracking event view for event:", eventId);
   const eventRef = doc(db, "events", eventId);
   const viewsCollection = collection(db, "events", eventId, "views");
 
   const ipDetails = await getUserIpDetails();
+  console.log("IP Details to use:", ipDetails);
+
   const ipDocRef = doc(viewsCollection, ipDetails.ip);
   const ipDocSnap = await getDoc(ipDocRef);
+  console.log("IP document exists?", ipDocSnap.exists());
 
   const updateData = {
     viewCount: increment(1)
   };
 
   if (!ipDocSnap.exists()) {
+    console.log("Setting new IP view document");
     await setDoc(ipDocRef, {
       ...ipDetails,
       timestamp: serverTimestamp()
@@ -608,6 +615,7 @@ async function trackEventView(eventId) {
     updateData.uniqueViewCount = increment(1);
   }
 
+  console.log("Updating event document with:", updateData);
   await updateDoc(eventRef, updateData);
 }
 
