@@ -88,6 +88,7 @@ async function loadFeaturedEvent() {
   );
 
   try {
+    const querySnapshot = await getDocs(q);
 const featuredDoc = querySnapshot.docs[0];
 const featured = featuredDoc?.data();
 const featuredId = featuredDoc?.id;
