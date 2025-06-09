@@ -88,14 +88,11 @@ async function loadFeaturedEvent() {
   );
 
   try {
-    const querySnapshot = await getDocs(q);
-    const featured = querySnapshot.docs[0]?.data();
+const featuredDoc = querySnapshot.docs[0];
+const featured = featuredDoc?.data();
+const featuredId = featuredDoc?.id;
 
-
-    if (featured && featured.isFeatured) {
-const featuredId = featured?.id;
-
-  
+if (featured && featured.isFeatured) {
   console.log("Featured Event ID:", featuredId);
   console.log("Featured Event Data:", featured);
 
