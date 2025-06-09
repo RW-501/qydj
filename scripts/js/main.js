@@ -93,7 +93,8 @@ async function loadFeaturedEvent() {
 
 
     if (featured && featured.isFeatured) {
-        const featured = featured.data();
+  const  featuredDoc = featured;
+  const featured = featuredDoc.data();
   const featuredId = featuredDoc.id;
       document.getElementById("featured-title").innerText = featured.title || "Upcoming Event";
           if (featured.allowRSVP) {
