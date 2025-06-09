@@ -367,18 +367,18 @@ if (!snap.exists()) {
   }
 
     if(event.facebookLink){
-  document.getElementById("facebookLinkBtn").style.display = "block";
+  document.getElementById("facebookLink").style.display = "block";
   document.getElementById("facebookLink").href = event.facebookLink;
   }else{
-  document.getElementById("facebookLinkBtn").style.display = "none";
+  document.getElementById("facebookLink").style.display = "none";
   }
 
     if(event.otherLink){
-  document.getElementById("otherLinkBtn").style.display = "block";
+  document.getElementById("otherLink").style.display = "block";
   document.getElementById("otherLink").href = event.otherLink;
   document.getElementById("otherLink").innerText = event.otherLink;
   }else{
-  document.getElementById("otherLinkBtn").style.display = "none";
+  document.getElementById("otherLink").style.display = "none";
   }
 
   // Calendar link (Google Calendar format)
