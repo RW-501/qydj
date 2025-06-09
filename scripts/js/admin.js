@@ -593,7 +593,7 @@ if (eventDate instanceof Date && !isNaN(eventDate)) {
   const isoString = eventDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
   document.getElementById("date").value = isoString;
 }
-const eventEndDate = event.date?.toDate(); // Convert Firestore Timestamp to JS Date
+const eventEndDate = event.endDate?.toDate(); // Convert Firestore Timestamp to JS Date
 if (eventEndDate instanceof Date && !isNaN(eventEndDate)) {
   const isoString = eventEndDate.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:MM'
   document.getElementById("endDate").value = isoString;
