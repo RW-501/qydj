@@ -88,44 +88,60 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
 });
 
 // 📞 Phone Login
-if (!window.recaptchaVerifier) {
-  window.recaptchaVerifier = new RecaptchaVerifier(
+let recaptchaVerifier;
+
+document.addEventListener("DOMContentLoaded", () => {
+  recaptchaVerifier = new RecaptchaVerifier(
     "recaptcha-container",
-    { size: "invisible" },
+    {
+      size: "invisible",
+      callback: (response) => {
+        console.log("reCAPTCHA solved");
+      },
+    },
     auth
   );
-}
+});
+
 
 document.getElementById("sendCode").addEventListener("click", async () => {
   const phone = document.getElementById("phoneInput").value.trim();
   if (!allowedPhones.includes(phone)) return alert("Unauthorized phone number.");
 
   try {
-    const confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+    const appVerifier = recaptchaVerifier;
+    const confirmationResult = await signInWithPhoneNumber(auth, phone, appVerifier);
     window.confirmationResult = confirmationResult;
-    document.getElementById("verifyCode").classList.remove("hidden");
-    document.getElementById("verifyBtn").classList.remove("hidden");
+    document.getElementById("codeSection").classList.remove("hidden");
   } catch (error) {
-    alert(error.message);
+    alert("Error sending code: " + error.message);
   }
 });
+
 
 document.getElementById("verifyBtn").addEventListener("click", async () => {
   const code = document.getElementById("verifyCode").value.trim();
   try {
     const result = await window.confirmationResult.confirm(code);
-    if (!allowedPhones.includes(result.user.phoneNumber)) {
+    const user = result.user;
+    if (!allowedPhones.includes(user.phoneNumber)) {
       alert("Unauthorized phone number.");
       logoutUser();
+    } else {
+      showAdminPanel();
     }
   } catch (error) {
-    alert("Invalid code.");
+    alert("Invalid code or expired session.");
   }
 });
+
 
 document.getElementById("logoutBtn").addEventListener("click", logoutUser);
 
 
+recaptchaVerifier.render().then((widgetId) => {
+  console.log("reCAPTCHA rendered:", widgetId);
+});
 
 
 
