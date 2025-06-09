@@ -142,7 +142,7 @@ function formatFirebaseDate(dateInput) {
       if (eventSnap.exists()) {
         const data = eventSnap.data();
         document.getElementById("eventTitle").textContent = data.title || "Untitled Event";
-        document.getElementById("eventDate").textContent = data.date ? formatFirebaseDate(dateInput) : "TBD";
+        document.getElementById("eventDate").textContent = data.date ? formatFirebaseDate(data.date) : "TBD";
         document.getElementById("eventLocation").textContent = data.location || "Location TBA";
               
         const link = `https://rw-501.github.io/qydj/events/details/index.html?id=${eventId}`;
