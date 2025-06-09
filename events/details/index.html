@@ -354,6 +354,36 @@ document.getElementById("closeMediaModal").addEventListener("click", () => {
   modal.classList.add("hidden");
 });
 
+
+
+function formatEventDateRange(start, end) {
+  const startDate = formatFirebaseDate(start);
+  const endDate = formatFirebaseDate(end);
+
+  if (!startDate || !endDate) return "Date Unavailable";
+
+  const options = {
+    weekday: "short",  // e.g., "Thu"
+    year: "numeric",
+    month: "short",    // e.g., "Jun"
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  };
+
+  const formattedStart = startDate.toLocaleString("en-US", options);
+  const formattedEnd = endDate.toLocaleString("en-US", options);
+
+  // If same day, show only time for end
+  const sameDay =
+    startDate.toDateString() === endDate.toDateString();
+
+  return sameDay
+    ? `${formattedStart} – ${endDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })}`
+    : `${formattedStart} – ${formattedEnd}`;
+}
+
 // Parse ID from URL
 const urlParams = new URLSearchParams(window.location.search);
 const eventId = urlParams.get("id");
@@ -375,7 +405,7 @@ if (!snap.exists()) {
 
 
   document.getElementById("eventTitle").innerText = event.title;
-  document.getElementById("eventDateTime").innerText = formatFirebaseDate(event.date);
+document.getElementById("eventDateTime").innerText = formatEventDateRange(event.date, event.endDate);
   document.getElementById("eventDescription").innerHTML = event.description;
   document.getElementById("eventLocation").innerHTML = `<strong>Location:</strong> ${event.location}`;
   document.getElementById("bannerImage").src = event.imageUrl;
