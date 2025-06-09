@@ -43,3 +43,140 @@ a, button {
     @apply border border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white transition;
   }
   
+
+
+
+
+
+  /* === General === */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+main {
+  line-height: 1.7;
+}
+
+/* === Featured Event Section === */
+#featured-event {
+  position: relative;
+  background: linear-gradient(to bottom right, #1f1c2c, #928dab);
+  height: 70vh;
+  overflow: hidden;
+}
+
+#featured-event #featured-image {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6);
+  z-index: 0;
+}
+
+#featured-event .absolute {
+  z-index: 1;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+/* === Event Slider Section === */
+.mySwiper {
+  padding: 1rem;
+}
+
+.swiper-slide {
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide:hover {
+  transform: scale(1.05);
+}
+
+#event-slider .swiper-slide img {
+  border-radius: 0.5rem 0.5rem 0 0;
+  transition: opacity 0.4s;
+}
+
+#event-slider .swiper-slide:hover img {
+  opacity: 0.85;
+}
+
+#event-slider .swiper-slide .p-4 {
+  background-color: #fff;
+}
+
+/* === CTA Section === */
+section.text-center a {
+  box-shadow: 0 4px 15px rgba(128, 0, 255, 0.3);
+}
+
+section.text-center a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(128, 0, 255, 0.5);
+}
+
+/* === Subscription Section === */
+#subscribe-form input,
+#subscribe-form button {
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+#subscribe-form input:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+#subscribe-form button:hover {
+  background-color: #2563eb;
+}
+
+/* === Modal === */
+#thank-you-modal .bg-white {
+  animation: slideIn 0.4s ease-out;
+}
+
+/* === Animations === */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* === Buttons === */
+button,
+a.button,
+input[type="submit"] {
+  transition: all 0.3s ease;
+}
+
+button:focus,
+a.button:focus {
+  outline: none;
+  ring: 2px solid #7c3aed;
+}
+
+/* === Footer (optional enhancement) === */
+footer {
+  background: #111;
+  color: #ccc;
+}
+
+footer a {
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #7c3aed;
+}
