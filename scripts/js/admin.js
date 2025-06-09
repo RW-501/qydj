@@ -656,7 +656,7 @@ if (commentsSnap.empty) {
     // Add click event to remove comment
     li.querySelector("button").addEventListener("click", async () => {
       if (confirm("Are you sure you want to delete this comment?")) {
-        await deleteDoc(doc(db, "events", eventId, "comments", id));
+await updateDoc(doc(db, "events", eventId, "comments", id), { visible: false });
         li.remove();
       }
     });
