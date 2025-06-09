@@ -135,25 +135,29 @@
     <section id="event-comments" class="max-w-2xl mx-auto my-10 bg-white p-6 rounded shadow">
   <h3 class="text-xl font-bold mb-4">💬 Comments</h3>
 
-  <form id="commentForm" class="space-y-4">
-    <input type="hidden" id="userIp" name="ip" />
-    <input type="hidden" id="eventId" name="eventId"/>
+<form id="commentForm" class="space-y-4">
+  <input type="hidden" id="userIp" name="ip">
+  <input type="hidden" id="eventId" name="eventId">
 
-    <input type="text" id="commenterName" placeholder="Your name (optional)"
-           class="w-full border rounded px-4 py-2" />
+  <input type="text" id="commenterName" placeholder="Your name (optional)" class="form-control">
 
-    <textarea id="commentContent" placeholder="Write your comment here..." required
-              class="w-full border rounded px-4 py-2"></textarea>
+  <textarea id="commentContent" placeholder="Write your comment here..." required class="form-control"></textarea>
 
-    <label class="inline-flex items-center gap-2">
-      <input type="checkbox" id="commentVisible" checked class="form-checkbox">
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="commentVisible" checked>
+    <label class="form-check-label" for="commentVisible">
       Show this comment publicly
     </label>
+  </div>
 
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+  <!-- Align button to the right -->
+  <div class="text-end">
+    <button type="submit" class="btn btn-primary">
       Post Comment
     </button>
-  </form>
+  </div>
+</form>
+
 
   <div id="commentsContainer" class="mt-6">
     <!-- Comments will be dynamically rendered here -->
