@@ -73,7 +73,17 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { doc, getDoc, addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+  //  import { doc, getDoc, addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc, getDoc, 
+  doc, query, orderBy, where,
+  serverTimestamp,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
     // 🔐 Config
 const firebaseConfig = {
