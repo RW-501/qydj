@@ -655,7 +655,7 @@ if (commentsSnap.empty) {
           <small class="text-muted">(${createdAt})</small>
           ${visibility}
         </div>
-        <button class="btn btn-sm btn-danger" data-id="${id}">Remove</button>
+        <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition btn-danger " data-id="${id}">Remove</button>
       </div>
       <p class="mt-2 mb-1">${c.content}</p>
       <div class="text-muted small">
