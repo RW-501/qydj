@@ -134,6 +134,7 @@ function formatFirebaseDate(dateInput) {
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get("id");
     document.getElementById("rsvpEventId").value = eventId;
+        const link = `https://rw-501.github.io/qydj/events/details/index.html?id=${eventId}`;
 
     async function loadEventDetails() {
       if (!eventId) return;
@@ -145,7 +146,6 @@ function formatFirebaseDate(dateInput) {
         document.getElementById("eventDate").textContent = data.date ? formatFirebaseDate(data.date) : "TBD";
         document.getElementById("eventLocation").textContent = data.location || "Location TBA";
               
-        const link = `https://rw-501.github.io/qydj/events/details/index.html?id=${eventId}`;
 
         document.getElementById("pageTitle").href = link;
         document.getElementById("pageLink").href = link;
