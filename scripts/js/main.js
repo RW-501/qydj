@@ -29,9 +29,35 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-
 function formatFirebaseDate(dateInput) {
+  let dateObj;
+
+  if (typeof dateInput?.toDate === 'function') {
+    dateObj = dateInput.toDate(); // Firestore Timestamp
+  } else {
+    try {
+      dateObj = new Date(dateInput);
+    } catch (e) {
+      console.warn("Invalid date input:", dateInput);
+      return null;
+    }
+  }
+
+  if (isNaN(dateObj)) return null;
+
+  return dateObj.toLocaleString("en-US", {
+    weekday: "long",        // "Saturday"
+    year: "numeric",        // "2025"
+    month: "long",          // "October"
+    day: "numeric",         // "26"
+    hour: "numeric",        // "7"
+    minute: "2-digit",      // "00"
+    hour12: true            // "PM"
+  });
+}
+
+
+function formatFirebaseDateCD(dateInput) {
   // Check if it's a Firestore Timestamp object
   if (typeof dateInput?.toDate === 'function') {
     return dateInput.toDate().toLocaleString(); // Convert and format
@@ -111,7 +137,7 @@ if (featured && featured.isFeatured) {
 
       document.getElementById("featured-image").style.backgroundImage =
         `url('${featured.imageUrl || 'default-banner.jpg'}')`;
-      initCountdown(new Date(formatFirebaseDate(featured.date)));
+      initCountdown(new Date(formatFirebaseDateCD(featured.date)));
     } else {
       document.getElementById("featured-title").innerText = "Stay tuned!";
       document.getElementById("countdown").innerText = "";
