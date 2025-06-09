@@ -113,6 +113,24 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+
+function formatFirebaseDate(dateInput) {
+  if (typeof dateInput?.toDate === 'function') {
+    return dateInput.toDate(); // ✅ Return a JS Date
+  }
+
+  try {
+    const date = new Date(dateInput);
+    if (!isNaN(date)) return date; // ✅ Valid Date
+  } catch (e) {
+    console.warn("Invalid date input:", dateInput);
+  }
+
+  return null; // ❌ Invalid
+}
+
+
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get("id");
     document.getElementById("rsvpEventId").value = eventId;
@@ -124,7 +142,7 @@ const db = getFirestore(app);
       if (eventSnap.exists()) {
         const data = eventSnap.data();
         document.getElementById("eventTitle").textContent = data.title || "Untitled Event";
-        document.getElementById("eventDate").textContent = data.date ? new Date(data.date).toLocaleString() : "TBD";
+        document.getElementById("eventDate").textContent = data.date ? formatFirebaseDate(dateInput) : "TBD";
         document.getElementById("eventLocation").textContent = data.location || "Location TBA";
               
         const link = `https://rw-501.github.io/qydj/events/details/index.html?id=${eventId}`;
