@@ -47,7 +47,7 @@ const storage = getStorage(app);
 
 // ✅ Admin Whitelist
 const allowedEmails = ["1988lrp@gmail.com"];
-const allowedPhones = ["+19725977878", "+12145527280"];
+const allowedPhones = ["+19725977878", "+12145527280", "9725977878", "2145527280"];
 
 // 🔐 Auth State
 onAuthStateChanged(auth, (user) => {
