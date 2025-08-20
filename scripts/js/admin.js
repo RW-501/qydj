@@ -111,20 +111,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.getElementById("sendCode").addEventListener("click", async () => {
-  const phone = document.getElementById("phoneInput").value.trim();
-  if (!allowedPhones.includes(phone)) return alert("Unauthorized phone number.");
+  let phone = document.getElementById("phoneInput").value.trim();
 
-try {
-  const confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
-  console.log("Code sent!", confirmationResult);
-  window.confirmationResult = confirmationResult;
-  document.getElementById("codeSection").classList.remove("hidden");
-} catch (error) {
-  console.error("signInWithPhoneNumber error:", error);
-  alert("Error sending code: " + error.message);
-}
+  // ✅ Ensure phone starts with +1
+  if (!phone.startsWith("+")) {
+    // If it already starts with "1", just add "+"
+    if (phone.startsWith("1")) {
+      phone = "+" + phone;
+    } else {
+      phone = "+1" + phone;
+    }
+  }
 
+  // ✅ Optional: strip out non-digits except +
+  phone = phone.replace(/[^\d+]/g, "");
+
+  if (!allowedPhones.includes(phone)) {
+    return alert("Unauthorized phone number.");
+  }
+
+  try {
+    const confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
+    console.log("Code sent!", confirmationResult);
+    window.confirmationResult = confirmationResult;
+    document.getElementById("codeSection").classList.remove("hidden");
+  } catch (error) {
+    console.error("signInWithPhoneNumber error:", error);
+    alert("Error sending code: " + error.message);
+  }
 });
+
 
 
 document.getElementById("verifyBtn").addEventListener("click", async () => {
